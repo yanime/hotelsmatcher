@@ -1,18 +1,29 @@
+/*global require*/
+'use strict';
+
 require.config({
-    paths: {
-        jquery: '../bower_components/jquery/jquery'
-    },
     shim: {
-        bootstrap: {
-            deps: ['jquery'],
-            exports: 'jquery'
+        underscore: {
+            exports: '_'
+        },
+        backbone: {
+            deps: [
+                'underscore',
+                'jquery'
+            ],
+            exports: 'Backbone'
         }
+    },
+    paths: {
+        jquery: '../bower_components/jquery/jquery',
+        backbone: '../bower_components/backbone/backbone',
+        underscore: '../bower_components/underscore/underscore'
     }
 });
 
-require(['app', 'jquery'], function (app, $) {
+require(['app', 'backbone'], function (app, Backbone) {
     'use strict';
     // use app here
-    console.log(app);
-    console.log('Running jQuery %s', $().jquery);
+
+    Backbone.history.start();
 });
