@@ -21,9 +21,7 @@ require.config({
     }
 });
 
-require(['app', 'backbone'], function (app, Backbone) {
+require(['dom-helpers', 'app'], function (domHelpers, App) {
     'use strict';
-    // use app here
-
-    Backbone.history.start();
+    App.start();
 });
