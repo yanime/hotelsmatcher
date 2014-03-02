@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>HotelsMatcher.com</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="stylesheet" href="styles/normalize.min.css">
+
+        <link rel="stylesheet/less" type="text/css" href="styles/main.less">
+        <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,700' rel='stylesheet' type='text/css'>
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <!-- <link rel="stylesheet" href="styles/main.css"> -->
+        <!-- build:js scripts/vendor/modernizr.js -->
+        <script src="bower_components/modernizr/modernizr.js"></script>
+        <!-- endbuild -->
+
+        <script src="scripts/vendor/less.min.js"></script>
+        <link href='http://fonts.googleapis.com/css?family=Noto+Sans&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    </head>
+    <body class="single">
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+        <div class="header-container">
+            <header role="banner" class="wrapper clearfix">
+                <h1 class="logo"><img src="images/logo.png" alt="HotelsMatcher"/></h1>
+            </header>
+        </div>
+
+        <div class="main-container">
+            <main class="main wrapper clearfix">
+                <header id="main-header">
+                    <h1 class="title">Hotel name</h1>
+                    <button type="button" class="close" title="Close this view"></button>
+                </header>
+                <section id="main-section">
+                    <div class="hotel photos">
+                        <button class="previous"></button>
+                        <div class="images">
+                            <img src="http://lorempixel.com/375/240/city" />
+                        </div>
+                        <button class="next"></button>
+                    </div>
+                    <div class="details-container">
+                        <div class="location hotel details">
+                            <span class="label">Location</span>
+                            <span class="content city point-out">New York,</span>
+                            <span class="content district value">Central Park</span>
+                        </div>
+                        <div class="price hotel details">
+                            <span class="label">Price range</span>
+                            <span class="content currency">$</span>
+                            <span class="content small price point-out">175</span>
+                            <span class="content currency">$</span>
+                            <span class="content large price point-out">1175</span>
+                        </div>
+                        <div class="facilities hotel details">
+                            <span class="label">Facilities</span>
+                            <span class="content facilities">Wifi, Parking</span>
+                            <span class="content facilities extra hidden">, Wifi, Parking</span>
+                            <button class="view-all">2 more &gt;</button>
+                        </div>
+                        <div class="rooms hotel details">
+                            <span class="label">Room types</span>
+                            <span class="content rooms">Single, Double</span>
+                            <span class="content rooms extra hidden">, Apartment, Etc</span>
+                            <button class="view-all">2 more &gt;</button>
+                        </div>
+                    </div>
+                    <div class="description-container hotel details">
+                        <span class="label">Description</span>
+                        <span class="content description">Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus. Praesent elementum hendrerit tortor. Sed semper lorem at felis. Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.<button class="read more" title="Show all the description we have for this hotel.">... read more &gt;</button></span>
+                    </div>
+                    <div class="actions">
+                        <div class="action-wrapper">
+                            <button type="button" class="button book-action" title="Book for this hotel">Book now</button>
+                        </div>
+                        <div class="action-wrapper">
+                            <button type="button" class="button action search" title="Book for this hotel">Compare</button>
+                            <span class="description">compare to other hotels in the same area</span>
+                    </div>
+                </section>
+            </main> <!-- #main -->
+        </div> <!-- #main-container -->
+
+        <div class="footer-container">
+        </div>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
+
+        <!-- build:js scripts/main.js -->
+            <script data-main="scripts/main" src="bower_components/requirejs/require.js"></script>
+        <!-- endbuild -->
+        <script src="scripts/main.js"></script>
+    </body>
+</html>

@@ -1,0 +1,20 @@
+   {
+     "name": "Park Central New York",
+     "price": "$345",
+     "stars": "3",
+     "tripadvisod":{
+       "reviews": "4"
+     },
+     "distance": "3.5km",
+     "facilities": {
+       "wifi": "true",
+       "parking": "false",
+       "airport-shuttle": "true",
+       "spa": "true"
+     },
+     "themes":{
+       "family": "true",
+       "business": "business",
+       "romance": "romance"
+     }
+   }

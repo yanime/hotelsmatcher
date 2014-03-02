@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>HotelsMatcher.com</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="stylesheet" href="styles/normalize.min.css">
+
+        <link rel="stylesheet/less" type="text/css" href="styles/main.less">
+        <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,700' rel='stylesheet' type='text/css'>
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <!-- <link rel="stylesheet" href="styles/main.css"> -->
+        <!-- build:js scripts/vendor/modernizr.js -->
+        <script src="bower_components/modernizr/modernizr.js"></script>
+        <!-- endbuild -->
+
+        <script src="scripts/vendor/less.min.js"></script>
+        <link href='http://fonts.googleapis.com/css?family=Noto+Sans&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    </head>
+    <body class="compare">
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+        <div class="header-container">
+            <header role="banner" class="wrapper clearfix">
+                <h1 class="logo"><img src="images/logo.png" alt="HotelsMatcher"/></h1>
+            </header>
+        </div>
+
+        <div class="main-container">
+            <main class="main wrapper clearfix">
+                <header id="main-header">
+                    <h1 class="title">Compare Hotels</h1>
+                    <button type="button" class="info" title="See our information section"></button>
+                </header>
+                <section id="main-section">
+                    <header class="search header">
+                        <div class="details">
+                            <div class="location">
+                                <span class="label static">Location</span>
+                                <span class="city point-out">New York,</span>
+                                <span class="district value">Central Park</span>
+                            </div>
+                            <div class="duration">
+                                <span class="label static">Duration of stay</span>
+                                <span class="nights point-out">1 night</span>
+                                <span class="date value">(otc.3rd2013-oct.4th2013)</span>
+                            </div>
+                            <div class="rooms">
+                                <span class="label static">Guests / Rooms</span>
+                                <span class="rooms point-out">1 adult, 1 room</span>
+                            </div>
+                            <button type="button" class="button action edit">Change current search</button>
+                        </div>
+                    </header>
+                    <aside class="sort-container">
+                        <div class="options">
+                            <span class="title">
+                                Sort by
+                            </span>
+                            <button class="push-button relevance active" type="button" title="Sort by Relevance">Relevance</button>
+                            <button class="push-button price" type="button" title="Sort by Price">Price</button>
+                            <button class="push-button stars" type="button" title="Sort by Stars">Stars</button>
+                            <button class="push-button review-score" type="button" title="Sort by Review Score">Review Score</button>
+                            <div class="trips dropdown distance">
+                                <div class="element">
+                                    <div class="top passive">
+                                        <span class="value">Distance from</span>
+                                        <span class="arrow"></span>
+                                    </div>
+                                    <ul class="options overlap">
+                                        <li class="top action">
+                                            <span class="value">Distance from</span>
+                                            <span class="arrow"></span>
+                                        </li>
+                                        <li class="separated action">Test</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                    <div class="pagination">
+                        <span class="title">Go to page</span>
+                        <ol>
+                            <li><button class="active">1</button></li>
+                            <li><button>2</button></li>
+                        </ol>
+                        <div class="steps">
+                            <button class="step left" title="Load previous"></button>
+                            <button class="step right" title="Load next"></button>
+                        </div>
+                    </div>
+                    <div class="compare-table">
+                        <div class="book details floating hidden">
+                            <ul class="hotel info column">
+                                <li class="header">
+                                    Paramount Zone Park Central New York
+                                </li>
+                                <li class="radio trips pin">
+                                    <input type="hidden" name="pinned" value="false" />
+                                    <span class="label">hotel pinned</span>
+                                    <div class="check"></div>
+                                </li>
+                                <li class="photos">
+                                    <button class="previous"></button>
+                                    <div class="images">
+                                        <img src="http://lorempixel.com/158/82/city" />
+                                    </div>
+                                    <button class="next"></button>
+                                </li>
+                                <li class="price"><span>Price </span><span class="currency"> $ </span><span class="value">345</span></li>
+                                <li class="book action"><button type="button" class="button book-action" title="Book for this hotel">Book now</button></li>
+                            </ul>
+                        </div>
+                        <ul class="headers column">
+                            <li class="header">
+                                Hotels
+                            </li>
+                            <li class="pin"></li>
+                            <li class="price"><span>Price</span></li>
+                            <li class="stars"><span>Stars</span></li>
+                            <li class="tripadvisor-reviews"><span>TripAdvisor Reviews</span></li>
+                            <li class="distance"><span>Distance from area</span></li>
+                            <li class="photos"><span>Photos</span></li>
+                            <li class="facilities category title"><span>Facilities</span></li>
+                            <li class="wifi option checkbox unchecked"><div class="check"></div><span>Wifi</span></li>
+                            <li class="parking option checkbox unchecked"><div class="check"></div><span>Parking</span></li>
+                            <li class="airport-shuttle option checkbox unchecked"><div class="check"></div><span>Airport Shuttle</span></li>
+                            <li class="fitness-center option checkbox unchecked"><div class="check"></div><span>Fitness Center</span></li>
+                            <li class="spa option checkbox unchecked"><div class="check"></div><span>Spa</span></li>
+                            <li class="see-all facilities"><button type="button" class="see-all facilities">&gt; see all facilities</button></li>
+                            <li class="theme category title"><span>Hotel theme</span></li>
+                            <li class="family option checkbox unchecked"><div class="check"></div><span>Family</span></li>
+                            <li class="business option checkbox unchecked"><div class="check"></div><span>Business</span></li>
+                            <li class="romance option checkbox unchecked"><div class="check"></div><span>Romance</span></li>
+                            <li class="budget option checkbox unchecked"><div class="check"></div><span>Budget</span></li>
+                            <li class="see-all"><button type="button" class="see-all theme">&gt; see all themes</button></li>
+                            <li class="book action"></li>
+                        </ul>
+                        <div class="pinned-container">
+                            <div class="hotel info column fixed pinned">
+                                <ul>
+                                    <li class="header">
+                                        Park Central New York
+                                    </li>
+                                    <li class="radio trips pin">
+                                        <input type="hidden" name="pinned" value="false" />
+                                        <span class="label">hotel pinned</span>
+                                        <div class="check"></div>
+                                    </li>
+                                    <li class="price"><span> $ </span><span class="value">345</span></li>
+                                    <li class="stars">
+                                        <div class="rating">
+                                            <span class="active"></span><span class="active"></span><span></span><span></span><span></span>
+                                        </div>
+                                    </li>
+                                    <li class="tripadvisor-reviews">
+                                        <div class="rating">
+                                            <span class="active"></span><span class="active"></span><span></span><span></span><span></span>
+                                        </div>
+                                    </li>
+                                    <li class="distance"><span>2.8 km</span></li>
+                                    <li class="photos">
+                                        <button class="previous"></button>
+                                        <div class="images">
+                                            <img src="http://lorempixel.com/125/115/city" />
+                                        </div>
+                                        <button class="next"></button>
+                                    </li>
+                                    <li class="facilities category title">Facilities</li>
+                                    <li class="wifi option"><span class="checkbox unchecked">true</span></li>
+                                    <li class="parking option"><span class="checkbox unchecked">false</span></li>
+                                    <li class="airport-shuttle option"><span class="checkbox unchecked">true</span></li>
+                                    <li class="fitness-center option"><span class="checkbox unchecked">true</span></li>
+                                    <li class="spa option"><span class="checkbox unchecked">true</span></li>
+                                    <li class="see-all"></li>
+                                    <li class="facilities category title">Hotel theme</li>
+                                    <li class="family option"><span class="checkbox unchecked">true</span></li>
+                                    <li class="business option"><span class="checkbox checked">true</span></li>
+                                    <li class="romance option"><span class="checkbox unchecked">true</span></li>
+                                    <li class="budget option"><span class="checkbox unchecked">true</span></li>
+                                    <li class="see-all"></li>
+                                    <li class="book action"><button type="button" class="button book-action" title="Book for this hotel">Book now</button></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="hotel info column fixed">
+                            <ul>
+                                <li class="header">
+                                    Park Central New York
+                                </li>
+                                <li class="radio trips pin">
+                                    <input type="hidden" name="pinned" value="false" />
+                                    <span class="label">pin this hotel</span>
+                                    <div class="check"></div>
+                                </li>
+                                <li class="price"><span> $ </span><span class="value">345</span></li>
+                                <li class="stars">
+                                    <div class="rating">
+                                        <span class="active"></span><span class="active"></span><span></span><span></span><span></span>
+                                    </div>
+                                </li>
+                                <li class="tripadvisor-reviews">
+                                    <div class="rating">
+                                        <span class="active"></span><span class="active"></span><span></span><span></span><span></span>
+                                    </div>
+                                </li>
+                                <li class="distance"><span>2.8 km</span></li>
+                                <li class="photos">
+                                    <button class="previous"></button>
+                                    <div class="images">
+                                        <img src="http://lorempixel.com/125/115/city" />
+                                    </div>
+                                    <button class="next"></button>
+                                </li>
+                                <li class="facilities category title">Facilities</li>
+                                <li class="wifi option"><span class="checkbox unchecked">true</span></li>
+                                <li class="parking option"><span class="checkbox checked">false</span></li>
+                                <li class="airport-shuttle option"><span class="checkbox checked">true</span></li>
+                                <li class="fitness-center option"><span class="checkbox checked">true</span></li>
+                                <li class="spa option"><span class="checkbox unchecked">true</span></li>
+                                <li class="see-all"></li>
+                                <li class="facilities category title">Hotel theme</li>
+                                <li class="family option"><span class="checkbox unchecked">true</span></li>
+                                <li class="business option"><span class="checkbox checked">true</span></li>
+                                <li class="romance option"><span class="checkbox checked">true</span></li>
+                                <li class="budget option"><span class="checkbox unchecked">true</span></li>
+                                <li class="see-all"></li>
+                                <li class="book action"><button type="button" class="button book-action" title="Book for this hotel">Book now</button></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="pagination bottom">
+                        <span class="title">Go to page</span>
+                        <ol>
+                            <li><button class="active">1</button></li>
+                            <li><button>2</button></li>
+                        </ol>
+                        <div class="steps">
+                            <button class="step left" title="Load previous"></button>
+                            <button class="step right" title="Load next"></button>
+                        </div>
+                    </div>
+                </section>
+            </main> <!-- #main -->
+        </div> <!-- #main-container -->
+
+        <div class="footer-container">
+        </div>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
+
+        <!-- build:js scripts/main.js -->
+            <script data-main="scripts/main" src="bower_components/requirejs/require.js"></script>
+        <!-- endbuild -->
+        <script src="scripts/main.js"></script>
+    </body>
+</html>
