@@ -4,24 +4,25 @@ define([
     'jquery',
     'underscore',
     'backbone',
+    'layoutmanager',
     'templates'
 ], function ($, _, Backbone, JST) {
     'use strict';
 
     var AutocompleteView = Backbone.View.extend({
-        template: JST['app/scripts/templates/autocomplete.ejs'],
+        manage: true,
+        template: 'autocomplete',
         url: 'http://dev.enode.ro/api/autocomplete?q=',
         initialize: function () {
             this.currentSearch = '';
-            this.render();
-            this._searchHelper = this.$el.find('.search.helper');
+        },
+        serialize: function () {
         },
         events: {
             'keyup #destination-input': '_handleSearch'
         },
-        render: function () {
-            this.$el.html(this.template());
-            return this;
+        afterRender: function () {
+            this._searchHelper = this.$el.find('.search.helper');
         },
         fetch: function (param) {
             var that = this;

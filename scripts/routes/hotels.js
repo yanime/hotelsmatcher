@@ -3,8 +3,9 @@
 define([
     'jquery',
     'backbone',
-    '../views/autocomplete'
-], function ($, Backbone, AutocompleteView) {
+    'layoutmanager',
+    '../views/homepage'
+], function ($, Backbone, LM, HomepageView) {
     'use strict';
 
     var HotelsRouter = Backbone.Router.extend({
@@ -14,10 +15,13 @@ define([
             'hotel/:id': 'pageHotel',
             'compare': 'pageCompare'
         },
+        _setPage: function (page) {
+            App.layout.insertView('.main-container', page);
+            page.render();
+        },
         pageIndex: function () {
-            new AutocompleteView({
-                el: $('#search-wrapper')
-            });
+            var page = new HomepageView();
+            this._setPage(page);
         },
         pageCompare: function () {
         },

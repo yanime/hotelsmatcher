@@ -12,11 +12,18 @@ require.config({
                 'jquery'
             ],
             exports: 'Backbone'
+        },
+        layoutmanager: {
+            deps: [
+                'backbone'
+            ],
+            exports: 'LayoutManager'
         }
     },
     paths: {
         jquery: '../bower_components/jquery/jquery',
         backbone: '../bower_components/backbone/backbone',
+        layoutmanager: '../bower_components/layoutmanager/backbone.layoutmanager',
         underscore: '../bower_components/underscore/underscore'
     }
 });

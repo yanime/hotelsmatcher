@@ -1,0 +1,158 @@
+<header id="main-header">
+    <h1 class="title">Search hotels that match your criteria</h1>
+    <button type="button" class="info" title="See our information section"></button>
+</header>
+<section id="main-section">
+    <form class="trips" action="" method="get" accept-charset="utf-8">
+        <fieldset id="search-wrapper">
+        </fieldset>
+        <fieldset class="check-in-options with three">
+            <div class="graphic out cell">
+                <label class="default label" for="check-in-month">Check-in Date</label>
+                <div class="input-container default check-date">
+                    <input class="default month" type="text" name="check-in-month" id="check-in-month" value=""/>
+                    <input class="default day" type="text" name="check-in-day" id="check-in-dd" value=""/>
+                    <input class="default year" type="text" name="check-in-year" id="check-in-year" value=""/>
+                </div>
+                <button title="Fill with today" type="button" class="date setter"></button>
+            </div>
+            <div class="graphic in cell">
+                <label class="default label" for="check-out-month">Check-out Date</label>
+                <div class="input-container default check-date">
+                    <input class="default month" type="text" name="check-out-month" id="check-out-month" value=""/>
+                    <input class="default day" type="text" name="check-out-day" id="check-out-dd" value=""/>
+                    <input class="default year" type="text" name="check-out-year" id="check-out-year" value=""/>
+                </div>
+                <button title="Fill with tomorrow" type="button" class="date setter"></button>
+            </div>
+            <div class="cell checkbox trips tripadvisor">
+                <input type="hidden" id="no-specific-date"/>
+                <div class="check"></div>
+                <span class="label">I don't have a specific date</span>
+            </div>
+        </fieldset>
+        <fieldset class="options">
+            <div class="trips dropdown guests">
+                <span class="label">Guests</span>
+                <div class="element">
+                    <div class="top passive">
+                        <span class="value">Choose</span>
+                        <span class="arrow"></span>
+                    </div>
+                    <ul class="options overlap">
+                        <li class="top action">
+                            <span class="value">Choose</span>
+                            <span class="arrow"></span>
+                        </li>
+                        <li class="separated action">1 Adult</li>
+                        <li class="action">2 Adults</li>
+                        <li class="separated action">More options</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="trips dropdown rooms">
+                <span class="label">Rooms</span>
+                <div class="element">
+                    <div class="top passive">
+                        <span class="value">1</span>
+                        <span class="arrow"></span>
+                    </div>
+                    <ul class="options overlap">
+                        <li class="top action">
+                            <span class="value">1</span>
+                            <span class="arrow"></span>
+                        </li>
+                        <li class="action">1</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="trips dropdown adults">
+                <span class="label">Adults</span>
+                <div class="element">
+                    <div class="top passive">
+                        <span class="value">1</span>
+                        <span class="arrow"></span>
+                    </div>
+                    <ul class="options overlap">
+                        <li class="top action">
+                            <span class="value">1</span>
+                            <span class="arrow"></span>
+                        </li>
+                        <li class="action">1</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="trips dropdown children">
+                <span class="label">Children</span>
+                <div class="element">
+                    <div class="top passive">
+                        <span class="value">1</span>
+                        <span class="arrow"></span>
+                    </div>
+                    <ul class="options overlap">
+                        <li class="top action">
+                            <span class="value">1</span>
+                            <span class="arrow"></span>
+                        </li>
+                        <li class="action">1</li>
+                    </ul>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset class="comparisson">
+            <div class="header">
+                <h2>Compare against</h2>
+                <button type="button" class="reset" title="Reset your options"></button>
+            </div>
+            <ul class="criterias">
+                <li class="checkbox trips">
+                    <input type="hidden" id="check-price" value="false" />
+                    <div class="check"></div>
+                    <span class="label">Price</span>
+                </li>
+                <li class="checkbox trips">
+                    <input type="hidden" id="check-stars" value="false" />
+                    <div class="check"></div>
+                    <span class="label">Stars</span>
+                </li>
+                <li class="checkbox trips">
+                    <input type="hidden" id="check-tripadvisor" value="false" />
+                    <div class="check"></div>
+                    <span class="label">TripAdvisor Ratings</span>
+                </li>
+                <li class="checkbox trips">
+                    <input type="hidden" id="check-distance" />
+                    <div class="check"></div>
+                    <span class="label">Distance from downtown</span>
+                </li>
+            </ul>
+            <ul class="categories-list">
+                <li class="checkbox trips categories" data-target="facilities-container">
+                    <div class="check"></div>
+                    <span class="label">Facilities</span>
+                </li>
+                <li class="checkbox trips categories" data-target="theme-container">
+                    <div class="check"></div>
+                    <span class="label">Hotel theme</span>
+                </li>
+            </ul>
+            <div class="facilities-container filters hidden">
+                <ul class="options">
+                    <li class="wifi option checkbox trips unchecked"><input type="hidden" id="wifi-option" value="false" /><div class="check"></div><span>Wifi</span></li>
+                    <li class="parking option checkbox trips unchecked"><input type="hidden" id="parking-option" value="false" /><div class="check"></div><span>Parking</span></li>
+                    <li class="airport-shuttle option checkbox trips unchecked"><input type="hidden" id="airport-shuttle-option" value="false" /><div class="check"></div><span>Airport Shuttle</span></li>
+                    <li class="fitness-center option checkbox trips unchecked"><input type="hidden" id="fitness-center-option" value="false" /><div class="check"></div><span>Fitness Center</span></li>
+                    <li class="spa option checkbox trips unchecked"><input type="hidden" id="spa-option" value="false" /><div class="check"></div><span>Spa</span></li>
+                </ul>
+            </div>
+            <div class="theme-container filters hidden">
+                <ul class="options">
+                    <li class="family option checkbox trips unchecked"><input type="hidden" id="familty-option" value="false" /><div class="check"></div><span>Family</span></li>
+                    <li class="business option checkbox trips unchecked"><input type="hidden" id="business-option" value="false" /><div class="check"></div><span>Business</span></li>
+                    <li class="romance option checkbox trips unchecked"><input type="hidden" id="romance-option" value="false" /><div class="check"></div><span>Romance</span></li>
+                    <li class="budget option checkbox trips unchecked"><input type="hidden" id="budget-option" value="false" /><div class="check"></div><span>Budget</span></li>
+                </ul>
+        </fieldset>
+        <input class="button action search" type="submit" name="search" id="search" value="Search &amp; Compare" title="Proceed to next step" />
+    </form>
+</section>
