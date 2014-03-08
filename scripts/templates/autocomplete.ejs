@@ -1,0 +1,18 @@
+<label class="default label" for="destination-input" title="Click and start typing to select your destination">Destination / Hotel Name</label>
+<div class="trips dropdown auto-complete destination">
+    <div class="element">
+        <div class="top passive">
+            <span class="empty hint value">
+                eg. City Name, Hotel Name, Region Name, etc.
+            </span>
+        </div>
+        <ul class="options overlap">
+            <li class="top">
+                <input class="input default" type="text" name="destination" id="destination-input" autocomplete="off" value="<%= obj.searchTerm %>" />
+            </li>
+            <li class="separated search helper hidden">
+                Searching...
+            </li>
+        </ul>
+    </div>
+</div>

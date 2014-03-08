@@ -23,5 +23,7 @@ require.config({
 
 require(['dom-helpers', 'app'], function (domHelpers, App) {
     'use strict';
-    App.start();
+    $(document).ready(function(){
+        App.start();
+    });
 });

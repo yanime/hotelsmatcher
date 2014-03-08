@@ -87,8 +87,9 @@ define([], function () {
             }
         },
         _set: function (value) {
-            this.el.children[0].children[0].innerHTML = value;
-            this.$el.find('.options .top .value')[0].innerHTML = value;
+            var val = value.split('<')[0];
+            this.$el.find('.top .value').html(val);
+            this.$el.find('input.input').val(val);
         },
         _bindOptions: function () {
             var that = this;

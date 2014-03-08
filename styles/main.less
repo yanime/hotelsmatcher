@@ -623,6 +623,7 @@ form.trips{
             .mixin-form-input-active;
             .mixin-no-shadow;
             border-bottom: 1px solid #FFF;;
+            z-index:10;
             li{
                 margin: 0 0.22727273em; // 5px
                 padding: 0 0.22727273em; // 5px
@@ -642,12 +643,22 @@ form.trips{
                 &:hover{
                     background: @active-blue;
                     color: #FFF;
+                    span.label{
+                        color: #FFF;
+                    }
                 }
                 &.top{
                     &:hover{
                         background: #FFF;
                         color: @default-text-color;
                     }
+                }
+                span.label{
+                    color: #aaa;
+                    float: right;
+                    font-size: 0.75em;
+                    line-height: 2.6em;
+                    margin: 0;
                 }
             }
             .top.passive{
