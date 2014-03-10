@@ -1,4 +1,5 @@
 /*global define*/
+/*global App*/
 
 define([
     'jquery',
@@ -16,6 +17,13 @@ define([
         className: 'main wrapper clearfix',
         beforeRender: function () {
             this.insertView('#search-wrapper', new AutocompleteView());
+        },
+        events: {
+            'click .action.search': '_handleCompare'
+        },
+        _handleCompare: function (e){
+            e.preventDefault();
+            App.router.navigate('compare',{trigger: true});
         }
     });
 

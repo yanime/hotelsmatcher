@@ -4,8 +4,9 @@ define([
     'jquery',
     'backbone',
     'layoutmanager',
-    '../views/homepage'
-], function ($, Backbone, LM, HomepageView) {
+    '../views/homepage',
+    '../views/compare'
+], function ($, Backbone, LM, HomepageView, CompareView) {
     'use strict';
 
     var HotelsRouter = Backbone.Router.extend({
@@ -16,14 +17,20 @@ define([
             'compare': 'pageCompare'
         },
         _setPage: function (page) {
+            if (this.page) {
+                this.page.remove();
+            }
+            this.page = page;
             App.layout.insertView('.main-container', page);
             page.render();
         },
         pageIndex: function () {
-            var page = new HomepageView();
-            this._setPage(page);
+            this._setPage( new HomepageView() );
+            App.layout.$el.attr('class', 'home');
         },
         pageCompare: function () {
+            this._setPage( new CompareView() );
+            App.layout.$el.attr('class', 'compare');
         },
         pageHotel: function (id) {
         }

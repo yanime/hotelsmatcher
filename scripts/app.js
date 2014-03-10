@@ -15,7 +15,7 @@ define(['layoutmanager', 'routes/hotels', 'templates'], function (LayoutManager,
         start: function () {
             App.layout.render();
             App.layout.$el.appendTo(".app-content");
-            new Router();
+            App.router = new Router();
             Backbone.history.start();
         }
     }
