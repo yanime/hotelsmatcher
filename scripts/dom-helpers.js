@@ -24,41 +24,12 @@ define([], function () {
         }
     }
 
-    // boostrap options in table
-    function _displaySelectedOptions(){
-        for (var name in _selectedClasses) {
-            if (_selectedClasses.hasOwnProperty(name)) {
-                if(_selectedClasses[name]){
-                    $('.compare-table .headers.column').find('.'+name).removeClass('unchecked').addClass('checked').removeClass('hidden');
-                    $('.compare-table .info.column').find('.'+name+' .checkbox').parent().removeClass('hidden');
-                } else {
-                    $('.compare-table .headers.column').find('.'+name).addClass('hidden');
-                    $('.compare-table .info.column').find('.'+name+' .checkbox').parent().addClass('hidden');
-                }
-            }
-        }
-    }
-
     var bgs = [
         'cb-back',
         'sm-back',
         'pf-back',
         'cs-back'
     ];
-
-    // should be preset from query result
-    var _selectedClasses = {
-        'wifi': true,
-        'parking': true,
-        'airport-shuttle': true,
-        'fitness-center': false,
-        'spa': true,
-        'family': true,
-        'business': false,
-        'romance': true,
-        'budget': true
-    };
-
     var _facilities = [
         'wifi',
         'parking',
@@ -88,7 +59,7 @@ define([], function () {
         },
         _set: function (value) {
             var val = value.split('<')[0];
-            this.$el.find('.top .value').html(val);
+            this.$el.find('.top .value').html(val).trigger('change');
             this.$el.find('input.input').val(val);
         },
         _bindOptions: function () {
@@ -149,29 +120,11 @@ define([], function () {
 
     DropdownController.bind();
 
-    $('.trips.checkbox:not(.categories)').on('click', function () {
-        var $this = $(this);
-        $this.toggleClass('active');
-        $this.find('input[type="hidden"]').val($this.hasClass('active'));
-    });
-    $('.trips.checkbox.categories').on('click', function () {
-        var $this = $(this),
-        target = $this.data('target');
-
-        $('.filters.'+target).toggleClass('hidden');
-        $this.toggleClass('active');
-    });
-
-    $('.action.search').on('click', function (e) {
-        e.preventDefault();
-    });
-
     var bookDetails = $('.book.details.floating');
 
     if (bookDetails.length) {
 
         var $compareTable = $('.compare-table');
-        _displaySelectedOptions();
 
         $('.compare-table .headers.column').on('click','.checkbox', function() {
             var $this = $(this),

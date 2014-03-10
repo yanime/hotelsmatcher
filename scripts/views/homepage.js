@@ -6,8 +6,9 @@ define([
     'underscore',
     'backbone',
     'layoutmanager',
-    '../views/autocomplete'
-], function ($, _, Backbone, Layout, AutocompleteView) {
+    '../views/autocomplete',
+    '../models/search'
+], function ($, _, Backbone, Layout, AutocompleteView, Search) {
     'use strict';
 
     var HomepageView = Backbone.Layout.extend({
@@ -15,14 +16,62 @@ define([
         template: 'homepage',
         tagName: 'main',
         className: 'main wrapper clearfix',
+        initialize: function () {
+            this.model = new Search();
+        },
         beforeRender: function () {
             this.insertView('#search-wrapper', new AutocompleteView());
         },
+        afterRender: function () {
+        },
         events: {
-            'click .action.search': '_handleCompare'
+            'click .action.search': '_handleCompare',
+            'click .trips.checkbox.categories': '_toggleOptionsContainer',
+            'click .trips.checkbox:not(.categories)': '_toggleOption',
+            'change .trips.dropdown .passive .value': '_setDropdownValue',
+            'click button.reset': 'resetOptions'
+        },
+        resetOptions: function () {
+            var option, options = Search.options, val;
+            for (option in options) {
+                if (options.hasOwnProperty(option)) {
+                    val = options[option];
+                    if (this.model.attributes[val]) {
+                        this.model.set(val, false);
+                        this.$el.find('.'+option).removeClass('active').find('input').val('');
+                    }
+                }
+            }
+            console.log(this.model.attributes);
+        },
+        _setDropdownValue: function (e) {
+            var $this = $(e.currentTarget),
+            val = $this[0].innerHTML,
+            target = $this.data()['target'];
+
+            this.model.set(target,val);
+        },
+        _toggleOptionsContainer: function (e) {
+            var $this = $(e.currentTarget),
+            target = $this.data('target');
+
+            $('.filters.'+target).toggleClass('hidden');
+            $this.toggleClass('active');
+        },
+        _toggleOption: function (e) {
+            var $this = $(e.currentTarget),
+            $item = $this.find('input[type="hidden"]'),
+            id;
+
+            $this.toggleClass('active');
+            id = $item[0].id
+            this.model.set(id, !this.model.attributes[id]);
+            console.log(this.model.attributes);
+            $item.val($this.hasClass('active'));
         },
         _handleCompare: function (e){
             e.preventDefault();
+            App.search = this.model;
             App.router.navigate('compare',{trigger: true});
         }
     });

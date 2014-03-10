@@ -25,7 +25,7 @@
                 </div>
                 <button title="Fill with tomorrow" type="button" class="date setter"></button>
             </div>
-            <div class="cell checkbox trips tripadvisor">
+            <div class="cell checkbox trips helper">
                 <input type="hidden" id="no-specific-date"/>
                 <div class="check"></div>
                 <span class="label">I don't have a specific date</span>
@@ -36,7 +36,7 @@
                 <span class="label">Guests</span>
                 <div class="element">
                     <div class="top passive">
-                        <span class="value">Choose</span>
+                        <span class="value" data-target="guests">Choose</span>
                         <span class="arrow"></span>
                     </div>
                     <ul class="options overlap">
@@ -54,7 +54,7 @@
                 <span class="label">Rooms</span>
                 <div class="element">
                     <div class="top passive">
-                        <span class="value">1</span>
+                        <span class="value" data-target="rooms">1</span>
                         <span class="arrow"></span>
                     </div>
                     <ul class="options overlap">
@@ -70,7 +70,7 @@
                 <span class="label">Adults</span>
                 <div class="element">
                     <div class="top passive">
-                        <span class="value">1</span>
+                        <span class="value" data-target="adults">1</span>
                         <span class="arrow"></span>
                     </div>
                     <ul class="options overlap">
@@ -86,7 +86,7 @@
                 <span class="label">Children</span>
                 <div class="element">
                     <div class="top passive">
-                        <span class="value">1</span>
+                        <span class="value" data-target="children">1</span>
                         <span class="arrow"></span>
                     </div>
                     <ul class="options overlap">
@@ -105,22 +105,22 @@
                 <button type="button" class="reset" title="Reset your options"></button>
             </div>
             <ul class="criterias">
-                <li class="checkbox trips">
+                <li class="checkbox trips price">
                     <input type="hidden" id="check-price" value="false" />
                     <div class="check"></div>
                     <span class="label">Price</span>
                 </li>
-                <li class="checkbox trips">
+                <li class="checkbox trips stars">
                     <input type="hidden" id="check-stars" value="false" />
                     <div class="check"></div>
                     <span class="label">Stars</span>
                 </li>
-                <li class="checkbox trips">
+                <li class="checkbox trips tripadvisor">
                     <input type="hidden" id="check-tripadvisor" value="false" />
                     <div class="check"></div>
                     <span class="label">TripAdvisor Ratings</span>
                 </li>
-                <li class="checkbox trips">
+                <li class="checkbox trips distance">
                     <input type="hidden" id="check-distance" />
                     <div class="check"></div>
                     <span class="label">Distance from downtown</span>
