@@ -1,8 +1,11 @@
 /*global define */
-define([], function () {
+define([
+    'underscore',
+    'backbone',
+], function (_, Backbone) {
     'use strict';
 
-    var $html = $('html');
+    var $html;
 
     function getRandomInt (min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -57,10 +60,16 @@ define([], function () {
                 that.hide();
             }
         },
-        _set: function (value) {
+        _set: function (value, dataset) {
             var val = value.split('<')[0];
-            this.$el.find('.top .value').html(val).trigger('change');
+            var res = this.$el.find('.top .value'),
+            data = res.data();
+            data.display = val;
+            data.value = dataset.value;
+
+            res.html(val).trigger('change');
             this.$el.find('input.input').val(val);
+            this.trigger('set',data);
         },
         _bindOptions: function () {
             var that = this;
@@ -78,16 +87,17 @@ define([], function () {
                 var val;
                 // @NOTE assignment
                 if ( ( val = $(e.currentTarget).find('.value')[0] ) ) {
-                    that._set(val.innerHTML);
+                    that._set(val.innerHTML, val.dataset['id']);
                 } else {
-                    that._set(e.currentTarget.innerHTML);
+                    that._set(e.currentTarget.innerHTML, e.currentTarget.dataset);
                 }
                 that.hide();
                 e.stopPropagation();
             });
         },
-        bind: function () {
+        handle: function () {
             var that = this;
+            $html = $('html');
             $html.on('click', this._class, function () {
                 var temp;
                 that.hide();
@@ -118,7 +128,9 @@ define([], function () {
         }
     };
 
-    DropdownController.bind();
+    _.extend(DropdownController,Backbone.Events);
+
+    window.DropdownController = DropdownController;
 
     var bookDetails = $('.book.details.floating');
 

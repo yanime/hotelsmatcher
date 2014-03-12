@@ -29,7 +29,13 @@ define([
             App.layout.$el.attr('class', 'home');
         },
         pageCompare: function () {
-            this._setPage( new CompareView() );
+            if (!App.search) {
+                App.router.navigate('',{trigger: true, replace: true});
+                return;
+            }
+            this._setPage( new CompareView({
+                model: App.search
+            }) );
             App.layout.$el.attr('class', 'compare');
         },
         pageHotel: function (id) {

@@ -12,7 +12,11 @@ define([
         manage: true,
         tagName: 'main',
         className: 'main wrapper clearfix',
-        template: 'compare'
+        template: 'compare',
+        serialize: function () {
+            console.log(this.model.attributes);
+            return this.model.attributes;
+        }
     });
 
     return CompareView;

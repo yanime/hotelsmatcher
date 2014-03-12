@@ -15,8 +15,6 @@ define([
         initialize: function () {
             this.currentSearch = '';
         },
-        serialize: function () {
-        },
         events: {
             'keyup #destination-input': '_handleSearch'
         },
@@ -53,7 +51,7 @@ define([
                     className = 'action result ' + results + ' separated ';
                     for(i = 0, l = v[results].length; i < l; i++){
                         r = v[results][i];
-                        str += '<li data-id="'+r.destinationId+'" class="'+className+'">'+r.name+this._labels[results]+'</li>';
+                        str += '<li data-value="'+r.destinationId+'" class="'+className+'">'+r.name+this._labels[results]+'</li>';
                         className = 'action result ' + results;
                     }
                 }

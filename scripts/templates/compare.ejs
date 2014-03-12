@@ -7,17 +7,16 @@
         <div class="details">
             <div class="location">
                 <span class="label static">Location</span>
-                <span class="city point-out">New York,</span>
-                <span class="district value">Central Park</span>
+                <span class="city point-out"><%= obj['destination-name']%></span>
             </div>
             <div class="duration">
                 <span class="label static">Duration of stay</span>
-                <span class="nights point-out">1 night</span>
+                <span class="nights point-out"></span>
                 <span class="date value">(otc.3rd2013-oct.4th2013)</span>
             </div>
             <div class="rooms">
                 <span class="label static">Guests / Rooms</span>
-                <span class="rooms point-out">1 adult, 1 room</span>
+                <span class="rooms point-out"><%= obj.guests == 1 ? obj.guests +' guest' : obj.guests + ' guests' %>, <%= obj.rooms == 1 ? obj.rooms +' room' : obj.rooms + ' rooms' %></span>
             </div>
             <button type="button" class="button action edit">Change current search</button>
         </div>

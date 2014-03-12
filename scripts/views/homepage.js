@@ -23,12 +23,13 @@ define([
             this.insertView('#search-wrapper', new AutocompleteView());
         },
         afterRender: function () {
+            window.DropdownController.handle();
+            this.listenTo(window.DropdownController,'set',this._setDropdownValue);
         },
         events: {
             'click .action.search': '_handleCompare',
             'click .trips.checkbox.categories': '_toggleOptionsContainer',
             'click .trips.checkbox:not(.categories)': '_toggleOption',
-            'change .trips.dropdown .passive .value': '_setDropdownValue',
             'click button.reset': 'resetOptions'
         },
         resetOptions: function () {
@@ -44,12 +45,32 @@ define([
             }
             console.log(this.model.attributes);
         },
-        _setDropdownValue: function (e) {
-            var $this = $(e.currentTarget),
-            val = $this[0].innerHTML,
-            target = $this.data()['target'];
+        _setDropdownValue: function (data) {
+            var temp;
+            switch (data.target) {
+                case 'guests':
+                    if (data.value === "more") {
+                        this.$el.find('.options .hidden').removeClass('hidden');
+                        return;
+                    }
+                    break;
+                case 'adults':
+                    temp = this.model.attributes.children;
+                    this.model.set('guests', Number(data.value) + Number(temp));
+                    break;
+                case 'children':
+                    temp = this.model.attributes.adults;
+                    this.model.set('guests', Number(data.value) + Number(temp));
+                    break;
+                case 'destination':
+                    this.model.set("destination-name",data.display);
+                    break;
+                case 'guests':
+                    break;
+            }
 
-            this.model.set(target,val);
+            this.model.set(data.target,data.value);
+            console.log(this.model.attributes);
         },
         _toggleOptionsContainer: function (e) {
             var $this = $(e.currentTarget),

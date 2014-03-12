@@ -10,6 +10,12 @@ define([
         defaults: {
             checkIn: +(new Date()),
             checkOut: +(new Date()),
+            adults: 0,
+            children: 0,
+            rooms: 1
+        },
+        url: 'http://dev.enode.ro/api/hotels?q=',
+        getMatches: function () {
         }
     },{
         options: {
