@@ -25,17 +25,23 @@ define([
             page.render();
         },
         pageIndex: function () {
-            this._setPage( new HomepageView() );
+            this._setPage( new HomepageView({
+                model: App.Search
+            }) );
             App.layout.$el.attr('class', 'home');
         },
         pageCompare: function () {
-            if (!App.search) {
+            if (!App.Search.get('destination-name')) {
                 App.router.navigate('',{trigger: true, replace: true});
                 return;
             }
+
+            App.Search.fetch();
+
             this._setPage( new CompareView({
-                model: App.search
+                model: App.Search
             }) );
+
             App.layout.$el.attr('class', 'compare');
         },
         pageHotel: function (id) {

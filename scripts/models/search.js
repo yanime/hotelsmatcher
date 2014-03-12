@@ -5,17 +5,30 @@ define([
     'backbone'
 ], function (_, Backbone) {
     'use strict';
+    var today = new Date();
 
     var SearchModel = Backbone.Model.extend({
         defaults: {
-            checkIn: +(new Date()),
-            checkOut: +(new Date()),
-            adults: 0,
+            checkIn: today,
+            checkOut: new Date(today.getTime() + (24 * 60 * 60 * 1000)),
+            adults: 2,
             children: 0,
             rooms: 1
         },
-        url: 'http://dev.enode.ro/api/hotels?q=',
-        getMatches: function () {
+        formatDate: function (date) {
+            return ( date.getMonth() ) + 1 + '/' + date.getDate() + '/' + date.getFullYear();
+        },
+        url: 'http://dev.enode.ro/api/hotels?',
+        fetch: function () {
+            var attr = this.attributes;
+            // http://dev.enode.ro/api/hotels?destinationId=003B6BAD-728C-4067-AB5A-B93C0EE6D0EA&from=12%2F20%2F2013&to=12%2F23%2F2013&room1=1,8,2,3
+            var url = this.url;
+            url += 'destinationId='+attr.destinationId;
+            url += '&from='+this.formatDate(attr.checkIn);
+            url += '&to='+this.formatDate(attr.checkOut);
+            url += '&room'+attr.rooms;
+            url += '='+attr.adults;
+            console.log(url);
         }
     },{
         options: {

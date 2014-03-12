@@ -7,7 +7,6 @@ define([
     'backbone',
     'layoutmanager',
     '../views/autocomplete',
-    '../models/search'
 ], function ($, _, Backbone, Layout, AutocompleteView, Search) {
     'use strict';
 
@@ -16,8 +15,8 @@ define([
         template: 'homepage',
         tagName: 'main',
         className: 'main wrapper clearfix',
-        initialize: function () {
-            this.model = new Search();
+        serialize: function () {
+            return this.model.attributes;
         },
         beforeRender: function () {
             this.insertView('#search-wrapper', new AutocompleteView());
@@ -29,7 +28,7 @@ define([
         events: {
             'click .action.search': '_handleCompare',
             'click .trips.checkbox.categories': '_toggleOptionsContainer',
-            'click .trips.checkbox:not(.categories)': '_toggleOption',
+            'click .trips.checkbox:not(.blocked)': '_toggleOption',
             'click button.reset': 'resetOptions'
         },
         resetOptions: function () {
@@ -62,7 +61,7 @@ define([
                     temp = this.model.attributes.adults;
                     this.model.set('guests', Number(data.value) + Number(temp));
                     break;
-                case 'destination':
+                case 'destinationId':
                     this.model.set("destination-name",data.display);
                     break;
                 case 'guests':
@@ -92,7 +91,6 @@ define([
         },
         _handleCompare: function (e){
             e.preventDefault();
-            App.search = this.model;
             App.router.navigate('compare',{trigger: true});
         }
     });

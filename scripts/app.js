@@ -1,7 +1,8 @@
 /*global define */
-define(['layoutmanager', 'routes/hotels'], function (LayoutManager, Router, JST) {
+define(['layoutmanager', 'routes/hotels', 'models/search'], function (LayoutManager, Router, Search) {
     'use strict';
     var app = {
+        Search: new Search(),
         Templates: {},
         layout: ( new Backbone.Layout({
             template: 'main',
