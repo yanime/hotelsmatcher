@@ -4,9 +4,8 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'layoutmanager',
-    'templates'
-], function ($, _, Backbone, JST) {
+    'layoutmanager'
+], function ($, _, Backbone) {
     'use strict';
 
     var AutocompleteView = Backbone.View.extend({
