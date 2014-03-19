@@ -36,8 +36,6 @@ define([
                 return;
             }
 
-            App.Search.fetch();
-
             this._setPage( new CompareView({
                 model: App.Search
             }) );

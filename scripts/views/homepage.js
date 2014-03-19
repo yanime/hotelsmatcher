@@ -89,9 +89,15 @@ define([
             console.log(this.model.attributes);
             $item.val($this.hasClass('active'));
         },
+        _displayAPIError: function () {
+            window.scrollTo(0,0);
+            this.$el.find('.api.error').removeClass('hidden');
+        },
         _handleCompare: function (e){
             e.preventDefault();
-            App.router.navigate('compare',{trigger: true});
+            this.model.fetch().done(function () {
+                App.router.navigate('compare',{trigger: true});
+            }).fail(this._displayAPIError.bind(this));
         }
     });
 

@@ -2,8 +2,11 @@
 
 define([
     'underscore',
-    'backbone'
-], function (_, Backbone) {
+    'backbone',
+    'collections/results',
+    'models/result',
+    'models/api-call',
+], function (_, Backbone, Results, Result, ApiCall) {
     'use strict';
     var today = new Date();
 
@@ -14,6 +17,10 @@ define([
             adults: 2,
             children: 0,
             rooms: 1
+        },
+        initialize: function () {
+            this.results = new Results();
+            this.pinnedResults = {};
         },
         formatDate: function (date) {
             return ( date.getMonth() ) + 1 + '/' + date.getDate() + '/' + date.getFullYear();
@@ -28,7 +35,15 @@ define([
             url += '&to='+this.formatDate(attr.checkOut);
             url += '&room'+attr.rooms;
             url += '='+attr.adults;
-            console.log(url);
+            return new ApiCall(url).status.done(this._parse.bind(this));
+        },
+        _parse: function (data) {
+            var results, hotels;
+            result = data.HotelListResponse;
+            hotels = result.HotelList.HotelSummary;
+            for (var i = 0, l = hotels.length; i < l; i ++) {
+                this.results.add(hotels[i]);
+            }
         }
     },{
         options: {
