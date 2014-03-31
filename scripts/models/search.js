@@ -39,8 +39,7 @@ define([
         },
         _parse: function (data) {
             var results, hotels;
-            result = data.HotelListResponse;
-            hotels = result.HotelList.HotelSummary;
+            hotels = data.HotelList.HotelSummary;
             for (var i = 0, l = hotels.length; i < l; i ++) {
                 this.results.add(hotels[i]);
             }

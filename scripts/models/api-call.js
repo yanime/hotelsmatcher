@@ -15,7 +15,7 @@ define([
                 readableMessage: data.EanWsError.presentationMessage
             });
         }
-        return this.status.resolveWith(data);
+        return this.status.resolve(data);
     };
 
     return ApiCall;

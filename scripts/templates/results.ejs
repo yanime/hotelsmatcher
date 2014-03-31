@@ -45,9 +45,9 @@
     <li class="see-all"><button type="button" class="see-all theme">&gt; see all themes</button></li>
     <li class="book action"></li>
 </ul>
-<div class="pinned-container">
+<div class="pinned-container hidden">
 </div>
-<% if(obj) obj.each(function(item,key,arr) { %>
+<% if(obj) _.each(obj,function(item,key,arr) { %>
 <% temp = item.attributes %>
 <div class="hotel info column fixed">
     <ul>
