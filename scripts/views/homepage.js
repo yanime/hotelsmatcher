@@ -7,6 +7,7 @@ define([
     'backbone',
     'layoutmanager',
     '../views/autocomplete',
+    '../vendor/jquery-ui-1.10.4.custom.min',
 ], function ($, _, Backbone, Layout, AutocompleteView, Search) {
     'use strict';
 
@@ -21,9 +22,28 @@ define([
         beforeRender: function () {
             this.insertView('#search-wrapper', new AutocompleteView());
         },
+        datePickerOptions: {
+            onClose: function(e){
+                var res = e.split('/');
+                if (res.length > 1) {
+                    this.parentElement.querySelector('.month').value = res[0][0] == 0 ? res[0][1] : res[0];
+                    this.parentElement.querySelector('.day').value = res[1][0] == 0 ? res[1][1] : res[1];
+                    this.parentElement.querySelector('.year').value = res[2];
+                }
+            }
+        },
         afterRender: function () {
+            var inDate, outDate, today = new Date();
+
             window.DropdownController.handle();
             this.listenTo(window.DropdownController,'set',this._setDropdownValue);
+
+            inDate = this.$el.find('#check-in-month').datepicker(this.datePickerOptions);
+            inDate.datepicker( "option", "minDate", today );
+            inDate.datepicker( "option", "defaultDate", today );
+
+            outDate = this.$el.find('#check-out-month').datepicker(this.datePickerOptions);
+            outDate.datepicker( "option", "minDate", new Date( today.getTime() + 24 * 60 * 60 * 1000 ) );
         },
         events: {
             'click .action.search': '_handleCompare',
@@ -42,7 +62,6 @@ define([
                     }
                 }
             }
-            console.log(this.model.attributes);
         },
         _setDropdownValue: function (data) {
             var temp;
@@ -84,7 +103,7 @@ define([
             id;
 
             $this.toggleClass('active');
-            id = $item[0].id
+            id = $item[0].id;
             this.model.set(id, !this.model.attributes[id]);
             console.log(this.model.attributes);
             $item.val($this.hasClass('active'));

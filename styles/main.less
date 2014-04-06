@@ -20,7 +20,6 @@
 @label-border: #C6C7CE;
 @table-background: #DCDBE2;
 @table-column-header-background: #F0EFF4;
-@table-border-color: #BFC2C9;
 @table-odd-row: #E9EAEF;
 @table-even-row: #E5E6EC;
 @pinned-table-odd-row: #F0EFF4;
@@ -33,6 +32,9 @@
 @price-stand-out: #b61919;
 @stand-out-blue: #3A73A8;
 @pinned-border: #72788F;
+@calendar-selectable-color: #004989;
+@calendar-selectable-color-hover: #2188C2;
+@calendar-unselectable-color: #BDBDBD;
 
 html,
 button,
@@ -1189,6 +1191,72 @@ form.trips{
     }
     &.bottom{
         margin-top: 0.75em;
+    }
+}
+
+#ui-datepicker-div{
+    .mixin-form-input-active;
+    .mixin-default-label;
+    margin-left: -1px;
+    padding: 0.25em;
+    font-size: 1.375em;
+    thead{
+        th{
+            font-weight: normal;
+            font-size: 0.625em;
+        }
+    }
+    tbody{
+        background: #FFF;
+        tr{
+            border-top: 1px solid #eee;
+        }
+        td{
+            padding: 0.5em;
+            text-align: right;
+            a{
+                .mixin-hoverable;
+                color: @default-text-color;
+                text-decoration: none;
+                &:hover{
+                    color: @calendar-selectable-color-hover;
+                }
+            }
+            span{
+                .mixin-hoverable;
+            }
+        }
+    }
+    .ui-corner-all{
+        font-size: 0.85em;
+    }
+    .ui-datepicker-header{
+        line-height: 1.5em;
+        margin-bottom: 1em;
+    }
+    .ui-datepicker-prev{
+        .mixin-hoverable;
+        float: left;
+        &:hover{
+            color: @calendar-selectable-color-hover;
+        }
+    }
+    .ui-datepicker-next{
+        .mixin-hoverable;
+        float: right;
+        &:hover{
+            color: @calendar-selectable-color-hover;
+        }
+    }
+    .ui-datepicker-title{
+        color: @heading-blue;
+        text-align: center;
+    }
+    .ui-state-disabled{
+        color: @calendar-unselectable-color;
+        &:hover{
+            color: @calendar-unselectable-color;
+        }
     }
 }
 
