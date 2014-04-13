@@ -7,8 +7,9 @@ define([
     'backbone',
     'layoutmanager',
     '../views/autocomplete',
+    '../views/compare-options',
     '../vendor/jquery-ui-1.10.4.custom.min',
-], function ($, _, Backbone, Layout, AutocompleteView, Search) {
+], function ($, _, Backbone, Layout, AutocompleteView, CompareOptionsView) {
     'use strict';
 
     var HomepageView = Backbone.Layout.extend({
@@ -21,46 +22,57 @@ define([
         },
         beforeRender: function () {
             this.insertView('#search-wrapper', new AutocompleteView());
+            this.insertView('#comparisson-wrapper', new CompareOptionsView({
+                model: this.model
+            }));
         },
-        datePickerOptions: {
-            onClose: function(e){
-                var res = e.split('/');
+        afterRender: function () {
+            var inDate, outDate,
+            datePickerOptions = {
+                onClose: this._generateScopedDatePickerHandler()
+            };
+
+            window.DropdownController.handle();
+            this.listenTo(window.DropdownController,'set',this._setDropdownValue);
+
+            inDate = this.$el.find('#check-in-month').datepicker(datePickerOptions);
+            inDate.datepicker( "option", "minDate", this.model.attributes.checkIn );
+            inDate.val( this.model.attributes.checkIn.getMonth() + 1 );
+
+            outDate = this.$el.find('#check-out-month').datepicker(datePickerOptions);
+            outDate.datepicker( "option", "minDate", this.model.attributes.checkOut );
+            outDate.val( this.model.attributes.checkOut.getMonth() + 1 );
+        },
+        events: {
+            'click .action.search': '_handleCompare',
+            'click .date.setter': '_resetDate',
+            'click .trips.checkbox.categories': '_toggleOptionsContainer'
+        },
+        _resetDate: function (e) {
+            var date = new Date(),
+            el = e.currentTarget;
+
+            if ($(e.currentTarget).hasClass('today')) {
+                this.model.attributes.checkIn = date;
+            } else {
+                date = new Date(date.getTime() + (24 * 60 * 60 * 1000));
+                this.model.attributes.checkOut = date;
+            }
+
+            el.parentElement.querySelector('.month').value = date.getMonth() + 1;
+            el.parentElement.querySelector('.day').value = date.getDate();
+            el.parentElement.querySelector('.year').value = date.getFullYear();
+        },
+        _generateScopedDatePickerHandler: function () {
+            var that = this;
+            return function (date) {
+                var res = date.split('/');
                 if (res.length > 1) {
                     this.parentElement.querySelector('.month').value = res[0][0] == 0 ? res[0][1] : res[0];
                     this.parentElement.querySelector('.day').value = res[1][0] == 0 ? res[1][1] : res[1];
                     this.parentElement.querySelector('.year').value = res[2];
                 }
-            }
-        },
-        afterRender: function () {
-            var inDate, outDate, today = new Date();
-
-            window.DropdownController.handle();
-            this.listenTo(window.DropdownController,'set',this._setDropdownValue);
-
-            inDate = this.$el.find('#check-in-month').datepicker(this.datePickerOptions);
-            inDate.datepicker( "option", "minDate", today );
-            inDate.datepicker( "option", "defaultDate", today );
-
-            outDate = this.$el.find('#check-out-month').datepicker(this.datePickerOptions);
-            outDate.datepicker( "option", "minDate", new Date( today.getTime() + 24 * 60 * 60 * 1000 ) );
-        },
-        events: {
-            'click .action.search': '_handleCompare',
-            'click .trips.checkbox.categories': '_toggleOptionsContainer',
-            'click .trips.checkbox:not(.blocked)': '_toggleOption',
-            'click button.reset': 'resetOptions'
-        },
-        resetOptions: function () {
-            var option, options = Search.options, val;
-            for (option in options) {
-                if (options.hasOwnProperty(option)) {
-                    val = options[option];
-                    if (this.model.attributes[val]) {
-                        this.model.set(val, false);
-                        this.$el.find('.'+option).removeClass('active').find('input').val('');
-                    }
-                }
+                that.model.attributes.checkIn = new Date(date);
             }
         },
         _setDropdownValue: function (data) {
@@ -88,7 +100,6 @@ define([
             }
 
             this.model.set(data.target,data.value);
-            console.log(this.model.attributes);
         },
         _toggleOptionsContainer: function (e) {
             var $this = $(e.currentTarget),
@@ -97,23 +108,36 @@ define([
             $('.filters.'+target).toggleClass('hidden');
             $this.toggleClass('active');
         },
-        _toggleOption: function (e) {
-            var $this = $(e.currentTarget),
-            $item = $this.find('input[type="hidden"]'),
-            id;
-
-            $this.toggleClass('active');
-            id = $item[0].id;
-            this.model.set(id, !this.model.attributes[id]);
-            console.log(this.model.attributes);
-            $item.val($this.hasClass('active'));
-        },
-        _displayAPIError: function () {
+        _displayAPIError: function (response) {
+            var $error;
             window.scrollTo(0,0);
-            this.$el.find('.api.error').removeClass('hidden');
+
+            $error = this.$el.find('.api.error');
+
+            if (response.reason === "AUTHENTICATION") {
+                $error[0].innerText = "We cannot service this request. Please contact support.";
+            } else {
+                $error[0].innerText = "We have encountered an error. Please contact support.";
+            }
+
+            $error.removeClass('hidden');
+
+            this.$el.find('.loading').addClass('hidden');
         },
         _handleCompare: function (e){
+            var temp;
             e.preventDefault();
+
+            // @NOTE assignment
+            if ( ( temp = this.model.validateQueryParams() ) !== true ) {
+                // @TODO display errors;
+                console.log('@TODO Handle field not populated');
+                console.log(temp);
+                return false;
+            }
+
+            this.$el.find('.loading').removeClass('hidden');
+
             this.model.fetch().done(function () {
                 App.router.navigate('compare',{trigger: true});
             }).fail(this._displayAPIError.bind(this));

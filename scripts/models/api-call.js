@@ -10,7 +10,7 @@ define([
     ApiCall.prototype._parse = function(data) {
         data = data.HotelListResponse;
         if (data.EanWsError) {
-            return this.status.rejectWith({
+            return this.status.reject({
                 reason: data.EanWsError.category,
                 readableMessage: data.EanWsError.presentationMessage
             });

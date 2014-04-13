@@ -26,10 +26,33 @@ define([
             return ( date.getMonth() ) + 1 + '/' + date.getDate() + '/' + date.getFullYear();
         },
         url: 'http://dev.enode.ro/api/hotels?',
+        validateQueryParams: function () {
+            var attr = this.attributes,
+            errors = [];
+
+            if ( attr.destinationId === undefined ){
+                errors[errors.length] = 'destinationId';
+            }
+            if ( attr.checkIn === undefined ){
+                errors[errors.length] = 'checkIn';
+            }
+            if ( attr.checkOut === undefined ){
+                errors[errors.length] = 'checkOut';
+            }
+            if ( attr.rooms === undefined ){
+                errors[errors.length] = 'rooms';
+            }
+            if ( attr.adults === undefined ) {
+                errors[errors.length] = 'adults';
+            }
+
+            return errors.length ? errors : true;
+        },
         fetch: function () {
-            var attr = this.attributes;
             // http://dev.enode.ro/api/hotels?destinationId=003B6BAD-728C-4067-AB5A-B93C0EE6D0EA&from=12%2F20%2F2013&to=12%2F23%2F2013&room1=1,8,2,3
-            var url = this.url;
+            var attr = this.attributes,
+            url = this.url;
+
             url += 'destinationId='+attr.destinationId;
             url += '&from='+this.formatDate(attr.checkIn);
             url += '&to='+this.formatDate(attr.checkOut);

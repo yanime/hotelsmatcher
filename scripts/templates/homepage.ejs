@@ -1,4 +1,13 @@
+<%
+var i; optionsArray = '';
+for(i=1;i<=30;i++){
+    optionsArray += '<li class="action" data-value="'+i+'">'+i+'</li>';
+}
+%>
 <div class="api error hidden">We have encountered a problem. Please contact support.</div>
+<div class="loading hidden">
+    <img src="images/circling-squares-with-trail.gif" alt="loading..." />
+</div>
 <header id="main-header">
     <h1 class="title">Search hotels that match your criteria</h1>
     <button type="button" class="info" title="See our information section"></button>
@@ -11,20 +20,20 @@
             <div class="graphic out cell">
                 <label class="default label" for="check-in-month">Check-in Date</label>
                 <div class="input-container default check-date">
-                    <input class="default month" type="text" name="check-in-month" id="check-in-month" value="<%=obj.checkIn.getMonth()+1%>" autocomplete="off"/>
+                    <input class="default month" type="text" name="check-in-month" id="check-in-month" value="" autocomplete="off"/>
                     <input class="default day" type="text" name="check-in-day" id="check-in-dd" value="<%=obj.checkIn.getDate()%>" autocomplete="off"/>
                     <input class="default year" type="text" name="check-in-year" id="check-in-year" value="<%=obj.checkIn.getFullYear()%>" autocomplete="off"/>
                 </div>
-                <button title="Fill with today" type="button" class="date setter"></button>
+                <button title="Fill with today" type="button" class="date setter today"></button>
             </div>
             <div class="graphic in cell">
                 <label class="default label" for="check-out-month">Check-out Date</label>
                 <div class="input-container default check-date">
-                    <input class="default month" type="text" name="check-out-month" id="check-out-month" value="<%=obj.checkOut.getMonth()+1%>" autocomplete="off"/>
+                    <input class="default month" type="text" name="check-out-month" id="check-out-month" value="" autocomplete="off"/>
                     <input class="default day" type="text" name="check-out-day" id="check-out-dd" value="<%=obj.checkOut.getDate()%>" autocomplete="off"/>
                     <input class="default year" type="text" name="check-out-year" id="check-out-year" value="<%=obj.checkOut.getFullYear()%>" autocomplete="off"/>
                 </div>
-                <button title="Fill with tomorrow" type="button" class="date setter"></button>
+                <button title="Fill with tomorrow" type="button" class="date setter tomorrow"></button>
             </div>
             <div class="cell checkbox trips helper">
                 <input type="hidden" id="no-specific-date"/>
@@ -62,10 +71,7 @@
                             <span class="value">1</span>
                             <span class="arrow"></span>
                         </li>
-                        <li class="action" data-value="1">1</li>
-                        <li class="action" data-value="2">2</li>
-                        <li class="action" data-value="3">3</li>
-                        <li class="action" data-value="4">4</li>
+                        <%= optionsArray %>
                     </ul>
                 </div>
             </div>
@@ -81,10 +87,7 @@
                             <span class="value">1</span>
                             <span class="arrow"></span>
                         </li>
-                        <li class="action" data-value="1">1</li>
-                        <li class="action" data-value="2">2</li>
-                        <li class="action" data-value="3">3</li>
-                        <li class="action" data-value="4">4</li>
+                        <%= optionsArray %>
                     </ul>
                 </div>
             </div>
@@ -100,69 +103,18 @@
                             <span class="value">0</span>
                             <span class="arrow"></span>
                         </li>
-                        <li class="action" data-value="1">1</li>
-                        <li class="action" data-value="2">2</li>
-                        <li class="action" data-value="3">3</li>
-                        <li class="action" data-value="4">4</li>
-                        <li class="action" data-value="5">5</li>
-                        <li class="action" data-value="6">6</li>
+                        <%
+                        var i; optionsArray = '';
+                        for(i=1;i<=10;i++){
+                            optionsArray += '<li class="action" data-value="'+i+'">'+i+'</li>';
+                        }
+                        %>
+                        <%= optionsArray %>
                     </ul>
                 </div>
             </div>
         </fieldset>
-        <fieldset class="comparisson">
-            <div class="header">
-                <h2>Compare against</h2>
-                <button type="button" class="reset" title="Reset your options"></button>
-            </div>
-            <ul class="criterias">
-                <li class="checkbox trips price active blocked">
-                    <input type="hidden" id="check-price" value="false" />
-                    <div class="check"></div>
-                    <span class="label">Price</span>
-                </li>
-                <li class="checkbox trips stars active blocked">
-                    <input type="hidden" id="check-stars" value="false" />
-                    <div class="check"></div>
-                    <span class="label">Stars</span>
-                </li>
-                <li class="checkbox trips tripadvisor active blocked">
-                    <input type="hidden" id="check-tripadvisor" value="false" />
-                    <div class="check"></div>
-                    <span class="label">TripAdvisor Ratings</span>
-                </li>
-                <li class="checkbox trips distance">
-                    <input type="hidden" id="check-distance" />
-                    <div class="check"></div>
-                    <span class="label">Distance from downtown</span>
-                </li>
-            </ul>
-            <ul class="categories-list">
-                <li class="checkbox trips categories blocked" data-target="facilities-container">
-                    <div class="check"></div>
-                    <span class="label">Facilities</span>
-                </li>
-                <li class="checkbox trips categories blocked hidden" data-target="theme-container">
-                    <div class="check"></div>
-                    <span class="label">Hotel theme</span>
-                </li>
-            </ul>
-            <div class="facilities-container filters hidden">
-                <ul class="options">
-                    <li class="wifi option checkbox trips unchecked"><input type="hidden" id="wifi-option" value="false" /><div class="check"></div><span>Wifi</span></li>
-                    <li class="parking option checkbox trips unchecked"><input type="hidden" id="parking-option" value="false" /><div class="check"></div><span>Parking</span></li>
-                    <li class="airport-shuttle option checkbox trips unchecked"><input type="hidden" id="airport-shuttle-option" value="false" /><div class="check"></div><span>Airport Shuttle</span></li>
-                    <li class="fitness-center option checkbox trips unchecked"><input type="hidden" id="fitness-center-option" value="false" /><div class="check"></div><span>Fitness Center</span></li>
-                    <li class="spa option checkbox trips unchecked"><input type="hidden" id="spa-option" value="false" /><div class="check"></div><span>Spa</span></li>
-                </ul>
-            </div>
-            <div class="theme-container filters hidden">
-                <ul class="options">
-                    <li class="family option checkbox trips unchecked"><input type="hidden" id="familty-option" value="false" /><div class="check"></div><span>Family</span></li>
-                    <li class="business option checkbox trips unchecked"><input type="hidden" id="business-option" value="false" /><div class="check"></div><span>Business</span></li>
-                    <li class="romance option checkbox trips unchecked"><input type="hidden" id="romance-option" value="false" /><div class="check"></div><span>Romance</span></li>
-                    <li class="budget option checkbox trips unchecked"><input type="hidden" id="budget-option" value="false" /><div class="check"></div><span>Budget</span></li>
-                </ul>
+        <fieldset class="comparisson" id="comparisson-wrapper">
         </fieldset>
         <input class="button action search" type="submit" name="search" id="search" value="Search &amp; Compare" title="Proceed to next step" />
     </form>

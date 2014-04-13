@@ -136,8 +136,9 @@ textarea {
     text-align: center;
 }
 .wrapper {
-    width: 900px;
     margin: 0 auto;
+    position: relative;
+    width: 900px;
 }
 .compare{
     .wrapper{
@@ -684,6 +685,8 @@ form.trips{
                 right: -1px;
                 left: -1px;
                 &.overlap{
+                    max-height: 18em;
+                    overflow-y: auto;
                     top: 0;
                 }
             }
@@ -1258,6 +1261,21 @@ form.trips{
         &:hover{
             color: @calendar-unselectable-color;
         }
+    }
+}
+
+.loading{
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.5);
+    text-align: center;
+    z-index: 100;
+    img{
+        position: absolute;
+        top: 49%;
     }
 }
 
