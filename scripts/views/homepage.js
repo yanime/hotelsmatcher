@@ -103,6 +103,7 @@ define([
             }
 
             this.model.set(data.target,data.value);
+            this.model.changed = true;
         },
         _toggleOptionsContainer: function (e) {
             var $this = $(e.currentTarget),
@@ -128,7 +129,9 @@ define([
             this.$el.find('.loading').addClass('hidden');
         },
         _handleCompare: function (e){
-            var temp;
+            var temp,
+            model = this.model;
+
             e.preventDefault();
 
             // @NOTE assignment
@@ -141,9 +144,16 @@ define([
 
             this.$el.find('.loading').removeClass('hidden');
 
-            this.model.fetch().done(function () {
+            if (model.changed) {
+                model.fetch().done(function () {
+                    model.changed = false;
+                    App.router.navigate('compare',{trigger: true});
+                }).fail(this._displayAPIError.bind(this));
+            } else {
                 App.router.navigate('compare',{trigger: true});
-            }).fail(this._displayAPIError.bind(this));
+            }
+
+            return true;
         }
     });
 
