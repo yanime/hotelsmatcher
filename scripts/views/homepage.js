@@ -21,7 +21,9 @@ define([
             return this.model.attributes;
         },
         beforeRender: function () {
-            this.insertView('#search-wrapper', new AutocompleteView());
+            this.insertView('#search-wrapper', new AutocompleteView({
+                value: this.model.attributes.destinationName
+            }));
             this.insertView('#comparisson-wrapper', new CompareOptionsView({
                 model: this.model
             }));
@@ -93,7 +95,7 @@ define([
                     this.model.set('guests', Number(data.value) + Number(temp));
                     break;
                 case 'destinationId':
-                    this.model.set("destination-name",data.display);
+                    this.model.set("destinationName",data.display);
                     break;
                 case 'guests':
                     break;

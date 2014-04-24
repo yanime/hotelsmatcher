@@ -21,6 +21,12 @@ define([
                 display: 6
             });
         },
+        events: {
+            'click .button.edit': "_handleChangeSearch"
+        },
+        _handleChangeSearch: function () {
+            App.router.navigate('index',{trigger: true});
+        },
         serialize: function () {
             return this.model.attributes;
         },

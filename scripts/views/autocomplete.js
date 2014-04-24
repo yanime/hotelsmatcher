@@ -12,8 +12,11 @@ define([
         manage: true,
         template: 'autocomplete',
         url: 'http://dev.enode.ro/api/autocomplete?q=',
-        initialize: function () {
-            this.currentSearch = '';
+        initialize: function (options) {
+            this.currentSearch = options.value;
+        },
+        serialize: function () {
+            return this.currentSearch;
         },
         events: {
             'keyup #destination-input': '_handleSearch'

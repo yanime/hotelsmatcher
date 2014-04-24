@@ -31,7 +31,7 @@ define([
             App.layout.$el.attr('class', 'home');
         },
         pageCompare: function () {
-            if (!App.Search.get('destination-name')) {
+            if (!App.Search.get('destinationName')) {
                 App.router.navigate('',{trigger: true, replace: true});
                 return;
             }

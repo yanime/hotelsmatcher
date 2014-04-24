@@ -1,14 +1,22 @@
+<%
+    var res = obj;
+    var additionalClassName = '';
+%>
 <label class="default label" for="destination-input" title="Click and start typing to select your destination">Destination / Hotel Name</label>
 <div class="trips dropdown auto-complete destination">
     <div class="element">
         <div class="top passive">
-            <span class="empty hint value" data-target="destinationId">
-                eg. City Name, Hotel Name, Region Name, etc.
+            <% if(!obj) {
+                res = 'eg. City Name, Hotel Name, Region Name, etc.';
+                additionalClassName = 'empty';
+            } %>
+            <span class="<%=additionalClassName %> hint value" data-target="destinationId">
+                <%=res %>
             </span>
         </div>
         <ul class="options overlap">
             <li class="top">
-                <input class="input default" type="text" name="destination" id="destination-input" autocomplete="off" value="<%= obj.searchTerm %>" />
+                <input class="input default" type="text" name="destination" id="destination-input" autocomplete="off" value="<%= obj %>" />
             </li>
             <li class="separated search helper hidden">
                 Searching...
