@@ -29,19 +29,20 @@ define([
             }));
         },
         afterRender: function () {
-            var inDate, outDate,
-            datePickerOptions = {
-                onClose: this._generateScopedDatePickerHandler()
-            };
+            var inDate, outDate;
 
             window.DropdownController.handle();
             this.listenTo(window.DropdownController,'set',this._setDropdownValue);
 
-            inDate = this.$el.find('#check-in-month').datepicker(datePickerOptions);
+            inDate = this.$el.find('#check-in-month').datepicker({
+                onClose: this._generateScopedDatePickerHandler('checkIn')
+            });
             inDate.datepicker( "option", "minDate", this.model.attributes.checkIn );
             inDate.val( this.model.attributes.checkIn.getMonth() + 1 );
 
-            outDate = this.$el.find('#check-out-month').datepicker(datePickerOptions);
+            outDate = this.$el.find('#check-out-month').datepicker({
+                onClose: this._generateScopedDatePickerHandler('checkOut')
+            });
             outDate.datepicker( "option", "minDate", this.model.attributes.checkOut );
             outDate.val( this.model.attributes.checkOut.getMonth() + 1 );
         },
@@ -65,7 +66,7 @@ define([
             el.parentElement.querySelector('.day').value = date.getDate();
             el.parentElement.querySelector('.year').value = date.getFullYear();
         },
-        _generateScopedDatePickerHandler: function () {
+        _generateScopedDatePickerHandler: function (target) {
             var that = this;
             return function (date) {
                 var res = date.split('/');
@@ -74,7 +75,7 @@ define([
                     this.parentElement.querySelector('.day').value = res[1][0] == 0 ? res[1][1] : res[1];
                     this.parentElement.querySelector('.year').value = res[2];
                 }
-                that.model.attributes.checkIn = new Date(date);
+                that.model.attributes[target] = new Date(date);
             }
         },
         _setDropdownValue: function (data) {
