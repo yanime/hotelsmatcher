@@ -84,15 +84,19 @@ define([
                 }
             });
             this.$el.on('click','.action', function (e) {
-                var val;
+                var val, $el = $(e.currentTarget);
+
                 // @NOTE assignment
-                if ( ( val = $(e.currentTarget).find('.value')[0] ) ) {
+                if ( ( val = $el.find('.value')[0] ) ) {
                     that._set(val.innerHTML, val.dataset['id']);
                 } else {
                     that._set(e.currentTarget.innerHTML, e.currentTarget.dataset);
                 }
+
                 that.hide();
                 e.stopPropagation();
+
+                $el.trigger(jQuery.Event( "dropdown:set" ));
             });
         },
         handle: function () {

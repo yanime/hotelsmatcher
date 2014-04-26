@@ -64,7 +64,7 @@ define([
             var results, hotels;
             hotels = data.HotelList.HotelSummary;
             for (var i = 0, l = hotels.length; i < l; i ++) {
-                this.results.add(hotels[i]);
+                this.results.addSearchResult(hotels[i]);
             }
         }
     },{

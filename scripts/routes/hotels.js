@@ -5,8 +5,9 @@ define([
     'backbone',
     'layoutmanager',
     '../views/homepage',
-    '../views/compare'
-], function ($, Backbone, LM, HomepageView, CompareView) {
+    '../views/compare',
+    '../views/hotel-page',
+], function ($, Backbone, LM, HomepageView, CompareView, HotelPage) {
     'use strict';
 
     var HotelsRouter = Backbone.Router.extend({
@@ -16,19 +17,20 @@ define([
             'hotel/:id': 'pageHotel',
             'compare': 'pageCompare'
         },
-        _setPage: function (page) {
+        _setPage: function (page, forcedClassName) {
             if (this.page) {
                 this.page.remove();
             }
             this.page = page;
             App.layout.insertView('.main-container', page);
             page.render();
+
+            App.layout.$el.attr('class', forcedClassName);
         },
         pageIndex: function () {
             this._setPage( new HomepageView({
                 model: App.Search
-            }) );
-            App.layout.$el.attr('class', 'home');
+            }), "main" );
         },
         pageCompare: function () {
             if (!App.Search.get('destinationName')) {
@@ -38,11 +40,18 @@ define([
 
             this._setPage( new CompareView({
                 model: App.Search
-            }) );
-
-            App.layout.$el.attr('class', 'compare');
+            }), "compare" );
         },
         pageHotel: function (id) {
+            var model = App.Search.results.get(id);
+            if (!model) {
+                App.router.navigate('',{trigger: true, replace: true});
+                return;
+            }
+
+            this._setPage( new HotelPage({
+                model: model
+            }), "single hotel");
         }
     });
 

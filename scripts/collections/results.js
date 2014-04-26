@@ -9,7 +9,7 @@ define([
 
     var ResultsCollection = Backbone.Collection.extend({
         model: ResultModel,
-        add: function (data) {
+        addSearchResult: function (data) {
             var result = _.pick(data,
                 'tripAdvisorRating',
                 'deepLink',
@@ -17,7 +17,7 @@ define([
                 'hotelRating',
                 'name',
                 'highRate');
-            Backbone.Collection.prototype.add.call(this, result);
+            this.add.call(this, result);
         }
     });
 

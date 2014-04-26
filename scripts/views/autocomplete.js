@@ -4,8 +4,9 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'layoutmanager'
-], function ($, _, Backbone) {
+    'layoutmanager',
+    'models/result'
+], function ($, _, Backbone, Layout, Result) {
     'use strict';
 
     var AutocompleteView = Backbone.View.extend({
@@ -19,7 +20,25 @@ define([
             return this.currentSearch;
         },
         events: {
-            'keyup #destination-input': '_handleSearch'
+            'keyup #destination-input': '_handleSearch',
+            'dropdown:set .dropdown li': '_handleValueSet'
+        },
+        _handleValueSet: function (e) {
+            var model, id, el = e.currentTarget;
+
+            if ( el.className.indexOf('hotels') !== -1 ) {
+                id = $(el).data('value');
+
+                model = new Result({
+                    id: id,
+                    destinationId: id,
+                    name: el.innerHTML.split('<span')[0]
+                });
+
+                App.Search.results.add(model);
+
+                App.router.navigate('hotel/'+id, {trigger: true});
+            }
         },
         afterRender: function () {
             this._searchHelper = this.$el.find('.search.helper');

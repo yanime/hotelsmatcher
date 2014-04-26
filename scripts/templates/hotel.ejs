@@ -1,0 +1,45 @@
+<div class="hotel photos">
+    <button class="previous"></button>
+    <div class="images">
+        <img src="http://lorempixel.com/375/240/city" />
+    </div>
+    <button class="next"></button>
+</div>
+<div class="details-container">
+    <div class="location hotel details">
+        <span class="label">Location</span>
+        <span class="content city point-out">New York,</span>
+        <span class="content district value">Central Park</span>
+    </div>
+    <div class="price hotel details">
+        <span class="label">Price range</span>
+        <span class="content currency">$</span>
+        <span class="content small price point-out">175</span>
+        <span class="content currency">$</span>
+        <span class="content large price point-out">1175</span>
+    </div>
+    <div class="facilities hotel details">
+        <span class="label">Facilities</span>
+        <span class="content facilities">Wifi, Parking</span>
+        <span class="content facilities extra hidden">, Wifi, Parking</span>
+        <button class="view-all">2 more &gt;</button>
+    </div>
+    <div class="rooms hotel details">
+        <span class="label">Room types</span>
+        <span class="content rooms">Single, Double</span>
+        <span class="content rooms extra hidden">, Apartment, Etc</span>
+        <button class="view-all">2 more &gt;</button>
+    </div>
+</div>
+<div class="description-container hotel details">
+    <span class="label">Description</span>
+    <span class="content description"><%= obj.description %><button class="read more" title="Show all the description we have for this hotel.">... read more &gt;</button><button class="read less" title="Show all the description we have for this hotel.">&lt; see less</button></span>
+</div>
+<div class="actions">
+    <div class="action-wrapper">
+        <button type="button" class="button book-action" title="Book for this hotel">Book now</button>
+    </div>
+    <div class="action-wrapper">
+        <button type="button" class="button action search" title="Book for this hotel">Compare</button>
+        <span class="description">compare to other hotels in the same area</span>
+</div>

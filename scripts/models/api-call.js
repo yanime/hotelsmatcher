@@ -8,13 +8,19 @@ define([
         this.status = jQuery.Deferred();
     };
     ApiCall.prototype._parse = function(data) {
-        data = data.HotelListResponse;
-        if (data.EanWsError) {
-            return this.status.reject({
-                reason: data.EanWsError.category,
-                readableMessage: data.EanWsError.presentationMessage
-            });
+        var res;
+
+        // error handling
+        if ( ( res = data.HotelListResponse ) ||
+            ( res = data.HotelInformationResponse ) ) {
+            if (res.EanWsError) {
+                return this.status.reject({
+                    reason: res.EanWsError.category,
+                    readableMessage: res.EanWsError.presentationMessage
+                });
+            }
         }
+
         return this.status.resolve(data);
     };
 

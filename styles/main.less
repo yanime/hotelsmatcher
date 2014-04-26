@@ -293,13 +293,17 @@ h1{
                 &.description{
                     line-height: 1.25em;
                 }
-                .read.more{
+                .read{
                     .mixin-font-light;
                     border: none;
                     background: transparent;
                     font-size: 0.8em; // 16px
                     font-style: italic;
                     margin-left: 1em;
+                }
+                .less{
+                    display: none;
+                    margin-left: 0;
                 }
             }
             &.location,
@@ -317,6 +321,26 @@ h1{
             clear: both;
             display: block;
             width: 100%;
+            p, b{
+                display: none;
+                margin: 0;
+            }
+            p:first-of-type {
+                display: inline;
+            }
+            .expanded{
+                p{
+                    display: inline !important;
+                }
+                .less,
+                b{
+                    display: block !important;
+                    margin: 0.5em 0;
+                }
+                .more{
+                    display: none;
+                }
+            }
         }
         .actions{
             display: table;
