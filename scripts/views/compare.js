@@ -15,10 +15,11 @@ define([
         className: 'main wrapper clearfix',
         template: 'compare',
         initialize: function () {
-            this.notPinnedView = new ResultsView({
+            console.log('called');
+            this.resultsView = new ResultsView({
                 model: this.model.results,
-                start: 0,
-                display: 6
+                page: 0,
+                countPerPage: 6
             });
         },
         events: {
@@ -31,7 +32,7 @@ define([
             return this.model.attributes;
         },
         beforeRender: function () {
-            this.insertView('#results', this.notPinnedView);
+            this.insertView('#results', this.resultsView);
         },
     });
 

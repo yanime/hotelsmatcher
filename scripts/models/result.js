@@ -1,12 +1,16 @@
 /*global define*/
 define([
     'underscore',
-    'backbone'
-], function (_, Backbone) {
+    'backbone',
+    'layoutmanager',
+], function (_, Backbone, Layout) {
     'use strict';
 
     var ResultModel = Backbone.Model.extend({
-        defaults: {
+        manage: true,
+        template: 'results',
+        initialize: function () {
+            this.pinned = false;
         }
     });
 

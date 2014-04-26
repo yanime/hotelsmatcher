@@ -185,26 +185,6 @@ define([
                 this.innerHTML = "&gt; only selected";
             }
         });
-
-        $compareTable.on('click', '.info.column.fixed .pin', function(){
-            var $this = $(this),
-            column = $this.closest('.column'),
-            pinned = $('.pinned-container');
-
-            if ( column.hasClass('pinned') ) {
-                $('.compare-table').append(column);
-            } else {
-                $('.pinned-container').append(column);
-            }
-
-            if ( pinned.children().length === 0 ) {
-                pinned.addClass('hidden');
-            } else {
-                pinned.removeClass('hidden');
-            }
-
-            column.toggleClass('pinned');
-        });
     }
 
     if($('body').hasClass('single')){

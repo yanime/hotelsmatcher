@@ -4,11 +4,11 @@ define([
     'underscore',
     'backbone',
     'models/result'
-], function (_, Backbone, ResultsModel) {
+], function (_, Backbone, ResultModel) {
     'use strict';
 
     var ResultsCollection = Backbone.Collection.extend({
-        model: ResultsModel,
+        model: ResultModel,
         add: function (data) {
             var result = _.pick(data,
                 'tripAdvisorRating',
