@@ -21,9 +21,9 @@ define([
         _handleResultPinned: function () {
 
             if (this.model.pinned) {
-                this.trigger('result:pin');
+                this.trigger('result:unpin', this);
             } else {
-                this.trigger('result:unpin');
+                this.trigger('result:pin', this);
             }
 
             this.model.pinned = !this.model.pinned;

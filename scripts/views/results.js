@@ -16,12 +16,13 @@ define([
         initialize: function (options) {
             this.page = options.page;
             this.countPerPage = options.countPerPage;
+            this._pinnedCount = 0;
         },
         serialize: function () {
             return {
                 page: this.page,
                 numberOfPages: this.model.length / this.countPerPage
-            }
+            };
         },
         beforeRender: function () {
             var pos = this.page * this.countPerPage;
@@ -36,15 +37,39 @@ define([
                     this.insertView(view = new ResultView({
                         model: item
                     }));
-                    this.listenTo(view, 'result:pin', this._handlePinClicked);
-                    this.listenTo(view, 'result:unpin', this._handlePinClicked);
+                    this.listenTo(view, 'result:pin', this._handlePin);
+                    this.listenTo(view, 'result:unpin', this._handleUnpin);
                 }
             }
         },
         afterRender: function () {
+            this._cachedDOMPinned = this.$el.find('.pinned-container');
         },
-        _handlePinClicked: function () {
-            debugger;
+        _handlePin: function (view) {
+            var element = view.$el;
+            element.addClass('pinned');
+            element.remove();
+            this._cachedDOMPinned.append(element);
+
+            view.delegateEvents();
+
+            if (this._pinnedCount === 0) {
+                this._cachedDOMPinned.removeClass('hidden');
+            }
+            this._pinnedCount++;
+        },
+        _handleUnpin: function (view) {
+            var element = view.$el;
+            element.remove();
+            element.removeClass('pinned');
+            this.$el.append(element);
+
+            view.delegateEvents();
+
+            this._pinnedCount--;
+            if (this._pinnedCount === 0) {
+                this._cachedDOMPinned.addClass('hidden');
+            }
         }
     });
 
