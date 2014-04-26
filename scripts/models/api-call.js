@@ -21,7 +21,7 @@ define([
             }
         }
 
-        return this.status.resolve(data);
+        return this.status.resolve(res);
     };
 
     return ApiCall;
