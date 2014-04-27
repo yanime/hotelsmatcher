@@ -14,6 +14,9 @@ define([
         tagName: 'main',
         className: 'main wrapper clearfix',
         template: 'hotel-page',
+        events: {
+            'click .close': '_handleClosePage'
+        },
         afterRender: function () {
             var that = this;
             this.model.fetch().done(function () {
@@ -22,6 +25,9 @@ define([
                 that.insertView('#main-section', view);
                 view.render();
             });
+        },
+        _handleClosePage: function () {
+            App.router.navigate('index',{trigger: true});
         }
     });
 
