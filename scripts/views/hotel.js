@@ -5,7 +5,8 @@ define([
     'underscore',
     'backbone',
     'layoutmanager',
-], function ($, _, Backbone, Layout) {
+    'views/hotel-images'
+], function ($, _, Backbone, Layout, HotelImages) {
     'use strict';
 
     var HotelView = Backbone.View.extend({
@@ -20,7 +21,10 @@ define([
         serialize: function () {
             return this.model.attributes;
         },
-        afterRender: function () {
+        beforeRender: function () {
+            this.insertView('.hotel.photos', new HotelImages({
+                model: this.model.attributes.images
+            }));
         },
         _handleReadMoreToggle: function () {
             this.$el.find('.description-container .description').toggleClass('expanded');

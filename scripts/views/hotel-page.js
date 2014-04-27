@@ -5,7 +5,7 @@ define([
     'underscore',
     'backbone',
     'layoutmanager',
-    'views/hotel',
+    'views/hotel'
 ], function ($, _, Backbone, Layout, HotelView) {
     'use strict';
 
