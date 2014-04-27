@@ -23,7 +23,6 @@ define([
             $this.toggleClass('active');
             id = $item[0].id;
             this.model.set(id, !this.model.attributes[id]);
-            console.log(this.model.attributes);
             $item.val($this.hasClass('active'));
         },
         resetOptions: function () {

@@ -33,7 +33,6 @@ define([
         },
         _parse: function (res) {
             var desc = this._parseHelper.html(res.HotelDetails.propertyDescription).text().replace(/<br \/>/g,'');
-            console.log(desc);
 
             this.attributes.description = desc;
 
