@@ -12,7 +12,8 @@ define([
         manage: true,
         template: 'hotel',
         events: {
-            'click .read': '_handleReadMore',
+            'click .read': '_handleReadMoreToggle',
+            'click .view': '_handleViewAllToggle',
             'click .book': '_handleBook',
             'click .compare': '_handleCompare'
         },
@@ -21,8 +22,17 @@ define([
         },
         afterRender: function () {
         },
-        _handleReadMore: function () {
+        _handleReadMoreToggle: function () {
             this.$el.find('.description-container .description').toggleClass('expanded');
+        },
+        _handleViewAllToggle: function (e) {
+            var el = e.currentTarget.parentElement;
+
+            if (el.className.indexOf('expanded') !== -1) {
+                el.className = el.className.replace(' expanded','');
+            } else {
+                el.className += ' expanded';
+            }
         },
         _handleBook: function () {
         }

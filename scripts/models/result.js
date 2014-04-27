@@ -29,10 +29,9 @@ define([
             };
         },
         _extractFacilities: function (facility) {
-            return facility.amenity;
+            return facility.amenity.trim();
         },
-        _parse: function (data) {
-            var res = data.HotelInformationResponse;
+        _parse: function (res) {
             var desc = this._parseHelper.html(res.HotelDetails.propertyDescription).text().replace(/<br \/>/g,'');
             console.log(desc);
 
@@ -41,8 +40,13 @@ define([
             this.attributes.city = res.HotelSummary.city;
             this.attributes.address = res.HotelSummary.address1;
 
-            this.attributes.images = _.map(res.HotelImages.HotelImage, this._extractImage);
-            this.attributes.rooms = _.map(res.RoomTypes.RoomType, this._extractRoom);
+            if (res.HotelImages.HotelImage) {
+                this.attributes.images = _.map(res.HotelImages.HotelImage, this._extractImage);
+            }
+
+            if (res.RoomTypes.RoomType) {
+                this.attributes.rooms = _.map(res.RoomTypes.RoomType, this._extractRoom);
+            }
 
             if (res.PropertyAmenities) {
                 this.attributes.facilities = _.map(res.PropertyAmenities.PropertyAmenity, this._extractFacilities);

@@ -1,3 +1,6 @@
+<%
+    var i, l, res;
+%>
 <div class="hotel photos">
     <button class="previous"></button>
     <div class="images">
@@ -8,28 +11,63 @@
 <div class="details-container">
     <div class="location hotel details">
         <span class="label">Location</span>
-        <span class="content city point-out">New York,</span>
-        <span class="content district value">Central Park</span>
+        <span class="content city point-out"><%= obj.city %>,</span>
+        <span class="content district value"><%= obj.address %></span>
     </div>
     <div class="price hotel details">
         <span class="label">Price range</span>
-        <span class="content currency">$</span>
-        <span class="content small price point-out">175</span>
-        <span class="content currency">$</span>
-        <span class="content large price point-out">1175</span>
+        <span class="content currency"></span>
+        <span class="content small price point-out">Not supported</span>
+        <span class="content currency"></span>
+        <span class="content large price point-out">Not supported</span>
     </div>
+    <% if(obj.facilities) { %>
     <div class="facilities hotel details">
         <span class="label">Facilities</span>
-        <span class="content facilities">Wifi, Parking</span>
-        <span class="content facilities extra hidden">, Wifi, Parking</span>
-        <button class="view-all">2 more &gt;</button>
+        <%
+        res = '';
+        res+='<span>'+obj.facilities[0]+'</span>, ';
+        res+='<span>'+obj.facilities[1]+'</span>, ';
+        %>
+        <div class="content facilities summary"><%=res%></div>
+        <%
+        i = 0; l = obj.facilities.length;
+        res = '';
+        res = '<ul>';
+        while(i < l){
+            res+='<li>'+obj.facilities[i]+'</li>';
+            i++;
+        }
+        res += '</ul>';
+        %>
+        <div class="content facilities extra"><%=res%></div>
+        <button class="view all"><%=l-2%> more &gt;</button>
+        <button class="view collapsed">&lt; collapse</button>
     </div>
+    <% } %>
+    <% if(obj.rooms) { %>
     <div class="rooms hotel details">
         <span class="label">Room types</span>
-        <span class="content rooms">Single, Double</span>
-        <span class="content rooms extra hidden">, Apartment, Etc</span>
-        <button class="view-all">2 more &gt;</button>
+        <%
+        res = '';
+        res+='<span>'+obj.rooms[0].name+'</span>, ';
+        res+='<span>'+obj.rooms[1].name+'</span>, ';
+        %>
+        <div class="content rooms summary"><%=res%></div>
+        <%
+        i = 0; l = obj.rooms.length;
+        res = '<ul>';
+        while(i < l){
+            res+='<li>'+obj.rooms[i].name+'</li>';
+            i++;
+        }
+        res += '</ul>';
+        %>
+        <div class="content rooms extra"><%=res%></div>
+        <button class="view all"><%=l-2 %> more &gt;</button>
+        <button class="view collapsed">&lt; collapse</button>
     </div>
+    <% } %>
 </div>
 <div class="description-container hotel details">
     <span class="label">Description</span>
