@@ -12,7 +12,7 @@ define([
     var AutocompleteView = Backbone.View.extend({
         manage: true,
         template: 'autocomplete',
-        url: 'http://dev.enode.ro/api/autocomplete?q=',
+        url: 'http://dev.enode.ro/eanapi/autocomplete?q=',
         initialize: function (options) {
             this.currentSearch = options.value;
         },

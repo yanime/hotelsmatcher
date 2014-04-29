@@ -8,7 +8,7 @@ define([
     'use strict';
 
     var ResultModel = Backbone.Model.extend({
-        _baseURL: "http://dev.enode.ro/api/hotel-detail?hotelId=",
+        _baseURL: "http://dev.enode.ro/eanapi/hotel-detail?hotelId=",
         _parseHelper: $('<textarea/>'),
         manage: true,
         template: 'results',

@@ -25,7 +25,7 @@ define([
         formatDate: function (date) {
             return ( date.getMonth() ) + 1 + '/' + date.getDate() + '/' + date.getFullYear();
         },
-        url: 'http://dev.enode.ro/api/hotels?',
+        url: 'http://dev.enode.ro/eanapi/hotels?',
         validateQueryParams: function () {
             var attr = this.attributes,
             errors = [];
