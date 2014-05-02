@@ -71,9 +71,10 @@ define([
             for(results in v) {
                 if(v.hasOwnProperty(results)){
                     className = 'action result ' + results + ' separated ';
+                    debugger;
                     for(i = 0, l = v[results].length; i < l; i++){
                         r = v[results][i];
-                        str += '<li data-value="'+r.destinationId+'" class="'+className+'">'+r.name+this._labels[results]+'</li>';
+                        str += '<li data-value="'+r.destinationId+'" class="'+className+'">'+this._buildCountryWrapHelper(results, r.country)+r.name+'</li>';
                         className = 'action result ' + results;
                     }
                 }
@@ -83,10 +84,20 @@ define([
             }
             return '<li class="result separated" >No results found</li>';
         },
-        _labels:{
-            'cities': '<span class="label">City</span>',
-            'hotels': '<span class="label">Hotel</span>',
-            'landmarks': '<span class="label">Landmark</span>'
+        _buildCountryWrapHelper: function (type, country) {
+            var res = '';
+            switch (type) {
+                case 'cities':
+                    res = 'City,';
+                    break;
+                case 'hotels':
+                    res = 'Hotel, ';
+                    break;
+                case 'landmarks':
+                    res = 'Landmark, ';
+                    break;
+            }
+            return '<span class="label">'+res+country+'</span>';
         }
     });
 
