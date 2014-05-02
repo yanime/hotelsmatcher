@@ -1,0 +1,14 @@
+<span class="title">Go to page</span>
+<ol>
+<li><button class="active">1</button></li>
+<%
+for( i = 1; i < obj; i++ ) {
+%><li><button><%=i+1 %></button></li><%
+}
+%>
+</ol>
+<div class="steps">
+    <button class="step left" title="Load previous"></button>
+    <button class="step right" title="Load next"></button>
+</div>
+

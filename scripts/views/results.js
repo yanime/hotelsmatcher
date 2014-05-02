@@ -13,10 +13,10 @@ define([
         manage: true,
         className: 'compare-table',
         template: 'results',
+        page: 0,
         initialize: function (options) {
-            this.page = options.page;
             this.countPerPage = options.countPerPage;
-            this._pinnedCount = 0;
+            this.pinnedCount = 0;
         },
         serialize: function () {
             return {
@@ -45,6 +45,17 @@ define([
         afterRender: function () {
             this._cachedDOMPinned = this.$el.find('.pinned-container');
         },
+        connectPaginationView: function (paginationView) {
+            this.listenTo(paginationView, 'change', this._handlePaginationChange);
+            //@todo notifiy pagination
+        },
+        _handlePaginationChange: function (newPage) {
+            this.page = newPage;
+            this.render();
+            if( window.scrollY > 373 ) {
+                window.scrollTo(0,373);
+            }
+        },
         _handlePin: function (view) {
             var element = view.$el;
             element.addClass('pinned');
@@ -53,10 +64,10 @@ define([
 
             view.delegateEvents();
 
-            if (this._pinnedCount === 0) {
+            if (this.pinnedCount === 0) {
                 this._cachedDOMPinned.removeClass('hidden');
             }
-            this._pinnedCount++;
+            this.pinnedCount++;
         },
         _handleUnpin: function (view) {
             var element = view.$el;
@@ -66,8 +77,8 @@ define([
 
             view.delegateEvents();
 
-            this._pinnedCount--;
-            if (this._pinnedCount === 0) {
+            this.pinnedCount--;
+            if (this.pinnedCount === 0) {
                 this._cachedDOMPinned.addClass('hidden');
             }
         }
