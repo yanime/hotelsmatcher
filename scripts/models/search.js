@@ -11,6 +11,7 @@ define([
     var today = new Date();
 
     var SearchModel = Backbone.Model.extend({
+        url: 'http://dev.enode.ro/eanapi/hotels?',
         defaults: {
             checkIn: today,
             checkOut: new Date(today.getTime() + (24 * 60 * 60 * 1000)),
@@ -20,12 +21,48 @@ define([
         },
         initialize: function () {
             this.results = new Results();
-            this.pinnedResults = {};
+            this.pinnedResults = [];
+        },
+        getUnpinned: function (count, from){
+            var i = 0,
+                res = [],
+                v,
+                found = 0,
+                failsafe = this.results.length;
+
+            from = from || 0;
+
+            while ( found < count && i < failsafe ){
+                v = this.results.at(i);
+                if (!v.pinned) {
+                    if (from) {
+                        from--;
+                    } else {
+                        res.push(v);
+                        found++;
+                    }
+                }
+                i++;
+            }
+            return res;
+        },
+        pin: function (result) {
+            result.pinned = true;
+            this.pinnedResults.push(result);
+        },
+        unpin: function (result) {
+            for (var i = 0, l = this.pinnedResults.length; i < l; i ++) {
+                if (this.pinnedResults[i] === result) {
+                    this.pinnedResults.splice(i,1);
+                    result.pinned = false;
+                    return true;
+                }
+            }
+            return false;
         },
         formatDate: function (date) {
             return ( date.getMonth() ) + 1 + '/' + date.getDate() + '/' + date.getFullYear();
         },
-        url: 'http://dev.enode.ro/eanapi/hotels?',
         validateQueryParams: function () {
             var attr = this.attributes,
             errors = [];

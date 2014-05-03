@@ -11,6 +11,7 @@ define([
         model: ResultModel,
         addSearchResult: function (data) {
             var result = _.pick(data,
+                'hotelId',
                 'tripAdvisorRating',
                 'deepLink',
                 'proximityDistance',

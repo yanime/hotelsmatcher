@@ -10,7 +10,12 @@ define([
 
     var ResultView = Backbone.View.extend({
         manage: true,
-        className: 'hotel info column fixed',
+        className: function () {
+            if (this.model.pinned) {
+                return 'hotel info column fixed pinned';
+            }
+            return 'hotel info column fixed unpinned';
+        },
         template: 'result',
         events: {
             'click .pin': '_handleResultPinned'
@@ -19,14 +24,11 @@ define([
             return this.model.attributes;
         },
         _handleResultPinned: function () {
-
             if (this.model.pinned) {
                 this.trigger('result:unpin', this);
             } else {
                 this.trigger('result:pin', this);
             }
-
-            this.model.pinned = !this.model.pinned;
         }
     });
 

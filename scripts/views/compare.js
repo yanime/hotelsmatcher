@@ -15,22 +15,30 @@ define([
         tagName: 'main',
         className: 'main wrapper clearfix',
         template: 'compare',
-        page: 0,
-        maxCountPerPage: 6,
         initialize: function () {
+
+            var results = this.model.results.length,
+                pinned = this.model.pinnedResults.length;
+
+            var counts = {
+                page: 0,
+                results: results,
+                countPinned: pinned,
+                countUnpinnedPerPage: 6 - pinned,
+                countPages: Math.ceil ( ( results - pinned ) / ( 6 - pinned ) )
+            };
+
             this.resultsView = new ResultsView({
-                model: this.model.results,
-                countPerPage: this.maxCountPerPage
+                model: this.model,
+                counts: counts
             });
             this.topPagination = new PaginationView({
                 model: this.model.results,
-                maxCountPerPage: this.maxCountPerPage,
-                pinnedCount: this.resultsView.pinnedCount
+                counts: counts
             });
             this.bottomPagination = new PaginationView({
                 model: this.model.results,
-                maxCountPerPage: this.maxCountPerPage,
-                pinnedCount: this.resultsView.pinnedCount
+                counts: counts
             });
 
             this.resultsView.connectPaginationView(this.topPagination);

@@ -18,9 +18,7 @@ define([
         numberOfPages: 1,
         _cachedCurrentPage: null,
         initialize: function (options) {
-            this.countPerPage = options.maxCountPerPage;
-            this.countPinned = options.pinnedCount;
-            this.calculateNumberOfPages();
+            this.counts = options.counts;
         },
         events: {
             'click .step.left': '_handlePaginationPrevious',
@@ -34,11 +32,8 @@ define([
             this._cachedCurrentPage.className = 'active';
             // @todo sync paginations
         },
-        calculateNumberOfPages: function () {
-            this.numberOfPages = Math.ceil ( ( this.model.length - this.countPinned ) / this.countPerPage );
-        },
         serialize: function () {
-            return this.numberOfPages;
+            return this.counts.countPages;
         },
         afterRender: function () {
             this._cachedCurrentPage = this._getPageBtnEl(0);
@@ -48,30 +43,31 @@ define([
             return this.el.getElementsByTagName('button')[page];
         },
         _handlePinnedAction: function () {
+            this.render();
         },
         _handlePaginationNavigation: function (e) {
             var newPage = Number(e.currentTarget.innerHTML) - 1;
-            if (this.page === newPage) {
+            if (this.counts.page === newPage) {
                 return;
             }
             this._cachedCurrentPage.className = '';
             this._cachedCurrentPage = e.currentTarget;
             this._cachedCurrentPage.className = 'active';
-            this.page = newPage;
+            this.counts.page = newPage;
             this.trigger('change', newPage);
         },
         _handlePaginationPrevious: function (e) {
-            if (this.page > 0) {
-                this.page--;
-                this.trigger('change', this.page);
-                this.syncDisplay(this.page);
+            if (this.counts.page > 0) {
+                this.counts.page--;
+                this.trigger('change', this.counts.page);
+                this.syncDisplay(this.counts.page);
             }
         },
         _handlePaginationNext: function (e) {
-            if (this.page < this.numberOfPages) {
-                this.page++
-                this.trigger('change', this.page);
-                this.syncDisplay(this.page);
+            if (this.counts.page < this.counts.countPages) {
+                this.counts.page++
+                this.trigger('change', this.counts.page);
+                this.syncDisplay(this.counts.page);
             }
         }
     });
