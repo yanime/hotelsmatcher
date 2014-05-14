@@ -15,7 +15,7 @@ define([
         initialize: function () {
             this.pinned = false;
             this.loaded = false;
-            this.id = this.attributes.hotelId;
+            this.id = this.attributes.id;
         },
         _extractImage: function (image) {
             return {
