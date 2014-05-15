@@ -41,7 +41,7 @@ define([
                 }
 
                 if (forceRender) {
-                    v.render();
+                    view.render();
                 }
 
                 this.listenTo(view, 'result:pin', this._handlePin);
@@ -95,7 +95,7 @@ define([
 
             this.model.pin(view.model);
 
-            view.delegateEvents();
+            view.refreshEvents();
 
             if (this.counts.countPinned === 0) {
                 this._cachedDOMPinned.removeClass('hidden');
@@ -118,7 +118,7 @@ define([
             element.addClass('unpinned');
             this.$el.append(element);
 
-            view.delegateEvents();
+            view.refreshEvents();
 
             var hotel = view.model;
             this.model.unpin(hotel);

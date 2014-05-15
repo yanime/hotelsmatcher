@@ -22,22 +22,25 @@ define([
             return 'hotel info column fixed unpinned';
         },
         initialize: function () {
-            this.listenTo(this.model, 'result:update', this.handleModelLoaded);
+            this.listenTo(this.model, 'result:update', this._handleModelDetailsLoaded);
 
             this._imagesView = new HotelImages({
                 useThumbnails: true
             });
         },
+        serialize: function () {
+            return this.model.attributes;
+        },
         beforeRender: function () {
             this.insertView('.photos', this._imagesView);
         },
-        handleModelLoaded: function () {
-            console.log(this.model.attributes);
+        refreshEvents: function () {
+            this.delegateEvents();
+            this._imagesView.delegateEvents();
+        },
+        _handleModelDetailsLoaded: function () {
             this._imagesView.model = this.model.attributes.images;
             this._imagesView.render();
-        },
-        serialize: function () {
-            return this.model.attributes;
         },
         _handleResultPinned: function () {
             if (this.model.pinned) {
