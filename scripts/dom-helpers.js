@@ -88,7 +88,7 @@ define([
 
                 // @NOTE assignment
                 if ( ( val = $el.find('.value')[0] ) ) {
-                    that._set(val.innerHTML, val.dataset['id']);
+                    that._set(val.innerHTML, val.dataset.id);
                 } else {
                     that._set(e.currentTarget.innerHTML, e.currentTarget.dataset);
                 }
@@ -145,8 +145,6 @@ define([
         $('.compare-table .headers.column').on('click','.checkbox', function() {
             var $this = $(this),
             name = $this[0].className.split(" ")[0];
-
-            _selectedClasses[name] = $this.hasClass('checked');
 
             $this.toggleClass('hidden').toggleClass('checked');
             $('.compare-table .info.column').find('.'+name+' .checkbox').parent().toggleClass('hidden');

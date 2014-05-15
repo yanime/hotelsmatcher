@@ -29,6 +29,7 @@ define([
             if ( el.className.indexOf('hotels') !== -1 ) {
                 id = $(el).data('value');
 
+                id = id + '';
                 model = new Result({
                     id: id,
                     destinationId: id,

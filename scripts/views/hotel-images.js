@@ -10,45 +10,52 @@ define([
 
     var HotelImagesView = Backbone.View.extend({
         manage: true,
-        template: 'hotel-images',
+        setTemplate: function () {
+            if (this._useThumbnails) {
+                this.template = 'hotel-images-thumbs';
+            } else {
+                this.template = 'hotel-images';
+            }
+        },
         events: {
             'click .next': '_handleNextRequest',
             'click .previous': '_handlePreviousRequest'
         },
-        initialize: function () {
+        initialize: function (options) {
             this._currentImage = 0;
-            this._numberOfImages = this.model.length;
+            this._useThumbnails = options.useThumbnails;
+            this.setTemplate();
         },
         serialize: function () {
+            if (this.model) {
+                this._numberOfImages = this.model.length;
+            }
             return this.model;
         },
-        _handleNextRequest: function () {
+        _updateImage: function () {
             var image;
-
+            // @NOTE assignment
+            if ( ( image = this.model[this._currentImage] ) ) {
+                this.el.querySelector('img').src = image.url;
+            }
+        },
+        _handleNextRequest: function () {
             if (this._currentImage === this._numberOfImages) {
                 this._currentImage = 0;
             } else {
                 this._currentImage++;
             }
 
-            // @NOTE assignment
-            if ( ( image = this.model[this._currentImage] ) ) {
-                this.el.querySelector('img').src = image.url;
-            }
+            this._updateImage();
         },
         _handlePreviousRequest: function () {
-            var image;
-
             if (this._currentImage === 0) {
                 this._currentImage = this._numberOfImages;
             } else {
                 this._currentImage--;
             }
 
-            // @NOTE assignment
-            if ( ( image = this.model[this._currentImage] ) ) {
-                this.el.querySelector('img').src = image.url;
-            }
+            this._updateImage();
         }
     });
 

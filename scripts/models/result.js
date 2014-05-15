@@ -15,7 +15,7 @@ define([
         initialize: function () {
             this.pinned = false;
             this.loaded = false;
-            this.id = this.attributes.id;
+            this.id = this.attributes.id || this.attributes.hotelId;
         },
         _extractImage: function (image) {
             return {
@@ -52,9 +52,10 @@ define([
                 this.attributes.facilities = _.map(res.PropertyAmenities.PropertyAmenity, this._extractFacilities);
             }
 
+            this.trigger('result:update');
         },
         fetch: function () {
-            var url = this._baseURL + this.attributes.id;
+            var url = this._baseURL + this.id;
             if (!this.loaded) {
                 this.loaded = true;
             }

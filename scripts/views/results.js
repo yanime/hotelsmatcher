@@ -25,9 +25,14 @@ define([
 
             for (i = 0; i < l; i ++) {
                 v = collection[i];
+
+                // @todo find a way to wait for updates
+
                 view = new ResultView({
                     model: v
                 });
+
+                v.fetch();
 
                 if (where) {
                     this.insertView(where, view);
@@ -36,7 +41,7 @@ define([
                 }
 
                 if (forceRender) {
-                    view.render();
+                    v.render();
                 }
 
                 this.listenTo(view, 'result:pin', this._handlePin);
