@@ -8,8 +8,9 @@ define([
     'layoutmanager',
     '../views/autocomplete',
     '../views/compare-options',
-    '../vendor/jquery-ui-1.10.4.custom.min',
-], function ($, _, Backbone, Layout, AutocompleteView, CompareOptionsView) {
+    'models/result',
+    '../vendor/jquery-ui-1.10.4.custom.min'
+], function ($, _, Backbone, Layout, AutocompleteView, CompareOptionsView, Result) {
     'use strict';
 
     var HomepageView = Backbone.Layout.extend({
@@ -17,13 +18,17 @@ define([
         template: 'homepage',
         tagName: 'main',
         className: 'main wrapper clearfix',
+        initialize: function () {
+            this._autocompleteView = new AutocompleteView({
+                value: this.model.attributes.destinationName
+            });
+            this.listenTo(this._autocompleteView,'select:hotel', this._handleHotelSelect);
+        },
         serialize: function () {
             return this.model.attributes;
         },
         beforeRender: function () {
-            this.insertView('#search-wrapper', new AutocompleteView({
-                value: this.model.attributes.destinationName
-            }));
+            this.insertView('#search-wrapper', this._autocompleteView);
             this.insertView('#comparisson-wrapper', new CompareOptionsView({
                 model: this.model
             }));
@@ -51,6 +56,20 @@ define([
             'click .date.setter': '_resetDate',
             'click .trips.checkbox.categories': '_toggleOptionsContainer'
         },
+        _handleHotelSelect: function (option) {
+            var id = option.id;
+
+            var model = new Result({
+                id: id,
+                destinationId: id,
+                name: option.name,
+                searchOptions: this.model.getOptionsQueryString()
+            });
+
+            App.Search.results.add(model);
+
+            App.router.navigate('hotel/'+id, {trigger: true});
+        },
         _resetDate: function (e) {
             var date = new Date(),
             el = e.currentTarget;
@@ -76,7 +95,7 @@ define([
                     this.parentElement.querySelector('.year').value = res[2];
                 }
                 that.model.attributes[target] = new Date(date);
-            }
+            };
         },
         _setDropdownValue: function (data) {
             var temp;

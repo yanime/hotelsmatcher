@@ -9,13 +9,22 @@ define([
 
     var ResultModel = Backbone.Model.extend({
         _baseURL: "http://dev.enode.ro/eanapi/hotel-detail?hotelId=",
+        _baseDeepLink: "http://www.travelnow.com/templates/55505/hotels/",
         _parseHelper: $('<textarea/>'),
         manage: true,
         template: 'results',
-        initialize: function () {
+        initialize: function (options) {
+            var deepLink;
+
             this.pinned = false;
             this.loaded = false;
             this.id = this.attributes.id || this.attributes.hotelId;
+
+            deepLink = this._baseDeepLink + this.id + "/overview?lang=en_US";
+            if (options.searchOptions) {
+                deepLink += options.searchOptions;
+            }
+            this.attributes.deepLink = deepLink;
         },
         _extractImage: function (image) {
             return {

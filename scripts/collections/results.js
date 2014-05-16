@@ -13,7 +13,6 @@ define([
             var result = _.pick(data,
                 'hotelId',
                 'tripAdvisorRating',
-                'deepLink',
                 'proximityDistance',
                 'hotelRating',
                 'name',

@@ -63,6 +63,13 @@ button{
 .mixin-sprite{
     background: url("../images/hm-sprite.png") no-repeat;
 }
+// requires button to be wrapped
+.mixin-as-button{
+    box-sizing: border-box;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+}
 .mixin-helper-button{
     .mixin-sprite;
     border: none;
@@ -1142,9 +1149,10 @@ form.trips{
         z-index: 10;
     }
 }
-.button.book-action{
+.book.action{
     .mixin-font-light;
     .mixin-book-action;
+    .mixin-as-button;
     font-size: 1.375em; // 22px
     padding: 0.54545455em 1em; // 12px 22px
 }
@@ -1203,7 +1211,7 @@ form.trips{
             }
         }
     }
-    .book-action{
+    .book.action{
         width: 100%;
     }
 }

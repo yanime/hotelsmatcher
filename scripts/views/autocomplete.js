@@ -5,8 +5,7 @@ define([
     'underscore',
     'backbone',
     'layoutmanager',
-    'models/result'
-], function ($, _, Backbone, Layout, Result) {
+], function ($, _, Backbone, Layout) {
     'use strict';
 
     var AutocompleteView = Backbone.View.extend({
@@ -27,18 +26,10 @@ define([
             var model, id, el = e.currentTarget;
 
             if ( el.className.indexOf('hotels') !== -1 ) {
-                id = $(el).data('value');
-
-                id = id + '';
-                model = new Result({
-                    id: id,
-                    destinationId: id,
+                this.trigger('select:hotel', {
+                    id: $(el).data('value'),
                     name: el.innerHTML.split('<span')[0]
                 });
-
-                App.Search.results.add(model);
-
-                App.router.navigate('hotel/'+id, {trigger: true});
             }
         },
         afterRender: function () {

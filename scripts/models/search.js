@@ -85,17 +85,29 @@ define([
 
             return errors.length ? errors : true;
         },
-        fetch: function () {
-            // http://dev.enode.ro/api/hotels?destinationId=003B6BAD-728C-4067-AB5A-B93C0EE6D0EA&from=12%2F20%2F2013&to=12%2F23%2F2013&room1=1,8,2,3
+        getOptionsQueryString: function () {
             var attr = this.attributes,
-            url = this.url;
+            url = '';
 
-            url += 'destinationId='+attr.destinationId;
             url += '&from='+this.formatDate(attr.checkIn);
             url += '&to='+this.formatDate(attr.checkOut);
             url += '&room'+attr.rooms;
             url += '='+attr.adults;
-            return new ApiCall(url).status.done(this._parse.bind(this));
+
+            return url;
+        },
+        getQueryString: function () {
+            var attr = this.attributes,
+            url = '';
+
+            url += 'destinationId='+attr.destinationId;
+            url += this.getOptionsQueryString();
+
+            return url;
+        },
+        fetch: function () {
+            // http://dev.enode.ro/api/hotels?destinationId=003B6BAD-728C-4067-AB5A-B93C0EE6D0EA&from=12%2F20%2F2013&to=12%2F23%2F2013&room1=1,8,2,3
+            return new ApiCall(this.url + this.getQueryString()).status.done(this._parse.bind(this));
         },
         _parse: function (data) {
             var results, hotels;
