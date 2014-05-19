@@ -15,6 +15,7 @@ define([
         defaults: {
             checkIn: today,
             checkOut: new Date(today.getTime() + (24 * 60 * 60 * 1000)),
+            withDate: true,
             adults: 2,
             children: 0,
             rooms: 1
@@ -91,8 +92,10 @@ define([
             i = 0,
             url = '';
 
-            url += '&from='+this.formatDate(attr.checkIn);
-            url += '&to='+this.formatDate(attr.checkOut);
+            if (attr.withDate) {
+                url += '&from='+this.formatDate(attr.checkIn);
+                url += '&to='+this.formatDate(attr.checkOut);
+            }
 
             var adultsPerRoom = attr.rooms / attr.adults;
             adultsPerRoom = Math.floor(adultsPerRoom);

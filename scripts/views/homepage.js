@@ -54,7 +54,8 @@ define([
         events: {
             'click .action.search': '_handleCompare',
             'click .date.setter': '_showDatePicker',
-            'click .trips.checkbox.categories': '_toggleOptionsContainer'
+            'click .trips.checkbox.categories': '_toggleOptionsContainer',
+            'click .trips.checkbox.no-date': '_toggleNoDate'
         },
         _handleHotelSelect: function (option) {
             var id = option.id;
@@ -125,6 +126,10 @@ define([
 
             $('.filters.'+target).toggleClass('hidden');
             $this.toggleClass('active');
+        },
+        _toggleNoDate: function (e) {
+            $(e.currentTarget).toggleClass('active');
+            this.model.attributes.withDate = !this.model.attributes.withDate;
         },
         _displayAPIError: function (response) {
             var $error;
