@@ -87,12 +87,35 @@ define([
         },
         getOptionsQueryString: function () {
             var attr = this.attributes,
+            room = 0,
+            i = 0,
             url = '';
 
             url += '&from='+this.formatDate(attr.checkIn);
             url += '&to='+this.formatDate(attr.checkOut);
-            url += '&room'+attr.rooms;
-            url += '='+attr.adults;
+
+            var adultsPerRoom = attr.rooms / attr.adults;
+            adultsPerRoom = Math.floor(adultsPerRoom);
+
+            // @todo fix issue where one adult is swallowed by floor
+            while ( room < attr.rooms ) {
+                url += '&room'+(room+1);
+                url += '='+adultsPerRoom;
+
+                if ( i < attr.children ) {
+                    url += ',5';
+                    i++;
+                }
+
+                room++;
+            }
+
+            if ( i < attr.children ) {
+                while ( i < attr.children ){
+                    url += ',5';
+                    i++;
+                }
+            }
 
             return url;
         },

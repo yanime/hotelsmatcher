@@ -94,23 +94,29 @@ define([
                         this.$el.find('.options .hidden').removeClass('hidden');
                         return;
                     }
+                    if (data.value === "1") {
+                        // @todo got to also reset values if they were checked
+                        this.$el.find('.options .rooms').addClass('hidden');
+                        this.$el.find('.options .adults').addClass('hidden');
+                        this.$el.find('.options .children').addClass('hidden');
+
+                        this.model.attributes.adults = 1;
+                        this.model.attributes.rooms = 1;
+                        this.model.attributes.children = 0;
+                        this.model.attributes.guests = 1;
+                    }
                     break;
                 case 'adults':
-                    temp = this.model.attributes.children;
-                    this.model.set('guests', Number(data.value) + Number(temp));
-                    break;
                 case 'children':
-                    temp = this.model.attributes.adults;
-                    this.model.set('guests', Number(data.value) + Number(temp));
+                    this.model.attributes[data.target] = Number(data.value);
                     break;
                 case 'destinationId':
                     this.model.set("destinationName",data.display);
-                    break;
-                case 'guests':
+                default:
+                    this.model.attributes[data.target] = data.value;
                     break;
             }
 
-            this.model.set(data.target,data.value);
             this.model.changed = true;
         },
         _toggleOptionsContainer: function (e) {
