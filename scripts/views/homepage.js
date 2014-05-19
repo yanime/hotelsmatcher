@@ -53,7 +53,7 @@ define([
         },
         events: {
             'click .action.search': '_handleCompare',
-            'click .date.setter': '_resetDate',
+            'click .date.setter': '_showDatePicker',
             'click .trips.checkbox.categories': '_toggleOptionsContainer'
         },
         _handleHotelSelect: function (option) {
@@ -70,20 +70,9 @@ define([
 
             App.router.navigate('hotel/'+id, {trigger: true});
         },
-        _resetDate: function (e) {
-            var date = new Date(),
-            el = e.currentTarget;
-
-            if ($(e.currentTarget).hasClass('today')) {
-                this.model.attributes.checkIn = date;
-            } else {
-                date = new Date(date.getTime() + (24 * 60 * 60 * 1000));
-                this.model.attributes.checkOut = date;
-            }
-
-            el.parentElement.querySelector('.month').value = date.getMonth() + 1;
-            el.parentElement.querySelector('.day').value = date.getDate();
-            el.parentElement.querySelector('.year').value = date.getFullYear();
+        _showDatePicker: function (e) {
+            var el = e.currentTarget;
+            $.datepicker._showDatepicker(el.parentElement.querySelectorAll('.hasDatepicker')[0]);
         },
         _generateScopedDatePickerHandler: function (target) {
             var that = this;
