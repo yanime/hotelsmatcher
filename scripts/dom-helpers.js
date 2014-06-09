@@ -93,6 +93,12 @@ define([
                     that._set(e.currentTarget.innerHTML, e.currentTarget.dataset);
                 }
 
+                $el.parent().find('.hidden').removeClass('hidden');
+
+                if ( $el.hasClass('preset') ) {
+                    $el.addClass('hidden');
+                }
+
                 that.hide();
                 e.stopPropagation();
 
