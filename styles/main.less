@@ -74,6 +74,11 @@ button{
     .mixin-sprite;
     border: none;
 }
+.mixin-ellipsis{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 html, button, input, select, textarea, body{
     font-size: 100%;
@@ -981,7 +986,9 @@ form.trips{
         margin: 0;
         .header{
             .mixin-font-light;
+            .mixin-ellipsis;
             background: @table-column-header-background;
+            cursor: default;
             font-size: 1.125em;
             line-height: 1.3333333em;
             text-align: center;
