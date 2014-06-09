@@ -14,6 +14,7 @@ define([
     'use strict';
 
     var HomepageView = Backbone.Layout.extend({
+        action: null,
         manage: true,
         template: 'homepage',
         tagName: 'main',
@@ -22,7 +23,17 @@ define([
             this._autocompleteView = new AutocompleteView({
                 value: this.model.attributes.destinationName
             });
-            this.listenTo(this._autocompleteView,'select:hotel', this._handleHotelSelect);
+            this.listenTo(this._autocompleteView,'select', this._handleSelect);
+
+            this.action = this._compareRequest;
+        },
+        _handleSelect: function (option) {
+            if (option.target === 'hotel') {
+                this.action = this._buildAction(this._hotelRequest, option);
+            }
+            if (option.target === 'city') {
+                this.action = this._buildAction(this._compareRequest, option);
+            }
         },
         serialize: function () {
             return this.model.attributes;
@@ -72,23 +83,6 @@ define([
                 }
                 that.model.setDate(target, new Date(date));
             };
-        },
-        _handleHotelSelect: function (option) {
-            var id = option.id;
-
-            this.model.clearResults();
-
-            var hotel = new Result({
-                id: id,
-                destinationId: id,
-                name: option.name,
-                searchOptions: this.model.getOptionsQueryString()
-            });
-
-            this.model.addResult(hotel);
-            this.model.pin(hotel);
-
-            App.router.navigate('hotel/'+id, {trigger: true});
         },
         _setDropdownValue: function (data) {
             var temp;
@@ -151,11 +145,47 @@ define([
 
             this.$el.find('.loading').addClass('hidden');
         },
-        _handleCompare: function (e){
-            var temp,
-            model = this.model;
+        _compareRequest: function () {
+            var model = this.model;
 
-            model.clearResults();
+            if (model.changed) {
+                model.fetch().done(function () {
+                    model.changed = false;
+                    App.router.navigate('compare', {
+                        trigger: true
+                    });
+                }).fail(this._displayAPIError.bind(this));
+            } else {
+                App.router.navigate('compare', {
+                    trigger: true
+                });
+            }
+        },
+        _buildAction: function (callback, selectionOption) {
+            var that = this;
+            return function () {
+                callback.call(that, selectionOption);
+            }
+        },
+        _hotelRequest: function (option) {
+            var id = option.id;
+
+            var hotel = new Result({
+                id: id,
+                destinationId: id,
+                name: option.name,
+                searchOptions: this.model.getOptionsQueryString()
+            });
+
+            this.model.addResult(hotel);
+            this.model.pin(hotel);
+
+            App.router.navigate('hotel/'+id, {trigger: true});
+        },
+        _handleCompare: function (e){
+            var temp;
+
+            this.model.clearResults();
 
             e.preventDefault();
 
@@ -169,14 +199,7 @@ define([
 
             this.$el.find('.loading').removeClass('hidden');
 
-            if (model.changed) {
-                model.fetch().done(function () {
-                    model.changed = false;
-                    App.router.navigate('compare',{trigger: true});
-                }).fail(this._displayAPIError.bind(this));
-            } else {
-                App.router.navigate('compare',{trigger: true});
-            }
+            this.action();
 
             return true;
         }

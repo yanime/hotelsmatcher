@@ -23,14 +23,21 @@ define([
             'dropdown:set .dropdown li': '_handleValueSet'
         },
         _handleValueSet: function (e) {
-            var model, id, el = e.currentTarget;
+            var id, el = e.currentTarget, optionClass;
 
             if ( el.className.indexOf('hotels') !== -1 ) {
-                this.trigger('select:hotel', {
-                    id: $(el).data('value'),
-                    name: el.innerHTML.split('<span')[0]
-                });
+                optionClass = 'hotel';
+            } else {
+                if ( el.className.indexOf('hotels') !== -1 ) {
+                    optionClass = 'city';
+                }
             }
+
+            this.trigger('select', {
+                id: $(el).data('value'),
+                target: optionClass,
+                name: el.innerHTML.split('<span')[0]
+            });
         },
         afterRender: function () {
             this._searchHelper = this.$el.find('.search.helper');

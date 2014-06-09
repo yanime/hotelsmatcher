@@ -19,10 +19,10 @@ define([
             'click .compare': '_handleCompareRequest'
         },
         block: function () {
-            that.$el.find('.loading').removeClass('hidden');
+            this.$el.find('.loading').removeClass('hidden');
         },
         unblock: function () {
-            that.$el.find('.loading').addClass('hidden');
+            this.$el.find('.loading').addClass('hidden');
         },
         afterRender: function () {
             var that = this;
