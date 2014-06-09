@@ -70,7 +70,7 @@ define([
                     this.parentElement.querySelector('.day').value = res[1][0] == 0 ? res[1][1] : res[1];
                     this.parentElement.querySelector('.year').value = res[2];
                 }
-                that.model.attributes[target] = new Date(date);
+                that.model.setDate(target, new Date(date));
             };
         },
         _handleHotelSelect: function (option) {
@@ -112,7 +112,7 @@ define([
                     break;
                 case 'adults':
                 case 'children':
-                    this.model.attributes[data.target] = Number(data.value);
+                    this.model.updateGuests( data );
                     break;
                 case 'destinationId':
                     this.model.set("destinationName",data.display);

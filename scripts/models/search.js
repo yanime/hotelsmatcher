@@ -3,26 +3,40 @@
 define([
     'underscore',
     'backbone',
+    'moment',
     'collections/results',
     'models/result',
     'models/api-call',
-], function (_, Backbone, Results, Result, ApiCall) {
+], function (_, Backbone, momentjs, Results, Result, ApiCall) {
     'use strict';
     var today = new Date();
 
     var SearchModel = Backbone.Model.extend({
         url: 'http://dev.enode.ro/eanapi/hotels?',
         defaults: {
-            checkIn: today,
-            checkOut: new Date(today.getTime() + (24 * 60 * 60 * 1000)),
+            checkIn: null,
+            checkOut: null,
             withDate: true,
             adults: 2,
             children: 0,
-            rooms: 1
+            rooms: 1,
+            guests: 2
         },
         initialize: function () {
+            this.setDate('checkIn', today);
+            this.setDate('checkOut', new Date(today.getTime() + (24 * 60 * 60 * 1000) ) );
             this.results = new Results();
             this.pinnedResults = [];
+        },
+        setDate: function (attr, value) {
+            this.attributes[attr] = value;
+            this.attributes['formatted_'+attr] = momentjs(value).format("MMM. Do YYYY");
+        },
+        updateGuests: function (from) {
+            var attrs = this.attributes;
+
+            attrs[from.target] = Number(from.data);
+            attrs.guests = attrs.adults + attrs.children;
         },
         addResult: function (hotel) {
             this.results.add(hotel);

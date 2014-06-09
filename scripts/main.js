@@ -23,6 +23,7 @@ require.config({
     paths: {
         jquery: '../bower_components/jquery/jquery',
         backbone: '../bower_components/backbone/backbone',
+        moment: '../bower_components/momentjs/moment',
         layoutmanager: '../bower_components/layoutmanager/backbone.layoutmanager',
         underscore: '../bower_components/underscore/underscore'
     }
