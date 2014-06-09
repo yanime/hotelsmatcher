@@ -27,14 +27,6 @@ define([
 
             this.action = this._compareRequest;
         },
-        _handleSelect: function (option) {
-            if (option.target === 'hotel') {
-                this.action = this._buildAction(this._hotelRequest, option);
-            }
-            if (option.target === 'city') {
-                this.action = this._buildAction(this._compareRequest, option);
-            }
-        },
         serialize: function () {
             return this.model.attributes;
         },
@@ -68,10 +60,19 @@ define([
             'click .trips.checkbox.categories': '_toggleOptionsContainer',
             'click .trips.checkbox.no-date': '_toggleNoDate'
         },
+        _handleSelect: function (option) {
+            if (option.target === 'hotel') {
+                this.action = this._buildAction(this._hotelRequest, option);
+            }
+            if (option.target === 'city') {
+                this.action = this._buildAction(this._compareRequest, option);
+            }
+        },
         _setValuesInInputs: function (inputs, date) {
-            inputs[0].value = this.model.attributes.checkIn.getMonth() + 1;
-            inputs[1].value = this.model.attributes.checkIn.getDate();
-            inputs[2].value = this.model.attributes.checkIn.getFullYear();
+            console.log(date);
+            inputs[0].value = date.getMonth() + 1;
+            inputs[1].value = date.getDate();
+            inputs[2].value = date.getFullYear();
         },
         _showDatePicker: function (e) {
             var el = e.currentTarget;
@@ -81,11 +82,13 @@ define([
             var that = this;
             return function (date) {
                 var res = date.split('/');
+
                 if (res.length > 1) {
                     this.parentElement.querySelector('.month').value = res[0][0] == 0 ? res[0][1] : res[0];
                     this.parentElement.querySelector('.day').value = res[1][0] == 0 ? res[1][1] : res[1];
                     this.parentElement.querySelector('.year').value = res[2];
                 }
+
                 that.model.setDate(target, new Date(date));
             };
         },
