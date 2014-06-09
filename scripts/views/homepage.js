@@ -50,23 +50,28 @@ define([
             window.DropdownController.handle();
             this.listenTo(window.DropdownController,'set',this._setDropdownValue);
 
-            inDate = this.$el.find('#check-in-month').datepicker({
+            inDate = this.$el.find('input.in').datepicker({
                 onClose: this._generateScopedDatePickerHandler('checkIn')
             });
             inDate.datepicker( "option", "minDate", this.model.attributes.checkIn );
-            inDate.val( this.model.attributes.checkIn.getMonth() + 1 );
+            this._setValuesInInputs(inDate, this.model.attributes.checkIn);
 
-            outDate = this.$el.find('#check-out-month').datepicker({
+            outDate = this.$el.find('input.out').datepicker({
                 onClose: this._generateScopedDatePickerHandler('checkOut')
             });
             outDate.datepicker( "option", "minDate", this.model.attributes.checkOut );
-            outDate.val( this.model.attributes.checkOut.getMonth() + 1 );
+            this._setValuesInInputs(outDate, this.model.attributes.checkOut);
         },
         events: {
             'click .action.search': '_handleCompare',
             'click .date.setter': '_showDatePicker',
             'click .trips.checkbox.categories': '_toggleOptionsContainer',
             'click .trips.checkbox.no-date': '_toggleNoDate'
+        },
+        _setValuesInInputs: function (inputs, date) {
+            inputs[0].value = this.model.attributes.checkIn.getMonth() + 1;
+            inputs[1].value = this.model.attributes.checkIn.getDate();
+            inputs[2].value = this.model.attributes.checkIn.getFullYear();
         },
         _showDatePicker: function (e) {
             var el = e.currentTarget;

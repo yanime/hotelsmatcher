@@ -20,18 +20,18 @@ for(i=1;i<=30;i++){
             <div class="graphic out cell">
                 <label class="default label" for="check-in-month">Check-in Date</label>
                 <div class="input-container default check-date">
-                    <input class="default month" type="text" name="check-in-month" id="check-in-month" value="" autocomplete="off"/>
-                    <input class="default day" type="text" name="check-in-day" id="check-in-dd" value="<%=obj.checkIn.getDate()%>" autocomplete="off"/>
-                    <input class="default year" type="text" name="check-in-year" id="check-in-year" value="<%=obj.checkIn.getFullYear()%>" autocomplete="off"/>
+                    <input class="in default month" type="text" name="check-in-month" id="check-in-month" value="" autocomplete="off"/>
+                    <input class="in default day" type="text" name="check-in-day" id="check-in-dd" value="" autocomplete="off"/>
+                    <input class="in default year" type="text" name="check-in-year" id="check-in-year" value="" autocomplete="off"/>
                 </div>
                 <button title="Fill with today" type="button" class="date setter today"></button>
             </div>
             <div class="graphic in cell">
                 <label class="default label" for="check-out-month">Check-out Date</label>
                 <div class="input-container default check-date">
-                    <input class="default month" type="text" name="check-out-month" id="check-out-month" value="" autocomplete="off"/>
-                    <input class="default day" type="text" name="check-out-day" id="check-out-dd" value="<%=obj.checkOut.getDate()%>" autocomplete="off"/>
-                    <input class="default year" type="text" name="check-out-year" id="check-out-year" value="<%=obj.checkOut.getFullYear()%>" autocomplete="off"/>
+                    <input class="out default month" type="text" name="check-out-month" id="check-out-month" value="" autocomplete="off"/>
+                    <input class="out default day" type="text" name="check-out-day" id="check-out-dd" value="<%=obj.checkOut.getDate()%>" autocomplete="off"/>
+                    <input class="out default year" type="text" name="check-out-year" id="check-out-year" value="<%=obj.checkOut.getFullYear()%>" autocomplete="off"/>
                 </div>
                 <button title="Fill with tomorrow" type="button" class="date setter tomorrow"></button>
             </div>
