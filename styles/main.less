@@ -758,9 +758,11 @@ form.trips{
                 right: -1px;
                 left: -1px;
                 &.overlap{
-                    max-height: 18em;
-                    overflow-y: auto;
                     top: 0;
+                    .results{
+                        max-height: 18em;
+                        overflow-y: auto;
+                    }
                 }
             }
             .separated{

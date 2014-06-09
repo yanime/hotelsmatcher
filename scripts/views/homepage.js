@@ -57,20 +57,6 @@ define([
             'click .trips.checkbox.categories': '_toggleOptionsContainer',
             'click .trips.checkbox.no-date': '_toggleNoDate'
         },
-        _handleHotelSelect: function (option) {
-            var id = option.id;
-
-            var model = new Result({
-                id: id,
-                destinationId: id,
-                name: option.name,
-                searchOptions: this.model.getOptionsQueryString()
-            });
-
-            App.Search.results.add(model);
-
-            App.router.navigate('hotel/'+id, {trigger: true});
-        },
         _showDatePicker: function (e) {
             var el = e.currentTarget;
             $.datepicker._showDatepicker(el.parentElement.querySelectorAll('.hasDatepicker')[0]);
@@ -86,6 +72,23 @@ define([
                 }
                 that.model.attributes[target] = new Date(date);
             };
+        },
+        _handleHotelSelect: function (option) {
+            var id = option.id;
+
+            this.model.clearResults();
+
+            var hotel = new Result({
+                id: id,
+                destinationId: id,
+                name: option.name,
+                searchOptions: this.model.getOptionsQueryString()
+            });
+
+            this.model.addResult(hotel);
+            this.model.pin(hotel);
+
+            App.router.navigate('hotel/'+id, {trigger: true});
         },
         _setDropdownValue: function (data) {
             var temp;
@@ -133,6 +136,7 @@ define([
         },
         _displayAPIError: function (response) {
             var $error;
+
             window.scrollTo(0,0);
 
             $error = this.$el.find('.api.error');
@@ -150,6 +154,8 @@ define([
         _handleCompare: function (e){
             var temp,
             model = this.model;
+
+            model.clearResults();
 
             e.preventDefault();
 

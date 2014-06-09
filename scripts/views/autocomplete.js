@@ -39,6 +39,7 @@ define([
             var that = this;
             this._searchHelper.removeClass('hidden');
             return $.get(this.url + param).done(function(data) {
+                window._searchCache = data.result;
                 that.displayResults(data.result);
             });
         },
@@ -46,7 +47,7 @@ define([
             var optionsEl = this.$el.find('.options'),
             tpl = this._buildResultsLists(data);
 
-            optionsEl.append(tpl);
+            optionsEl.find('.results')[0].innerHTML = tpl;
             this._searchHelper.addClass('hidden');
         },
         _handleSearch: function ( e ) {

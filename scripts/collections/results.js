@@ -17,7 +17,10 @@ define([
                 'hotelRating',
                 'name',
                 'highRate');
-            this.add.call(this, result);
+
+            result.id = data.hotelId;
+
+            this.add(result, {merge: true});
         }
     });
 

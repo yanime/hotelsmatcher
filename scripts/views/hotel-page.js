@@ -15,7 +15,8 @@ define([
         className: 'main wrapper clearfix',
         template: 'hotel-page',
         events: {
-            'click .close': '_handleClosePage'
+            'click .close': '_handleClosePage',
+            'click .compare': '_handleCompareRequest'
         },
         afterRender: function () {
             var that = this;
@@ -24,6 +25,11 @@ define([
                 that.$el.find('.loading').remove();
                 that.insertView('#main-section', view);
                 view.render();
+            });
+        },
+        _handleCompareRequest: function () {
+            App.Search.fetchHotelsNearHotel(this.model).done(function () {
+                App.router.navigate('compare',{trigger: true});
             });
         },
         _handleClosePage: function () {

@@ -24,6 +24,9 @@ define([
             this.results = new Results();
             this.pinnedResults = [];
         },
+        addResult: function (hotel) {
+            this.results.add(hotel);
+        },
         getUnpinned: function (count, from){
             var i = 0,
                 res = [],
@@ -131,9 +134,27 @@ define([
 
             return url;
         },
+        clearResults: function () {
+            this.results.reset();
+            this.pinnedResults.length = 0;
+        },
         fetch: function () {
             // http://dev.enode.ro/api/hotels?destinationId=003B6BAD-728C-4067-AB5A-B93C0EE6D0EA&from=12%2F20%2F2013&to=12%2F23%2F2013&room1=1,8,2,3
             return new ApiCall(this.url + this.getQueryString()).status.done(this._parse.bind(this));
+        },
+        fetchHotelsNearHotel: function (hotel) {
+            var cities = window._searchCache.cities;
+
+            for ( var i= 0, l = cities.length; i < l; i ++) {
+                var v = cities[i];
+
+                if (v.name === hotel.attributes.city) {
+                    this.attributes.destinationId = v.destinationId;
+                    return this.fetch();
+                }
+            }
+
+            throw new Error('09061250 something went wrong');
         },
         _parse: function (data) {
             var results, hotels;
