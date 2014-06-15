@@ -173,8 +173,13 @@ define([
         _parse: function (data) {
             var results, hotels;
             hotels = data.HotelList.HotelSummary;
-            for (var i = 0, l = hotels.length; i < l; i ++) {
-                this.results.addSearchResult(hotels[i]);
+            if (hotels.length) {
+                for (var i = 0, l = hotels.length; i < l; i ++) {
+                    this.results.addSearchResult(hotels[i]);
+                }
+            } else {
+                // one result is not wrapped in an array
+                this.results.addSearchResult(hotels);
             }
         }
     },{
