@@ -53,8 +53,9 @@ define([
         },
         _addPagedUnpinnedResults: function (forceRender) {
             var arr = this.model.getUnpinned(
-                    this.counts.countUnpinnedPerPage,
-                    this.counts.page);
+                this.counts.countUnpinnedPerPage,
+                this.counts.page * this.counts.countUnpinnedPerPage
+            );
 
             this._insertViews(arr,undefined,forceRender);
         },
@@ -75,11 +76,18 @@ define([
         _handlePaginationChange: function (newPage) {
             var views = this.getViews();
             var i = 1;
-            while(i <= this.counts.countUnpinnedPerPage){
-                views._wrapped[6 - i].remove();
+            var temp;
+
+            while( i <= this.counts.countUnpinnedPerPage ){
+                // @note assignment
+                if( ( temp = views._wrapped[6 - i] ) ) {
+                    temp.remove();
+                }
                 i++;
             }
+
             this._addPagedUnpinnedResults(true);
+
             if( window.scrollY > 373 ) {
                 window.scrollTo(0,373);
             }

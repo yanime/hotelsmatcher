@@ -41,20 +41,20 @@ define([
         addResult: function (hotel) {
             this.results.add(hotel);
         },
-        getUnpinned: function (count, from){
+        getUnpinned: function (count, skip){
             var i = 0,
                 res = [],
                 v,
                 found = 0,
                 failsafe = this.results.length;
 
-            from = from || 0;
+            skip = skip || 0;
 
             while ( found < count && i < failsafe ){
                 v = this.results.at(i);
                 if (!v.pinned) {
-                    if (from) {
-                        from--;
+                    if (skip) {
+                        skip--;
                     } else {
                         res.push(v);
                         found++;

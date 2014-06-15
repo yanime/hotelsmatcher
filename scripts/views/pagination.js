@@ -47,14 +47,14 @@ define([
         },
         _handlePaginationNavigation: function (e) {
             var newPage = Number(e.currentTarget.innerHTML) - 1;
+
             if (this.counts.page === newPage) {
                 return;
             }
-            this._cachedCurrentPage.className = '';
-            this._cachedCurrentPage = e.currentTarget;
-            this._cachedCurrentPage.className = 'active';
+
             this.counts.page = newPage;
-            this.trigger('change', newPage);
+
+            this.syncDisplay(newPage);
         },
         _handlePaginationPrevious: function (e) {
             if (this.counts.page > 0) {
@@ -64,7 +64,7 @@ define([
             }
         },
         _handlePaginationNext: function (e) {
-            if (this.counts.page < this.counts.countPages) {
+            if (this.counts.page < this.counts.countPages - 1) {
                 this.counts.page++
                 this.trigger('change', this.counts.page);
                 this.syncDisplay(this.counts.page);
