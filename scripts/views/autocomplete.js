@@ -28,7 +28,7 @@ define([
             if ( el.className.indexOf('hotels') !== -1 ) {
                 optionClass = 'hotel';
             } else {
-                if ( el.className.indexOf('hotels') !== -1 ) {
+                if ( el.className.indexOf('cities') !== -1 ) {
                     optionClass = 'city';
                 }
             }
