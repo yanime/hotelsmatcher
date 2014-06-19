@@ -23,7 +23,7 @@ define([
             'dropdown:set .dropdown li': '_handleValueSet'
         },
         _handleValueSet: function (e) {
-            var id, el = e.currentTarget, optionClass;
+            var id, el = e.currentTarget, optionClass = "landmark";
 
             if ( el.className.indexOf('hotels') !== -1 ) {
                 optionClass = 'hotel';

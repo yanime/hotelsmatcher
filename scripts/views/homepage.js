@@ -26,6 +26,12 @@ define([
             this.listenTo(this._autocompleteView,'select', this._handleSelect);
 
             this.action = this._compareRequest;
+
+            this.requestsMappedToType = {
+                "city": this._compareRequest,
+                "landmark": this._landmarkRequest,
+                "hotel": this._hotelRequest
+            }
         },
         serialize: function () {
             return this.model.attributes;
@@ -61,12 +67,10 @@ define([
             'click .trips.checkbox.no-date': '_toggleNoDate'
         },
         _handleSelect: function (option) {
-            if (option.target === 'hotel') {
-                this.action = this._buildAction(this._hotelRequest, option);
-            }
-            if (option.target === 'city') {
-                this.action = this._buildAction(this._compareRequest, option);
-            }
+            this.action = this._buildAction(
+                this.requestsMappedToType[option.target],
+                option
+            );
         },
         _setValuesInInputs: function (inputs, date) {
             console.log(date);
@@ -93,7 +97,6 @@ define([
             };
         },
         _setDropdownValue: function (data) {
-            var temp;
             switch (data.target) {
                 case 'guests':
                     if (data.value === "more") {
@@ -153,6 +156,11 @@ define([
 
             this.$el.find('.loading').addClass('hidden');
         },
+        _landmarkRequest: function () {
+            var dest = this.model.attributes.destinationId;
+            this.model.attributes.destinationId = dest.substring(1, dest.length-1);
+            this._compareRequest();
+        },
         _compareRequest: function () {
             var model = this.model;
 
@@ -173,7 +181,7 @@ define([
             var that = this;
             return function () {
                 callback.call(that, selectionOption);
-            }
+            };
         },
         _hotelRequest: function (option) {
             var id = option.id;
