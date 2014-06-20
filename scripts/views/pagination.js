@@ -54,6 +54,7 @@ define([
 
             this.counts.page = newPage;
 
+            this.trigger('change', this.counts.page);
             this.syncDisplay(newPage);
         },
         _handlePaginationPrevious: function (e) {
