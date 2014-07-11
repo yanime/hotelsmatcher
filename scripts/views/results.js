@@ -5,12 +5,13 @@ define([
     'underscore',
     'backbone',
     'layoutmanager',
-    'views/result'
-], function ($, _, Backbone, Layout, ResultView) {
+    'views/result',
+    'views/lightbox',
+], function ($, _, Backbone, Layout, ResultView, LightboxView) {
     'use strict';
 
     var PIN = 1,
-        UNPIN = -1;
+    UNPIN = -1;
 
     var ResultsView = Backbone.View.extend({
         manage: true,
@@ -19,6 +20,11 @@ define([
         page: 0,
         initialize: function (options) {
             this.counts = options.counts;
+
+            this.lightboxView = new LightboxView();
+        },
+        events: {
+            'mouseover .result .header': '_displayLightbox'
         },
         _insertViews: function (collection, where, forceRender) {
             var i, l = collection.length, v, view;
@@ -46,6 +52,7 @@ define([
 
                 this.listenTo(view, 'result:pin', this._handlePin);
                 this.listenTo(view, 'result:unpin', this._handleUnpin);
+                this.listenTo(view, 'result:lightbox', this._handleLightboxRequest);
             }
         },
         _addPinnedResults: function () {
@@ -62,6 +69,8 @@ define([
         beforeRender: function () {
             this._addPinnedResults();
             this._addPagedUnpinnedResults();
+
+            this.insertView(this.lightboxView);
         },
         afterRender: function () {
             this._cachedDOMPinned = this.$el.find('.pinned-container');
@@ -141,6 +150,13 @@ define([
                 this._cachedDOMPinned.addClass('hidden');
             }
             this.trigger('result:pin');
+        },
+        _displayLightbox: function (e) {
+            var parent = e.currentTarget.parentElement,
+            id = parent.id;
+
+            this.lightboxView.handle(App.Search.results.get(id));
+            this.lightboxView.displayAt( $(parent).offset().left - 16 );
         }
     });
 

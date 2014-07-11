@@ -986,13 +986,15 @@ form.trips{
         margin: 0;
         .header{
             .mixin-font-light;
-            .mixin-ellipsis;
             background: @table-column-header-background;
             cursor: default;
             font-size: 1.125em;
             line-height: 1.3333333em;
             text-align: center;
             height: 2.4444444em; // 44px
+            &.short{
+                .mixin-ellipsis;
+            }
         }
         li{
             background: @table-odd-row;
