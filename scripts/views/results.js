@@ -156,7 +156,7 @@ define([
             id = parent.id;
 
             this.lightboxView.handle(App.Search.results.get(id));
-            this.lightboxView.displayAt( $(parent).offset().left - 16 );
+            this.lightboxView.displayAt( '45%');
         }
     });
 

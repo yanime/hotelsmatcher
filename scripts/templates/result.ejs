@@ -1,6 +1,6 @@
 <ul id=<%=obj.hotelId %> class="result">
     <li class="header short" title="<%=obj.name %>">
-        <%= obj.name %>
+        <a href="#hotel/<%=obj.hotelId %>"><%= obj.name %></a>
     </li>
     <li class="radio trips pin">
         <input type="hidden" name="pinned" value="false" />

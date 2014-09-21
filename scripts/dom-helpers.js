@@ -55,7 +55,7 @@ define([
         _class: '.trips.dropdown .element',
         _handleClick: function (e) {
             var that = e.data.that,
-            $this = $(e.target);
+            $this = $(e.target);			
             if($this.closest('.element').length === 0){
                 that.hide();
             }
@@ -92,7 +92,7 @@ define([
                 } else {
                     that._set(e.currentTarget.innerHTML, e.currentTarget.dataset);
                 }
-
+				
                 $el.parent().find('.hidden').removeClass('hidden');
 
                 if ( $el.hasClass('preset') ) {
@@ -110,6 +110,10 @@ define([
             $html = $('html');
             $html.on('click', this._class, function () {
                 var temp;
+				if($(that._class).hasClass('error-border')){
+					$(that._class).removeClass('error-border');
+					$(that._class).find('.search-error').removeClass('search-error');
+				}
                 that.hide();
                 if (that.el !== this) {
                     that.show(this);
@@ -154,29 +158,6 @@ define([
 
             $this.toggleClass('hidden').toggleClass('checked');
             $('.compare-table .info.column').find('.'+name+' .checkbox').parent().toggleClass('hidden');
-        });
-
-        $compareTable.on('mouseenter', '.info.column.fixed .header', function(){
-            var $this = $(this),
-            $el = $this.closest('.info.column');
-
-            //@NOTE assignment
-            if($el.parent().hasClass('pinned-container')){
-                $el = $el.position().left + $el.parent().position().left;
-            } else {
-                $el = $this.parent().position().left;
-            }
-
-            bookDetails.removeClass('hidden');
-
-            bookDetails.css({
-                left: $el - 16
-            });
-
-            bookDetails.off().on('mouseleave', function() {
-                bookDetails.addClass('hidden');
-                bookDetails.removeAttr('style');
-            });
         });
 
         $compareTable.on('click', '.headers.column .see-all button', function(){

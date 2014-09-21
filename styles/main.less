@@ -995,6 +995,10 @@ form.trips{
             &.short{
                 .mixin-ellipsis;
             }
+			a{
+				color: #000;
+				text-decoration: none;
+			}
         }
         li{
             background: @table-odd-row;
@@ -1442,6 +1446,13 @@ form.trips{
     *zoom: 1;
 }
 
+.search-error{
+	color: red;
+}
+
+.error-border{
+	border: solid 1px red !important;
+}
 /* ==========================================================================
    Print styles
    ========================================================================== */

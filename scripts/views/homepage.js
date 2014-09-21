@@ -73,7 +73,6 @@ define([
             );
         },
         _setValuesInInputs: function (inputs, date) {
-            console.log(date);
             inputs[0].value = date.getMonth() + 1;
             inputs[1].value = date.getDate();
             inputs[2].value = date.getFullYear();
@@ -116,6 +115,8 @@ define([
                     }
                     break;
                 case 'adults':
+					this.model.updateGuests( data );
+					break;
                 case 'children':
                     this.model.updateGuests( data );
                     break;
@@ -149,7 +150,7 @@ define([
             if (response.reason === "AUTHENTICATION") {
                 $error[0].innerText = "We cannot service this request. Please contact support.";
             } else {
-                $error[0].innerText = "We have encountered an error. Please contact support.";
+                $error[0].innerText = response.readableMessage;
             }
 
             $error.removeClass('hidden');
@@ -199,7 +200,7 @@ define([
             App.router.navigate('hotel/'+id, {trigger: true});
         },
         _handleCompare: function (e){
-            var temp;
+            var temp, message = "", $err;
 
             this.model.clearResults();
 
@@ -207,9 +208,47 @@ define([
 
             // @NOTE assignment
             if ( ( temp = this.model.validateQueryParams() ) !== true ) {
-                // @TODO display errors;
-                console.log('@TODO Handle field not populated');
-                console.log(temp);
+                // display errors for compare forms;
+				for (var i=0; i< temp.length; i++){
+					var searchEl = this.$el.find('[data-target="'+temp[i]+'"]');
+					switch(temp[i]){
+						case 'destinationId':
+							message += "Please verify destination or hotel name \n";
+							searchEl.addClass('search-error');
+							searchEl.parent().parent().addClass('error-border');
+							break;
+							
+						case 'checkIn':
+							message += "Please verify checkin date \n";
+							searchEl.addClass('search-error');
+							break;
+							
+						case 'checkOut':
+							message += "Please verify checkout \n";
+							searchEl.addClass('search-error');
+							break;
+						
+						case 'rooms':
+							message += "Please verify number of rooms \n";
+							searchEl.addClass('search-error');
+							break;
+						
+						case 'adults':
+							message += "Please verify number of adults \n";
+							searchEl.addClass('search-error');
+							break;
+						
+						case 'children':
+							message += "Please verify number of children \n";
+							searchEl.addClass('search-error');
+							searchEl.parent().parent().addClass('error-border');
+							break;
+					}
+				}
+				$err = this.$el.find('.api.error');
+				$err[0].innerText = message;
+				$err.removeClass('hidden');
+				
                 return false;
             }
 

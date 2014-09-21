@@ -35,7 +35,7 @@ define([
         updateGuests: function (from) {
             var attrs = this.attributes;
 
-            attrs[from.target] = Number(from.data);
+            attrs[from.target] = Number(from.value);
             attrs.guests = attrs.adults + attrs.children;
         },
         addResult: function (hotel) {
@@ -100,8 +100,15 @@ define([
             if ( attr.adults === undefined ) {
                 errors[errors.length] = 'adults';
             }
-
-            return errors.length ? errors : true;
+			if ( attr.children === undefined ) {
+                errors[errors.length] = 'children';
+            }
+			if(errors.length){
+				errors[attr] = this.attributes;
+				return errors;
+			}else{
+				return true;
+			}	
         },
         getOptionsQueryString: function () {
             var attr = this.attributes,
@@ -113,7 +120,7 @@ define([
                 url += '&from='+this.formatDate(attr.checkIn);
                 url += '&to='+this.formatDate(attr.checkOut);
             }
-
+			
             var adultsPerRoom = attr.rooms / attr.adults;
             adultsPerRoom = Math.floor(adultsPerRoom);
 
