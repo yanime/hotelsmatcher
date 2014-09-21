@@ -24,7 +24,7 @@ define([
             this.lightboxView = new LightboxView();
         },
         events: {
-            'mouseover .result .header': '_displayLightbox'
+            'mouseover .result .header': '_displayLightbox',
         },
         _insertViews: function (collection, where, forceRender) {
             var i, l = collection.length, v, view;
@@ -153,10 +153,11 @@ define([
         },
         _displayLightbox: function (e) {
             var parent = e.currentTarget.parentElement,
-            id = parent.id;
+            id = parent.id,
+			marginLeft= $(parent).position().left;
 
             this.lightboxView.handle(App.Search.results.get(id));
-            this.lightboxView.displayAt( '45%');
+            this.lightboxView.displayAt( marginLeft );
         }
     });
 

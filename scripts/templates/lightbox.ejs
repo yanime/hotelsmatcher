@@ -3,7 +3,7 @@ if( obj.id !== undefined ) {
 %>
 <ul class="hotel info column">
     <li class="header">
-        <%= obj.name %>
+        <a href="#hotel/<%=obj.hotelId %>"><%= obj.name %></a>
     </li>
     <li class="radio trips pin">
         <input type="hidden" name="pinned" value="<% obj.pinned %>" />
@@ -20,6 +20,7 @@ if( obj.id !== undefined ) {
     <li class="price"><span>Price </span><span class="currency"> $ </span><span class="value">345</span></li>
     <li class="book"><a href="<%=obj.deepLink %>" target="_blank" class="button action book" title="Book for this hotel">Book now</a></li>
 </ul>
+<div class="close"></div>
 <%
 }
 %>
