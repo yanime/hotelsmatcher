@@ -83,6 +83,7 @@ define([
         },
         _generateScopedDatePickerHandler: function (target) {
             var that = this;
+			that.model.changed = true; 
             return function (date) {
                 var res = date.split('/');
 
