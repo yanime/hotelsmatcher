@@ -121,7 +121,7 @@ define([
                 url += '&to='+this.formatDate(attr.checkOut);
             }
 			
-            var adultsPerRoom = attr.rooms / attr.adults;
+            var adultsPerRoom = attr.adults / attr.rooms;
             adultsPerRoom = Math.floor(adultsPerRoom);
 
             // @todo fix issue where one adult is swallowed by floor
@@ -143,7 +143,7 @@ define([
                     i++;
                 }
             }
-
+	
             return url;
         },
         getQueryString: function () {
@@ -182,10 +182,12 @@ define([
             hotels = data.HotelList.HotelSummary;
             if (hotels.length) {
                 for (var i = 0, l = hotels.length; i < l; i ++) {
+					hotels[i]['search_options'] = this.attributes;
                     this.results.addSearchResult(hotels[i]);
                 }
             } else {
                 // one result is not wrapped in an array
+				hotels['search_options'] = this.attributes;
                 this.results.addSearchResult(hotels);
             }
         }

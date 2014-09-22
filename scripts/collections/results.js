@@ -16,7 +16,9 @@ define([
                 'proximityDistance',
                 'hotelRating',
                 'name',
-                'highRate');
+                'highRate',
+				'search_options'
+			);
 
             result.id = data.hotelId;
 

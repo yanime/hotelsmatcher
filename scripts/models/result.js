@@ -14,18 +14,50 @@ define([
         manage: true,
         template: 'results',
         initialize: function (options) {
-            var deepLink;
+            var deepLink, searchOptions, kidsPerRoom = 3, lastKid;
 
             this.pinned = false;
             this.loaded = false;
             this.id = this.attributes.id || this.attributes.hotelId;
 
             deepLink = this._baseDeepLink + this.id + "/overview?lang=en_US";
-            if (options.searchOptions) {
-                deepLink += options.searchOptions;
+            if (options.search_options) {
+				searchOptions = '&roomsCount=' + options.search_options['rooms'];
+				if(options.search_options['rooms'] >= 1){
+					searchOptions += this._adultsPerRoom(options.search_options);
+				}
+				
+                deepLink += searchOptions;
             }
             this.attributes.deepLink = deepLink;
         },
+		_adultsPerRoom: function(data){
+			var adultsPerRoom, lastAdult, url='';
+			
+			adultsPerRoom = data['adults'] / data['rooms'];
+			adultsPerRoom = Math.floor(adultsPerRoom);
+			var nrAdults = adultsPerRoom * data['rooms'];
+			
+			if( nrAdults == data['adults']){
+				for (var i = 0; i < data['rooms']; i++){
+					url += '&rooms%5b' + i + '%5d.adultsCount=' + adultsPerRoom;
+				}
+			}else{
+				lastAdult = data['adults'] - nrAdults;
+				for (var i = 0; i < data['rooms']; i++){
+					if(i == data['rooms'] - 1){
+						lastAdult +=adultsPerRoom;
+						url += '&rooms%5b' + i + '%5d.adultsCount=' + lastAdult ;
+					}else{
+						url += '&rooms%5b' + i + '%5d.adultsCount=' + adultsPerRoom;
+					}
+				}
+			}
+			return url;
+		},
+		/*_childrenPerRoom: function(data){
+	
+		},*/		
         _extractImage: function (image) {
             return {
                 thumbnailUrl: image.thumbnailUrl,
