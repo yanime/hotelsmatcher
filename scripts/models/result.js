@@ -41,6 +41,7 @@ define([
 			if( nrAdults == data['adults']){
 				for (var i = 0; i < data['rooms']; i++){
 					url += '&rooms%5b' + i + '%5d.adultsCount=' + adultsPerRoom;
+					url += this._childrenPerRoom(data);
 				}
 			}else{
 				lastAdult = data['adults'] - nrAdults;
@@ -51,13 +52,48 @@ define([
 					}else{
 						url += '&rooms%5b' + i + '%5d.adultsCount=' + adultsPerRoom;
 					}
+					url += this._childrenPerRoom(data);
 				}
 			}
 			return url;
 		},
-		/*_childrenPerRoom: function(data){
-	
-		},*/		
+		_childrenPerRoom: function(data){
+			var link = '', childrenPerRoom, lastChild;
+			
+			if(data['children'] > 0){
+				childrenPerRoom = data['children'] / data['rooms'];
+				childrenPerRoom = Math.floor(childrenPerRoom);
+				var nrChildren = childrenPerRoom * data['rooms'];
+				
+				if( nrChildren == data['children']){
+					for (var i = 0; i < data['rooms']; i++){
+						link += '&rooms%5b' + i + '%5d.childrenCount=' + childrenPerRoom;
+						for( var j = 0; j< childrenPerRoom; j++){
+							link += '&rooms%5b' + i + '%5d.children%5b' + j + '%5d.age=' + 5;
+						}
+					}
+				}else{
+					lastChild = data['children'] - nrChildren;
+					for (var i = 0; i < data['rooms']; i++){
+						if(i == data['rooms'] - 1){
+							lastChild +=childrenPerRoom;
+							link += '&rooms%5b' + i + '%5d.childrenCount=' + lastChild ;
+							for( var j = 0; j< lastChild; j++){
+								link += '&rooms%5b' + i + '%5d.children%5b' + j + '%5d.age=' + 5;
+							}
+						}else{
+							link += '&rooms%5b' + i + '%5d.childrenCount=' + childrenPerRoom;
+							for( var j = 0; j< childrenPerRoom; j++){
+								link += '&rooms%5b' + i + '%5d.children%5b' + j + '%5d.age=' + 5;
+							}
+						}
+					}
+				}
+			}
+			
+			return link;
+			
+		},		
         _extractImage: function (image) {
             return {
                 thumbnailUrl: image.thumbnailUrl,
