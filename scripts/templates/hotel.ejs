@@ -4,6 +4,14 @@
 <div class="hotel photos">
 </div>
 <div class="details-container">
+	<div class="duration hotel details">
+		<span class="label">Duration of stay: </span>
+		<span class="content date-value"><%=obj.search_options.formatted_checkIn%> - <%=obj.search_options.formatted_checkOut%></span>
+	</div>
+	<div class="rooms-choosed hotel details">
+		<span class="label">Guests / Rooms</span>
+		<span class="content room"><%= obj.search_options.guests == 1 ? obj.search_options.guests +' guest' : obj.search_options.guests + ' guests' %>, <%= obj.search_options.rooms == 1 ? obj.search_options.rooms +' room' : obj.search_options.rooms + ' rooms' %></span>
+	</div>
     <div class="location hotel details">
         <span class="label">Location</span>
         <span class="content city point-out"><%= obj.city %>,</span>
