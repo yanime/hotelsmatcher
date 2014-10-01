@@ -34,10 +34,7 @@ define([
             });
         },
         _handleCompareRequest: function () {
-            this.block();
-            App.Search.fetchHotelsNearHotel(this.model).done(function () {
-                App.router.navigate('compare',{trigger: true});
-            });
+            App.router.navigate('compare',{trigger: true});
         },
         _handleClosePage: function () {
             App.router.navigate('index',{trigger: true});
