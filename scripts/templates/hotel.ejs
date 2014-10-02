@@ -18,11 +18,9 @@
         <span class="content district value"><%= obj.address %></span>
     </div>
     <div class="price hotel details">
-        <span class="label">Price range</span>
-        <span class="content currency"></span>
-        <span class="content small price point-out">Not supported</span>
-        <span class="content currency"></span>
-        <span class="content large price point-out">Not supported</span>
+        <span class="label">Price</span>
+        <span class="content currency">$</span>
+        <span class="content small price point-out"><%= obj.highRate %></span>
     </div>
     <% if(obj.facilities) { %>
     <div class="facilities hotel details">

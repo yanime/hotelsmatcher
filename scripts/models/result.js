@@ -19,6 +19,7 @@ define([
             this.pinned = false;
             this.loaded = false;
             this.id = this.attributes.id || this.attributes.hotelId;
+			this.attributes.highRate = Math.floor(options.highRate);
 
             deepLink = this._baseDeepLink + this.id + "/overview?lang=en_US";
             if (options.search_options) {
