@@ -192,7 +192,8 @@ define([
                 id: id,
                 destinationId: id,
                 name: option.name,
-                searchOptions: this.model.getOptionsQueryString()
+                searchOptions: this.model.getOptionsQueryString(),
+				search_options: this.model.attributes
             });
 
             this.model.addResult(hotel);

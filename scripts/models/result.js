@@ -19,7 +19,9 @@ define([
             this.pinned = false;
             this.loaded = false;
             this.id = this.attributes.id || this.attributes.hotelId;
-			this.attributes.highRate = Math.floor(options.highRate);
+			
+			if(options.highRate)
+				this.attributes.highRate = Math.floor(options.highRate);
 
             deepLink = this._baseDeepLink + this.id + "/overview?lang=en_US";
             if (options.search_options) {
@@ -115,26 +117,33 @@ define([
             return facility.amenity.trim();
         },
         _parse: function (res) {
-            var desc = this._parseHelper.html(res.HotelDetails.propertyDescription).text().replace(/<br \/>/g,'');
+			if(res){
+				var desc = this._parseHelper.html(res.HotelDetails.propertyDescription).text().replace(/<br \/>/g,'');
 
-            this.attributes.description = desc;
+				this.attributes.description = desc;
 
-            this.attributes.city = res.HotelSummary.city;
-            this.attributes.address = res.HotelSummary.address1;
+				this.attributes.city = res.HotelSummary.city;
+				this.attributes.address = res.HotelSummary.address1;
 
-            if (res.HotelImages.HotelImage) {
-                this.attributes.images = _.map(res.HotelImages.HotelImage, this._extractImage);
-            }
+				if (res.HotelImages.HotelImage) {
+					this.attributes.images = _.map(res.HotelImages.HotelImage, this._extractImage);
+				}
 
-            if (res.RoomTypes.RoomType) {
-                this.attributes.rooms = _.map(res.RoomTypes.RoomType, this._extractRoom);
-            }
+				if (res.RoomTypes.RoomType) {
+					this.attributes.rooms = _.map(res.RoomTypes.RoomType, this._extractRoom);
+				}
 
-            if (res.PropertyAmenities) {
-                this.attributes.facilities = _.map(res.PropertyAmenities.PropertyAmenity, this._extractFacilities);
-            }
+				if (res.PropertyAmenities) {
+					this.attributes.facilities = _.map(res.PropertyAmenities.PropertyAmenity, this._extractFacilities);
+				}
 
-            this.trigger('result:update');
+				if(res.HotelSummary.highRate && !this.attributes.highRate){
+
+					this.attributes.highRate = (res.HotelSummary.lowRate > 0) ? Math.floor((res.HotelSummary.highRate+res.HotelSummary.lowRate)/2) : Math.floor(res.HotelSummary.highRate);
+				}
+
+				this.trigger('result:update');
+			}
         },
         fetch: function () {
             var url = this._baseURL + this.id;
