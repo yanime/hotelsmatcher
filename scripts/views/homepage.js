@@ -23,8 +23,8 @@ define([
             this._autocompleteView = new AutocompleteView({
                 value: this.model.attributes.destinationName
             });
-            this.listenTo(this._autocompleteView,'select', this._handleSelect);
-
+			this.listenTo(this._autocompleteView,'select', this._handleSelect);
+			
             this.action = this._compareRequest;
 
             this.requestsMappedToType = {
@@ -202,10 +202,14 @@ define([
             App.router.navigate('hotel/'+id, {trigger: true});
         },
         _handleCompare: function (e){
-            var temp, message = "", $err;
+            var temp, message = "", $err, searchInput;
 
             this.model.clearResults();
-
+			searchInput = this.$el.find('input[name="destination"]').val();
+			if(searchInput == ''){
+				delete this.model.attributes.destinationId;
+				delete this.model.attributes.destinationName;
+			}
             e.preventDefault();
 
             // @NOTE assignment
