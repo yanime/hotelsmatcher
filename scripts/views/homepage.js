@@ -25,7 +25,6 @@ define([
             });
 			this.listenTo(this._autocompleteView,'select', this._handleSelect);
 			
-            this.action = this._compareRequest;
 
             this.requestsMappedToType = {
                 "city": this._compareRequest,
@@ -202,8 +201,8 @@ define([
             App.router.navigate('hotel/'+id, {trigger: true});
         },
         _handleCompare: function (e){
-            var temp, message = "", $err, searchInput;
-
+            var temp, message = "", $err, searchInput, destinationId;
+			
             this.model.clearResults();
 			searchInput = this.$el.find('input[name="destination"]').val();
 			if(searchInput == ''){
@@ -211,7 +210,7 @@ define([
 				delete this.model.attributes.destinationName;
 			}
             e.preventDefault();
-
+			destinationId = this.model.attributes.destinationId;
             // @NOTE assignment
             if ( ( temp = this.model.validateQueryParams() ) !== true ) {
                 // display errors for compare forms;
@@ -259,8 +258,13 @@ define([
             }
 
             this.$el.find('.loading').removeClass('hidden');
-
-            this.action();
+			
+			if(!destinationId.match(/-/g)){
+				var option = {id: destinationId, name: this.model.attributes.destinationName};
+				this._hotelRequest(option);
+			}else{
+				this._compareRequest();
+			}
 
             return true;
         }
