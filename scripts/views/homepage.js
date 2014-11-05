@@ -2,218 +2,240 @@
 /*global App*/
 
 define([
-    'jquery',
-    'underscore',
-    'backbone',
-    'layoutmanager',
-    '../views/autocomplete',
-    '../views/compare-options',
-    'models/result',
-    '../vendor/jquery-ui-1.10.4.custom.min'
+	'jquery',
+	'underscore',
+	'backbone',
+	'layoutmanager',
+	'../views/autocomplete',
+	'../views/compare-options',
+	'models/result',
+	'../vendor/jquery-ui-1.10.4.custom.min'
 ], function ($, _, Backbone, Layout, AutocompleteView, CompareOptionsView, Result) {
-    'use strict';
+	'use strict';
 
-    var HomepageView = Backbone.Layout.extend({
-        action: null,
-        manage: true,
-        template: 'homepage',
-        tagName: 'main',
-        className: 'main wrapper clearfix',
+	var HomepageView = Backbone.Layout.extend({
+		action: null,
+		manage: true,
+		template: 'homepage',
+		tagName: 'main',
+		className: 'main wrapper clearfix',
         initialize: function () {
-            this._autocompleteView = new AutocompleteView({
-                value: this.model.attributes.destinationName
-            });
+			this._autocompleteView = new AutocompleteView({
+				value: this.model.attributes.destinationName
+			});
 			this.listenTo(this._autocompleteView,'select', this._handleSelect);
-			
 
-            this.requestsMappedToType = {
-                "city": this._compareRequest,
-                "landmark": this._landmarkRequest,
-                "hotel": this._hotelRequest
-            }
-        },
+
+			this.requestsMappedToType = {
+				"city": this._compareRequest,
+				"landmark": this._landmarkRequest,
+				"hotel": this._hotelRequest
+			}
+		},
         serialize: function () {
-            return this.model.attributes;
-        },
+			return this.model.attributes;
+		},
         beforeRender: function () {
-            this.insertView('#search-wrapper', this._autocompleteView);
-            this.insertView('#comparisson-wrapper', new CompareOptionsView({
-                model: this.model
-            }));
-        },
+			this.insertView('#search-wrapper', this._autocompleteView);
+			this.insertView('#comparisson-wrapper', new CompareOptionsView({
+				model: this.model
+			}));
+		},
         afterRender: function () {
-            var inDate, outDate;
+			var inDate, outDate;
 
-            window.DropdownController.handle();
+			window.DropdownController.handle();
             this.listenTo(window.DropdownController,'set',this._setDropdownValue);
 
-            inDate = this.$el.find('input.in').datepicker({
-                onClose: this._generateScopedDatePickerHandler('checkIn')
-            });
-            inDate.datepicker( "option", "minDate", this.model.attributes.checkIn );
-            this._setValuesInInputs(inDate, this.model.attributes.checkIn);
+			inDate = this.$el.find('input.in').datepicker({
+				onClose: this._generateScopedDatePickerHandler('checkIn')
+			});
 
-            outDate = this.$el.find('input.out').datepicker({
-                onClose: this._generateScopedDatePickerHandler('checkOut')
-            });
+			if (!this.model.attributes.withDate) {
+				this.model.attributes.checkIn = new Date();
+				this.model.attributes.checkOut = this._generateDefaultCheckOutDate();
+			}
+
+			inDate.datepicker("option", "minDate", this.model.attributes.checkIn);
+			this._setValuesInInputs(inDate, this.model.attributes.checkIn);
+
+			outDate = this.$el.find('input.out').datepicker({
+				onClose: this._generateScopedDatePickerHandler('checkOut')
+			});
             outDate.datepicker( "option", "minDate", this.model.attributes.checkOut );
-            this._setValuesInInputs(outDate, this.model.attributes.checkOut);
-        },
-        events: {
-            'click .action.search': '_handleCompare',
-            'click .date.setter': '_showDatePicker',
-            'click .trips.checkbox.categories': '_toggleOptionsContainer',
-            'click .trips.checkbox.no-date': '_toggleNoDate'
-        },
-        _handleSelect: function (option) {
-            this.action = this._buildAction(
-                this.requestsMappedToType[option.target],
-                option
-            );
-        },
-        _setValuesInInputs: function (inputs, date) {
-            inputs[0].value = date.getMonth() + 1;
-            inputs[1].value = date.getDate();
-            inputs[2].value = date.getFullYear();
-        },
-        _showDatePicker: function (e) {
-            var el = e.currentTarget;
-            $.datepicker._showDatepicker(el.parentElement.querySelectorAll('.hasDatepicker')[0]);
-        },
-        _generateScopedDatePickerHandler: function (target) {
-            var that = this;
-			that.model.changed = true; 
+			this._setValuesInInputs(outDate, this.model.attributes.checkOut);
+		},
+		events: {
+			'click .action.search': '_handleCompare',
+			'click .date.setter': '_showDatePicker',
+			'click .trips.checkbox.categories': '_toggleOptionsContainer',
+			'click .trips.checkbox.no-date': '_toggleNoDate'
+		},
+		_handleSelect: function(option) {
+			this.action = this._buildAction(
+					this.requestsMappedToType[option.target],
+					option
+					);
+		},
+		_setValuesInInputs: function(inputs, date) {
+			inputs[0].value = date.getMonth() + 1;
+			inputs[1].value = date.getDate();
+			inputs[2].value = date.getFullYear();
+		},
+		_showDatePicker: function(e) {
+			var el = e.currentTarget;
+			$.datepicker._showDatepicker(el.parentElement.querySelectorAll('.hasDatepicker')[0]);
+		},
+		_generateDefaultCheckOutDate: function() {
+			var d;
+
+			d = new Date();
+			d.setDate(d.getDate() + 1);
+
+			return d;
+		},
+		_generateScopedDatePickerHandler: function(target) {
+			var that = this;
+			that.model.changed = true;
             return function (date) {
-                var res = date.split('/');
-
-                if (res.length > 1) {
-                    this.parentElement.querySelector('.month').value = res[0][0] == 0 ? res[0][1] : res[0];
-                    this.parentElement.querySelector('.day').value = res[1][0] == 0 ? res[1][1] : res[1];
-                    this.parentElement.querySelector('.year').value = res[2];
-                }
-
-                that.model.setDate(target, new Date(date));
-            };
-        },
+				var res = date.split('/');
+				
+				if(target === 'checkIn'){
+					$(this).parent().find('input.in').datepicker("option", "minDate", new Date(date));
+				}else{
+					$(this).parent().find('input.out').datepicker("option", "minDate", new Date(date));
+				}
+				
+				if (res.length > 1) {
+					this.parentElement.querySelector('.month').value = res[0][0] == 0 ? res[0][1] : res[0];
+					this.parentElement.querySelector('.day').value = res[1][0] == 0 ? res[1][1] : res[1];
+					this.parentElement.querySelector('.year').value = res[2];
+				}
+				
+				that.model.setDate(target, new Date(date));
+			};
+		},
         _setDropdownValue: function (data) {
-            switch (data.target) {
-                case 'guests':
-                    if (data.value === "more") {
-                        this.$el.find('.options .hidden').removeClass('hidden');
-                        return;
-                    }
-                    if (data.value === "1") {
-                        // @todo got to also reset values if they were checked
-                        this.$el.find('.options .rooms').addClass('hidden');
-                        this.$el.find('.options .adults').addClass('hidden');
-                        this.$el.find('.options .children').addClass('hidden');
+			switch (data.target) {
+				case 'guests':
+					if (data.value === "more") {
+						this.$el.find('.options .hidden').removeClass('hidden');
+						return;
+					}
+					if (data.value === "1") {
+						// @todo got to also reset values if they were checked
+						this.$el.find('.options .rooms').addClass('hidden');
+						this.$el.find('.options .adults').addClass('hidden');
+						this.$el.find('.options .children').addClass('hidden');
 
-                        this.model.attributes.adults = 1;
-                        this.model.attributes.rooms = 1;
-                        this.model.attributes.children = 0;
-                        this.model.attributes.guests = 1;
-                    }
-                    break;
-                case 'adults':
+						this.model.attributes.adults = 1;
+						this.model.attributes.rooms = 1;
+						this.model.attributes.children = 0;
+						this.model.attributes.guests = 1;
+					}
+					break;
+				case 'adults':
 					this.model.updateGuests( data );
 					break;
-                case 'children':
+				case 'children':
                     this.model.updateGuests( data );
-                    break;
-                case 'destinationId':
+					break;
+				case 'destinationId':
                     this.model.set("destinationName",data.display);
-                default:
-                    this.model.attributes[data.target] = data.value;
-                    break;
-            }
+				default:
+					this.model.attributes[data.target] = data.value;
+					break;
+			}
 
-            this.model.changed = true;
-        },
+			this.model.changed = true;
+		},
         _toggleOptionsContainer: function (e) {
-            var $this = $(e.currentTarget),
-            target = $this.data('target');
+			var $this = $(e.currentTarget),
+					target = $this.data('target');
 
             $('.filters.'+target).toggleClass('hidden');
-            $this.toggleClass('active');
-        },
+			$this.toggleClass('active');
+		},
         _toggleNoDate: function (e) {
-            $(e.currentTarget).toggleClass('active');
-            this.model.attributes.withDate = !this.model.attributes.withDate;
-        },
+			$(e.currentTarget).toggleClass('active');
+			this.model.attributes.withDate = !this.model.attributes.withDate;
+			if (!this.model.attributes.withDate)
+				this.model.attributes.checkIn = this.model.attributes.checkOut = '';
+		},
         _displayAPIError: function (response) {
-            var $error;
+			var $error;
 
             window.scrollTo(0,0);
 
-            $error = this.$el.find('.api.error');
+			$error = this.$el.find('.api.error');
 
-            if (response.reason === "AUTHENTICATION") {
-                $error[0].innerText = "We cannot service this request. Please contact support.";
-            } else {
-                $error[0].innerText = response.readableMessage;
-            }
+			if (response.reason === "AUTHENTICATION") {
+				$error[0].innerText = "We cannot service this request. Please contact support.";
+			} else {
+				$error[0].innerText = response.readableMessage;
+			}
 
-            $error.removeClass('hidden');
+			$error.removeClass('hidden');
 
-            this.$el.find('.loading').addClass('hidden');
-        },
+			this.$el.find('.loading').addClass('hidden');
+		},
         _landmarkRequest: function () {
-            var dest = this.model.attributes.destinationId;
+			var dest = this.model.attributes.destinationId;
             this.model.attributes.destinationId = dest.substring(1, dest.length-1);
-            this._compareRequest();
-        },
+			this._compareRequest();
+		},
         _compareRequest: function () {
-            var model = this.model;
+			var model = this.model;
 
-            if (model.changed) {
+			if (model.changed) {
                 model.fetch().done(function () {
-                    model.changed = false;
-                    App.router.navigate('compare', {
-                        trigger: true
-                    });
-                }).fail(this._displayAPIError.bind(this));
-            } else {
-                App.router.navigate('compare', {
-                    trigger: true
-                });
-            }
-        },
+					model.changed = false;
+					App.router.navigate('compare', {
+						trigger: true
+					});
+				}).fail(this._displayAPIError.bind(this));
+			} else {
+				App.router.navigate('compare', {
+					trigger: true
+				});
+			}
+		},
         _buildAction: function (callback, selectionOption) {
-            var that = this;
+			var that = this;
             return function () {
-                callback.call(that, selectionOption);
-            };
-        },
+				callback.call(that, selectionOption);
+			};
+		},
         _hotelRequest: function (option) {
-            var id = option.id;
+			var id = option.id;
 
-            var hotel = new Result({
-                id: id,
-                destinationId: id,
-                name: option.name,
-                searchOptions: this.model.getOptionsQueryString(),
+			var hotel = new Result({
+				id: id,
+				destinationId: id,
+				name: option.name,
+				searchOptions: this.model.getOptionsQueryString(),
 				search_options: this.model.attributes
-            });
+			});
 
-            this.model.addResult(hotel);
-            this.model.pin(hotel);
+			this.model.addResult(hotel);
+			this.model.pin(hotel);
 
             App.router.navigate('hotel/'+id, {trigger: true});
-        },
+		},
         _handleCompare: function (e){
-            var temp, message = "", $err, searchInput, destinationId;
-			
-            this.model.clearResults();
+			var temp, message = "", $err, searchInput, destinationId;
+
+			this.model.clearResults();
 			searchInput = this.$el.find('input[name="destination"]').val();
 			if(searchInput == ''){
 				delete this.model.attributes.destinationId;
 				delete this.model.attributes.destinationName;
 			}
-            e.preventDefault();
+			e.preventDefault();
 			destinationId = this.model.attributes.destinationId;
-            // @NOTE assignment
+			// @NOTE assignment
             if ( ( temp = this.model.validateQueryParams() ) !== true ) {
-                // display errors for compare forms;
+				// display errors for compare forms;
 				for (var i=0; i< temp.length; i++){
 					var searchEl = this.$el.find('[data-target="'+temp[i]+'"]');
 					switch(temp[i]){
@@ -222,27 +244,32 @@ define([
 							searchEl.addClass('search-error');
 							searchEl.parent().parent().addClass('error-border');
 							break;
-							
+
 						case 'checkIn':
 							message += "Please verify checkin date \n";
 							searchEl.addClass('search-error');
 							break;
-							
+
 						case 'checkOut':
 							message += "Please verify checkout \n";
 							searchEl.addClass('search-error');
 							break;
-						
+
+						case 'calendar':
+							message += "Please verify checkin and checkout dates. Seems checkin date si greater than checkout \n";
+							$('.check-date').addClass('error-border');
+							break;
+
 						case 'rooms':
 							message += "Please verify number of rooms \n";
 							searchEl.addClass('search-error');
 							break;
-						
+
 						case 'adults':
 							message += "Please verify number of adults \n";
 							searchEl.addClass('search-error');
 							break;
-						
+
 						case 'children':
 							message += "Please verify number of children \n";
 							searchEl.addClass('search-error');
@@ -253,22 +280,22 @@ define([
 				$err = this.$el.find('.api.error');
 				$err[0].innerText = message;
 				$err.removeClass('hidden');
-				
-                return false;
-            }
 
-            this.$el.find('.loading').removeClass('hidden');
-			
-			if(!destinationId.match(/-/g)){
+				return false;
+			}
+
+			this.$el.find('.loading').removeClass('hidden');
+
+			if (!destinationId.match(/-/g)) {
 				var option = {id: destinationId, name: this.model.attributes.destinationName};
 				this._hotelRequest(option);
-			}else{
+			} else {
 				this._compareRequest();
 			}
 
-            return true;
-        }
-    });
+			return true;
+		}
+	});
 
-    return HomepageView;
+	return HomepageView;
 });

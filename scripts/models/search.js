@@ -88,12 +88,15 @@ define([
             if ( attr.destinationId === undefined ){
                 errors[errors.length] = 'destinationId';
             }
-            if ( attr.checkIn === undefined ){
+            if ( attr.checkIn === undefined  && attr.withDate){
                 errors[errors.length] = 'checkIn';
             }
-            if ( attr.checkOut === undefined ){
+            if ( attr.checkOut === undefined  && attr.withDate){
                 errors[errors.length] = 'checkOut';
             }
+			if((attr.checkIn > attr.checkOut) && attr.withDate){
+				errors[errors.length] = 'calendar'
+			}
             if ( attr.rooms === undefined ){
                 errors[errors.length] = 'rooms';
             }

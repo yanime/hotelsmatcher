@@ -25,10 +25,13 @@ define([
 
             deepLink = this._baseDeepLink + this.id + "/overview?lang=en_US";
             if (options.search_options) {
-				var checkIn = $.datepicker.formatDate('mm/dd/yy', options.search_options['checkIn']), 
-				    checkOut = $.datepicker.formatDate('mm/dd/yy',options.search_options['checkOut']),
-					dateSearch = '&checkout=' + checkOut.replace(/\//g,'%2F') + '&checkin=' + checkIn.replace(/\//g,'%2F');
+				var dateSearch;
 				
+				if(options.search_options['checkIn'] && options.search_options['checkOut'] ){
+				var checkIn = $.datepicker.formatDate('mm/dd/yy', options.search_options['checkIn']), 
+				    checkOut = $.datepicker.formatDate('mm/dd/yy',options.search_options['checkOut']);
+					dateSearch = '&checkout=' + checkOut.replace(/\//g,'%2F') + '&checkin=' + checkIn.replace(/\//g,'%2F');
+				}
 				searchOptions = dateSearch + '&roomsCount=' + options.search_options['rooms'];
 				if(options.search_options['rooms'] >= 1){
 					searchOptions += this._adultsPerRoom(options.search_options);
