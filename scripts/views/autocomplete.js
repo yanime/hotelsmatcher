@@ -74,13 +74,13 @@ define([
 					if(results == 'hotels'){
 						for(i = 0, l = v[results].length; i < l; i++){
 							r = v[results][i];
-							str += '<li data-value="'+r.HotelID+'" class="'+className+'">'+r.name+this._buildCountryWrapHelper(results, r.country)+'</li>';
+							str += '<li data-value="'+r.HotelID.replace(/\{|\}/g,"")+'" class="'+className+'">'+r.name+this._buildCountryWrapHelper(results, r.country)+'</li>';
 							className = 'action result ' + results;
 						}
 					}else{
 						for(i = 0, l = v[results].length; i < l; i++){
 							r = v[results][i];
-							str += '<li data-value="'+r.destinationId+'" class="'+className+'">'+r.name+this._buildCountryWrapHelper(results, r.country)+'</li>';
+							str += '<li data-value="'+r.destinationId.replace(/\{|\}/g,"")+'" class="'+className+'">'+r.name+this._buildCountryWrapHelper(results, r.country)+'</li>';
 							className = 'action result ' + results;
 						}
 					}
