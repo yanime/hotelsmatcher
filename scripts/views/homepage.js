@@ -24,7 +24,14 @@ define([
 				value: this.model.attributes.destinationName
 			});
 			this.listenTo(this._autocompleteView,'select', this._handleSelect);
-
+			this.model.attributes.check_distance = false;
+			this.model.attributes.facilities ={
+				'wifi': false,
+				'parking': false,
+				'airport_shuttle': false,
+				'fitness_center': false,
+				'spa': false,
+			}
 
 			this.requestsMappedToType = {
 				"city": this._compareRequest,

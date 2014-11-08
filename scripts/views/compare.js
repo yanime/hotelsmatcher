@@ -19,7 +19,7 @@ define([
 
             var results = this.model.results.length,
                 pinned = this.model.pinnedResults.length;
-
+		
             var counts = {
                 page: 0,
                 results: results,
@@ -61,6 +61,13 @@ define([
             this.insertView('.pagination.top', this.topPagination);
             this.insertView('.pagination.bottom', this.bottomPagination);
         },
+		afterRender: function(){
+			if(!this.model.attributes.check_distance){
+				this.$el.find(".trips.distance").addClass('hidden');
+			}else{
+				this.$el.find(".trips.distance").removeClass('hidden')
+			}
+		}
     });
 
     return CompareView;

@@ -196,11 +196,11 @@ define([
         }
     },{
         options: {
-            'wifi': 'wifi-option',
-            'parking': 'parking-option',
-            'airport-shuttle': 'airport-shuttle-option',
-            'fitness-center': 'fitness-center-option',
-            'spa': 'spa-option',
+            'wifi': 'wifi',
+            'parking': 'parking',
+            'airport-shuttle': 'airport_shuttle',
+            'fitness-center': 'fitness_center',
+            'spa': 'spa',
             'family': 'family-option',
             'business': 'business-option',
             'romance': 'romance-option',
