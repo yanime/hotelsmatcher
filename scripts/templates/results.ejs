@@ -9,11 +9,11 @@
     <li class="distance"><span>Distance from area</span></li>
     <li class="photos"><span>Photos</span></li>
     <li class="facilities category title"><span>Facilities</span></li>
-    <li class="wifi option checkbox unchecked"><div class="check"></div><span>Wifi</span></li>
-    <li class="parking option checkbox unchecked"><div class="check"></div><span>Parking</span></li>
-    <li class="airport-shuttle option checkbox unchecked"><div class="check"></div><span>Airport Shuttle</span></li>
-    <li class="fitness-center option checkbox unchecked"><div class="check"></div><span>Fitness Center</span></li>
-    <li class="spa option checkbox unchecked"><div class="check"></div><span>Spa</span></li>
+    <li class="wifi option checkbox <%=(obj.facilities.wifi == true)? 'checked' : 'unchecked' %>"><div class="check"></div><span>Wifi</span></li>
+    <li class="parking option checkbox <%=(obj.facilities.parking == true)? 'checked' : 'unchecked' %>"><div class="check"></div><span>Parking</span></li>
+    <li class="airport-shuttle option checkbox <%=(obj.facilities.airport_shuttle == true)? 'checked' : 'unchecked' %>"><div class="check"></div><span>Airport Shuttle</span></li>
+    <li class="fitness-center option checkbox <%=(obj.facilities.fitness_center == true)? 'checked' : 'unchecked' %>"><div class="check"></div><span>Fitness Center</span></li>
+    <li class="spa option checkbox <%=(obj.facilities.spa == true)? 'checked' : 'unchecked' %>"><div class="check"></div><span>Spa</span></li>
     <li class="see-all facilities"></li>
     <li></li>
 </ul>

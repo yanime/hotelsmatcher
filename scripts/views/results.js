@@ -77,33 +77,6 @@ define([
 			if (this.counts.countPinned) {
 				this._cachedDOMPinned.removeClass('hidden');
 			}
-			var i;
-			for (i in this.model.attributes.facilities) {
-				if (this.model.attributes.facilities[i] == true) {
-					switch (i) {
-						case 'wifi':
-							this.$el.find(".option.checkbox.wifi").removeClass('unchecked').addClass('checked');
-							break;
-
-						case 'parking':
-							this.$el.find(".option.checkbox.parking").removeClass('unchecked').addClass('checked');
-							break;
-
-						case 'airport_shuttle':
-							this.$el.find(".option.checkbox.airport_shuttle").removeClass('unchecked').addClass('checked');
-							break;
-
-						case 'fitness_center':
-							this.$el.find(".option.checkbox.fitness_center").removeClass('unchecked').addClass('checked');
-							break;
-
-						case 'spa':
-							this.$el.find(".option.checkbox.spa").removeClass('unchecked').addClass('checked');
-							break;
-					}
-
-				}
-			}
 		},
 		connectPaginationView: function (paginationView) {
 			this.listenTo(paginationView, 'change', this._handlePaginationChange);
