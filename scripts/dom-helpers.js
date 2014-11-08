@@ -191,12 +191,12 @@ define([
             $this.parent().find('.extra').toggleClass('hidden');
         });
     }
-	$('body').click(function(e){
+	/*$('body').click(function(e){
 		if(!$(e.target).parent().is('ul.hotel.info.column')){
 			if($('div.book.details.floating')){
 				$('div.book.details.floating').addClass('hidden');
 				$('div.book.details.floating').removeAttr('style');
 			}
 		}
-	});
+	});*/
 });
