@@ -109,15 +109,6 @@ define([
                 this._handleArrowUpPress();
                 return;
             }
-            if (e.keyCode === 13){
-                if(this.$el.find('.results > li').length){
-                   // $('#destination-input').val(this.$el.find('.selected')[0].innerHTML.split('<span')[0]);
-                    //var el = this.$el.find('.selected')[0];
-                    //window.DropdownController._set(this.$el.find('.selected')[0].innerHTML,{value: $(el).data('value')});
-                    //this.$el.find('.result').remove();
-                }
-                return false;
-            }
             this.$el.find('.result').remove();
             if(this.currentSearch === res || !res || res.length < 3){
                 return ;
