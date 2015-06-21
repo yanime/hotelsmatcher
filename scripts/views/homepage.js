@@ -30,8 +30,8 @@ define([
 				'parking': false,
 				'airport_shuttle': false,
 				'fitness_center': false,
-				'spa': false,
-			}
+				'spa': false
+			};
 
 			this.requestsMappedToType = {
 				"city": this._compareRequest,
@@ -76,8 +76,15 @@ define([
 			'click .action.search': '_handleCompare',
 			'click .date.setter': '_showDatePicker',
 			'click .trips.checkbox.categories': '_toggleOptionsContainer',
-			'click .trips.checkbox.no-date': '_toggleNoDate'
+			'click .trips.checkbox.no-date': '_toggleNoDate',
+            'keypress': '_stopPropag'
 		},
+        _stopPropag: function(e){
+            if(e.keyCode === 13){
+                e.stopPropagation();
+                e.preventDefault();
+            }
+        },
 		_handleSelect: function(option) {
 			this.action = this._buildAction(
 					this.requestsMappedToType[option.target],

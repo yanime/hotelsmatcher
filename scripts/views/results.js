@@ -24,7 +24,7 @@ define([
 			this.lightboxView = new LightboxView();
 		},
 		events: {
-			'mouseover .result .header': '_displayLightbox',
+			'mouseover .result .header': '_displayLightbox'
 		},
 		_insertViews: function (collection, where, forceRender) {
 			var i, l = collection.length, v, view;
@@ -102,12 +102,10 @@ define([
 			}
 		},
 		_handlePin: function (view) {
+            console.log('pin');
 			var element = view.$el;
 			var hotel = view.model;
 
-			element.removeClass('unpinned');
-			element.addClass('pinned');
-			element.remove();
 			this._cachedDOMPinned.append(element);
 
 			this.model.pin(view.model);
@@ -119,8 +117,6 @@ define([
 			}
 
 			this._updateCountsFor(PIN);
-
-			this.trigger('result:pin');
 		},
 		_updateCountsFor: function (action) {
 			this.counts.countPinned += action;
@@ -149,7 +145,6 @@ define([
 			if (this.counts.countPinned === 0) {
 				this._cachedDOMPinned.addClass('hidden');
 			}
-			this.trigger('result:pin');
 		},
 		_displayLightbox: function (e) {
 			var parent = e.currentTarget.parentElement,

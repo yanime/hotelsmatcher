@@ -66,7 +66,7 @@ define([
         },
         _handlePaginationNext: function (e) {
             if (this.counts.page < this.counts.countPages - 1) {
-                this.counts.page++
+                this.counts.page++;
                 this.trigger('change', this.counts.page);
                 this.syncDisplay(this.counts.page);
             }

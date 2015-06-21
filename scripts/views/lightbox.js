@@ -4,7 +4,7 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'layoutmanager',
+    'layoutmanager'
 ], function ($, _, Backbone, Layout) {
     'use strict';
 
@@ -13,7 +13,8 @@ define([
         template: 'lightbox',
         className: "book details floating hidden",
         events: {
-			'click .close': 'close'
+			'click .close': 'close',
+            'click .pin': '_handleResultPinned'
         },
         handle: function (model) {
             this.model = model;
@@ -24,6 +25,26 @@ define([
             this.$el.css({
                 left: leftPX
             });
+        },
+        _handlePin: function () {
+            this.model.set({'pinned': true});
+            this.model.pinned = true;
+            this.render();
+           // this.trigger('result:pin');
+        },
+        _handleUnpin: function () {
+            this.model.set({'pinned': false});
+            this.render();
+           // this.trigger('result:pin');
+        },
+        _handleResultPinned: function () {
+            if (this.model.get('pinned')) {
+                this._handleUnpin();
+            } else {
+                this._handlePin();
+            }
+            console.log(this.model);
+            this.model.trigger('result:pinUpdate');
         },
 		close: function(){
 			this.$el.addClass('hidden');

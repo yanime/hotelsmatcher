@@ -23,6 +23,7 @@ define([
         },
         initialize: function () {
             this.listenTo(this.model, 'result:update', this._handleModelDetailsLoaded);
+            this.listenTo(this.model, 'result:pinUpdate', this._handleResultPinned);
 
             this._imagesView = new HotelImages({
                 useThumbnails: true
@@ -43,11 +44,12 @@ define([
             this._imagesView.render();
         },
         _handleResultPinned: function () {
-            if (this.model.pinned) {
+            if (this.model.get('pinned')) {
                 this.trigger('result:unpin', this);
             } else {
                 this.trigger('result:pin', this);
             }
+            this.render();
         }
     });
 

@@ -6,7 +6,7 @@ define([
     'moment',
     'collections/results',
     'models/result',
-    'models/api-call',
+    'models/api-call'
 ], function (_, Backbone, momentjs, Results, Result, ApiCall) {
     'use strict';
     var today = new Date();

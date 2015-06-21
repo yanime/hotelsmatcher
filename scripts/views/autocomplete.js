@@ -4,7 +4,7 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'layoutmanager',
+    'layoutmanager'
 ], function ($, _, Backbone, Layout) {
     'use strict';
 
@@ -20,10 +20,19 @@ define([
         },
         events: {
             'keyup #destination-input': '_handleSearch',
+            'mouseenter .results li': '_addSelectedClass',
+            'mouseleave .results li': '_removeSelectedClass',
+            'keyup .dropdown li': '_handleArrowsPress',
             'dropdown:set .dropdown li': '_handleValueSet'
         },
+        _addSelectedClass: function(e){
+            $(e.currentTarget).addClass('selected');
+        },
+        _removeSelectedClass: function(e){
+            $(e.currentTarget).removeClass('selected');
+        },
         _handleValueSet: function (e) {
-            var id, el = e.currentTarget, optionClass = "landmark";
+            var el = e.currentTarget, optionClass = "landmark";
 
             if ( el.className.indexOf('hotels') !== -1 ) {
                 optionClass = 'hotel';
@@ -38,6 +47,39 @@ define([
                 target: optionClass,
                 name: el.innerHTML.split('<span')[0]
             });
+        },
+        _handleArrowDownPress: function(){
+            var $current;
+            var $listItems = this.$el.find('.results > li');
+            var $selected = $listItems.filter('.selected');
+
+            $listItems.removeClass('selected');
+
+
+            if ( ! $selected.length || $selected.is(':last-child') ) {
+                $current = $listItems.eq(0);
+            }
+            else {
+                $current = $selected.next();
+            }
+
+            $current.addClass('selected');
+
+        },
+        _handleArrowUpPress: function(){
+            var $current;
+            var $listItems = this.$el.find('.results > li');
+            var $selected = $listItems.filter('.selected');
+
+            $listItems.removeClass('selected');
+            if ( ! $selected.length || $selected.is(':first-child') ) {
+                $current = $listItems.last();
+            }
+            else {
+                $current = $selected.prev();
+            }
+
+            $current.addClass('selected');
         },
         afterRender: function () {
             this._searchHelper = this.$el.find('.search.helper');
@@ -59,6 +101,23 @@ define([
         },
         _handleSearch: function ( e ) {
             var res = e.currentTarget.value;
+            if (e.keyCode === 40){
+                this._handleArrowDownPress();
+                return;
+            }
+            if (e.keyCode === 38){
+                this._handleArrowUpPress();
+                return;
+            }
+            if (e.keyCode === 13){
+                if(this.$el.find('.results > li').length){
+                   // $('#destination-input').val(this.$el.find('.selected')[0].innerHTML.split('<span')[0]);
+                    //var el = this.$el.find('.selected')[0];
+                    //window.DropdownController._set(this.$el.find('.selected')[0].innerHTML,{value: $(el).data('value')});
+                    //this.$el.find('.result').remove();
+                }
+                return false;
+            }
             this.$el.find('.result').remove();
             if(this.currentSearch === res || !res || res.length < 3){
                 return ;

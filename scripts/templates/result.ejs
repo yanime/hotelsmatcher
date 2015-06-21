@@ -3,8 +3,8 @@
 		<%= obj.name %>
     </li>
     <li class="radio trips pin">
-        <input type="hidden" name="pinned" value="false" />
-        <span class="label">hotel pinned</span>
+        <input type="hidden" name="pinned" value="<%=obj.pinned%>" />
+        <span class="label"><%=obj.pinned ? 'hotel pinned' : 'hotel unpined' %></span>
         <div class="check"></div>
     </li>
     <li class="price"><span> $ </span><span class="value"><%=obj.highRate %></span></li>

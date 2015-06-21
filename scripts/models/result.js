@@ -13,6 +13,10 @@ define([
         _parseHelper: $('<textarea/>'),
         manage: true,
         template: 'results',
+        defaults: {
+            "pinned":  false
+        },
+
         initialize: function (options) {
             var deepLink, searchOptions, kidsPerRoom = 3, lastKid;
 

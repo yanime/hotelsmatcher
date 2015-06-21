@@ -1,7 +1,7 @@
 /*global define */
 define([
     'underscore',
-    'backbone',
+    'backbone'
 ], function (_, Backbone) {
     'use strict';
 
@@ -67,7 +67,7 @@ define([
             data.display = val;
             data.value = dataset.value;
 
-            res.html(val).trigger('change');
+            res.html(value).trigger('change');
             this.$el.find('input.input').val(val);
             this.trigger('set',data);
         },
@@ -92,7 +92,7 @@ define([
                 } else {
                     that._set(e.currentTarget.innerHTML, e.currentTarget.dataset);
                 }
-				
+
                 $el.parent().find('.hidden').removeClass('hidden');
 
                 if ( $el.hasClass('preset') ) {
@@ -104,6 +104,43 @@ define([
 
                 $el.trigger(jQuery.Event( "dropdown:set" ));
             });
+            this.$el.on('keyup', function (e) {
+                if (e.keyCode === 13){
+                    var $el = $(that.$el.find('.selected')[0]);
+                    that._set(that.$el.find('.selected')[0].innerHTML,{value: $el.data('value')});
+                    $el.parent().find('.hidden').removeClass('hidden');
+
+                    if ( $el.hasClass('preset') ) {
+                        $el.addClass('hidden');
+                    }
+
+                    that.hide();
+                    e.stopPropagation();
+
+                    $el.trigger(jQuery.Event( "dropdown:set" ));
+                }
+            });
+        },
+        _setValueOnSpan: function(e, that){
+            var val, $el = $(e.currentTarget);
+
+            // @NOTE assignment
+            if ( ( val = $el.find('.value')[0] ) ) {
+                that._set(val.innerHTML, val.dataset.id);
+            } else {
+                that._set(e.currentTarget.innerHTML, e.currentTarget.dataset);
+            }
+
+            $el.parent().find('.hidden').removeClass('hidden');
+
+            if ( $el.hasClass('preset') ) {
+                $el.addClass('hidden');
+            }
+
+            that.hide();
+            e.stopPropagation();
+
+            $el.trigger(jQuery.Event( "dropdown:set" ));
         },
         handle: function () {
             var that = this;

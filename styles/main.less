@@ -730,12 +730,13 @@ form.trips{
             }
             li.action{
                 .mixin-hoverable;
-                &:hover{
-                    background: @active-blue;
+
+                &.selected{
+                  background: @active-blue;
+                  color: #FFF;
+                  span.label{
                     color: #FFF;
-                    span.label{
-                        color: #FFF;
-                    }
+                  }
                 }
                 &.top{
                     &:hover{
@@ -788,7 +789,14 @@ form.trips{
             font-style: italic;
         }
         .value{
-            float: left;
+            width: 99%;
+            .label{
+                color: #aaa;
+                float: right;
+                font-size: .75em;
+                line-height: 2.6em;
+                margin: 0;
+            }
         }
         .arrow{
             .mixin-sprite;

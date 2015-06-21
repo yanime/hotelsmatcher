@@ -5,7 +5,7 @@ define(['layoutmanager', 'routes/hotels', 'models/search'], function (LayoutMana
         Search: new Search(),
         Templates: {},
         layout: ( new Backbone.Layout({
-            template: 'main',
+            template: 'main'
         })),
         start: function () {
             App.layout.render();
