@@ -28,14 +28,13 @@ define([
         },
         _handlePin: function () {
             this.model.set({'pinned': true});
-            this.model.pinned = true;
             this.render();
-           // this.trigger('result:pin');
+            this.trigger('result:pin');
         },
         _handleUnpin: function () {
             this.model.set({'pinned': false});
             this.render();
-           // this.trigger('result:pin');
+            this.trigger('result:pin');
         },
         _handleResultPinned: function () {
             if (this.model.get('pinned')) {

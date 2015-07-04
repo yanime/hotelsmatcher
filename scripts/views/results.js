@@ -6,12 +6,12 @@ define([
 	'backbone',
 	'layoutmanager',
 	'views/result',
-	'views/lightbox',
+	'views/lightbox'
 ], function ($, _, Backbone, Layout, ResultView, LightboxView) {
 	'use strict';
 
 	var PIN = 1,
-			UNPIN = -1;
+        UNPIN = -1;
 
 	var ResultsView = Backbone.View.extend({
 		manage: true,
@@ -52,7 +52,6 @@ define([
 
 				this.listenTo(view, 'result:pin', this._handlePin);
 				this.listenTo(view, 'result:unpin', this._handleUnpin);
-				this.listenTo(view, 'result:lightbox', this._handleLightboxRequest);
 			}
 		},
 		_addPinnedResults: function () {
@@ -62,9 +61,9 @@ define([
 			var arr = this.model.getUnpinned(
 					this.counts.countUnpinnedPerPage,
 					this.counts.page * this.counts.countUnpinnedPerPage
-					);
+            );
 
-			this._insertViews(arr, undefined, forceRender);
+			this._insertViews(arr, false, forceRender);
 		},
 		beforeRender: function () {
 			this._addPinnedResults();
@@ -82,18 +81,18 @@ define([
 			this.listenTo(paginationView, 'change', this._handlePaginationChange);
 			paginationView.listenTo(this, 'result:pin', paginationView._handlePinnedAction);
 		},
-		_handlePaginationChange: function (newPage) {
+		_handlePaginationChange: function () {
 			var views = this.getViews();
-			var i = 1;
-			var temp;
+			var i = 0;
 
-			while (i <= this.counts.countUnpinnedPerPage) {
-				// @note assignment
-				if ((temp = views._wrapped[6 - i])) {
-					temp.remove();
+			while (i < views._wrapped.length) {
+				if (views._wrapped[i].model && !views._wrapped[i].model.get('pinned')) {
+					views._wrapped[i].remove();
 				}
 				i++;
 			}
+
+            console.log('pagination');
 
 			this._addPagedUnpinnedResults(true);
 
@@ -102,9 +101,7 @@ define([
 			}
 		},
 		_handlePin: function (view) {
-            console.log('pin');
 			var element = view.$el;
-			var hotel = view.model;
 
 			this._cachedDOMPinned.append(element);
 
@@ -137,7 +134,7 @@ define([
 			this.model.unpin(hotel);
 			this.model.results.remove(hotel);
 
-			var pos = this.countResultsPerPage * this.page + this.countUnpinnedPerPage;
+			var pos = 6 * this.page + this.countUnpinnedPerPage;
 			this.model.results.add(hotel, {at: pos});
 
 			this._updateCountsFor(UNPIN);

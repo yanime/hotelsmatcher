@@ -52,7 +52,7 @@ define([
 
             while ( found < count && i < failsafe ){
                 v = this.results.at(i);
-                if (!v.pinned) {
+                if (!v.attributes.pinned) {
                     if (skip) {
                         skip--;
                     } else {
@@ -65,14 +65,14 @@ define([
             return res;
         },
         pin: function (result) {
-            result.pinned = true;
+            result.set({pinned: true});
             this.pinnedResults.push(result);
         },
         unpin: function (result) {
             for (var i = 0, l = this.pinnedResults.length; i < l; i ++) {
                 if (this.pinnedResults[i] === result) {
                     this.pinnedResults.splice(i,1);
-                    result.pinned = false;
+                    result.set({pinned: false});
                     return true;
                 }
             }

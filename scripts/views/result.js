@@ -15,12 +15,6 @@ define([
         events: {
             'click .pin': '_handleResultPinned'
         },
-        className: function () {
-            if (this.model.pinned) {
-                return 'hotel info column fixed pinned';
-            }
-            return 'hotel info column fixed unpinned';
-        },
         initialize: function () {
             this.listenTo(this.model, 'result:update', this._handleModelDetailsLoaded);
             this.listenTo(this.model, 'result:pinUpdate', this._handleResultPinned);
@@ -33,6 +27,11 @@ define([
             return this.model.attributes;
         },
         beforeRender: function () {
+            if (this.model.get('pinned')) {
+                this.el.className = 'hotel info column fixed pinned';
+            } else {
+                this.el.className = 'hotel info column fixed unpinned';
+            }
             this.insertView('.photos', this._imagesView);
         },
         refreshEvents: function () {

@@ -6,7 +6,7 @@ define([
     'layoutmanager',
     '../views/homepage',
     '../views/compare',
-    '../views/hotel-page',
+    '../views/hotel-page'
 ], function ($, Backbone, LM, HomepageView, CompareView, HotelPage) {
     'use strict';
 
