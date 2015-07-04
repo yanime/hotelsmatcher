@@ -92,8 +92,6 @@ define([
 				i++;
 			}
 
-            console.log('pagination');
-
 			this._addPagedUnpinnedResults(true);
 
 			if (window.scrollY > 373) {
@@ -114,6 +112,9 @@ define([
 			}
 
 			this._updateCountsFor(PIN);
+            if(this.lightboxView){
+                this.lightboxView.close();
+            }
 		},
 		_updateCountsFor: function (action) {
 			this.counts.countPinned += action;
@@ -142,14 +143,25 @@ define([
 			if (this.counts.countPinned === 0) {
 				this._cachedDOMPinned.addClass('hidden');
 			}
-		},
+            if(this.lightboxView){
+                this.lightboxView.close();
+            }
+        },
 		_displayLightbox: function (e) {
 			var parent = e.currentTarget.parentElement,
 					id = parent.id,
 					marginLeft = $(parent).position().left;
 
 			this.lightboxView.handle(App.Search.results.get(id));
-			this.lightboxView.displayAt(marginLeft);
+
+            //strange behavior when the div is rendered in the container of pinned results
+            //todo find why the offset left is different
+            if(this.lightboxView.getState()){
+                this.lightboxView.displayAt(marginLeft + 173);
+            } else {
+                this.lightboxView.displayAt(marginLeft);
+            }
+
 		}
 	});
 

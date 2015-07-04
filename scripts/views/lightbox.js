@@ -27,14 +27,13 @@ define([
             });
         },
         _handlePin: function () {
-            this.model.set({'pinned': true});
             this.render();
-            this.trigger('result:pin');
         },
         _handleUnpin: function () {
-            this.model.set({'pinned': false});
             this.render();
-            this.trigger('result:pin');
+        },
+        getState: function(){
+            return this.model.get('pinned');
         },
         _handleResultPinned: function () {
             if (this.model.get('pinned')) {
@@ -42,7 +41,6 @@ define([
             } else {
                 this._handlePin();
             }
-            console.log(this.model);
             this.model.trigger('result:pinUpdate');
         },
 		close: function(){
