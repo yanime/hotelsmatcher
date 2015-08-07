@@ -11,11 +11,9 @@ if( obj.id !== undefined ) {
         <div class="check"></div>
     </li>
     <li class="photos">
-        <button class="previous"></button>
         <div class="images">
-            <img src="http://lorempixel.com/158/82/city" />
+            <img src="<%=obj.images[0].thumbnailUrl%>" height="90px" width="115px" alt="hotel image" />
         </div>
-        <button class="next"></button>
     </li>
     <li class="price"><span>Price </span><span class="currency"> $ </span><span class="value"><%=obj.highRate %></span></li>
     <li class="book"><a href="<%=obj.deepLink %>" target="_blank" class="button action book" title="Book for this hotel">Book now</a></li>

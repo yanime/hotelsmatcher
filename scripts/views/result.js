@@ -41,6 +41,7 @@ define([
         _handleModelDetailsLoaded: function () {
             this._imagesView.model = this.model.attributes.images;
             this._imagesView.render();
+            this.render();
         },
         _handleResultPinned: function () {
             if (this.model.get('pinned')) {

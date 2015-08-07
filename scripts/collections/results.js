@@ -17,7 +17,8 @@ define([
                 'hotelRating',
                 'name',
                 'highRate',
-				'search_options'
+				'search_options',
+                'facilities'
 			);
 
             result.id = data.hotelId;

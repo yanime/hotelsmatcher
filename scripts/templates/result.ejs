@@ -38,11 +38,11 @@
     <li class="photos">
     </li>
     <li class="facilities category title">Facilities</li>
-    <li class="wifi option"><span class="checkbox unchecked">true</span></li>
-    <li class="parking option"><span class="checkbox unchecked">false</span></li>
-    <li class="airport-shuttle option"><span class="checkbox unchecked">true</span></li>
-    <li class="fitness-center option"><span class="checkbox unchecked">true</span></li>
-    <li class="spa option"><span class="checkbox unchecked">true</span></li>
+    <% if((obj.search_options.facilities.wifi == true)){%> <li class="wifi option"><span class="checkbox <%=obj.facilities.indexOf("Free WiFi")>=0 ? 'checked' : 'unchecked'%> "></span></li><%}%>
+    <% if((obj.search_options.facilities.parking == true)){%> <li class="parking option"><span class="checkbox <%=obj.facilities.indexOf("Free self parking")>=0 ? 'checked' : 'unchecked'%> "></span></li><%}%>
+    <% if((obj.search_options.facilities.airport_shuttle == true)){%> <li class="airport-shuttle option"><span class="checkbox <%=obj.facilities.indexOf("Airport transportation (surcharge)")>=0 ? 'checked' : 'unchecked'%> "></span></li><%}%>
+    <% if((obj.search_options.facilities.fitness_center == true)){%> <li class="fitness-center option"><span class="checkbox <%=obj.facilities.indexOf("24-hour fitness facilities")>=0 ? 'checked' : 'unchecked'%> "></span></li><%}%>
+    <% if((obj.search_options.facilities.spa == true)){%> <li class="spa option"><span class="checkbox <%=obj.facilities.indexOf("Full-service spa")>=0 ? 'checked' : 'unchecked'%> "></span></li><%}%>
     <li class="see-all"></li>
     <li class="book"><a href="<%=obj.deepLink %>" target="_blank" class="button action book" title="Book for this hotel">Book now</a></li>
 </ul>

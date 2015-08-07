@@ -77,6 +77,7 @@ define([
 			'click .date.setter': '_showDatePicker',
 			'click .trips.checkbox.categories': '_toggleOptionsContainer',
 			'click .trips.checkbox.no-date': '_toggleNoDate',
+            'click .facilities-container.filters > ul > li.option': 'test',
             'keypress': '_stopPropag'
 		},
         _stopPropag: function(e){
@@ -99,6 +100,9 @@ define([
 		_showDatePicker: function(e) {
 			var el = e.currentTarget;
 			$.datepicker._showDatepicker(el.parentElement.querySelectorAll('.hasDatepicker')[0]);
+		},
+        test: function(e) {
+            console.log(e);
 		},
 		_generateDefaultCheckOutDate: function() {
 			var d;

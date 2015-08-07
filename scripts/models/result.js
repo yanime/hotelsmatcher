@@ -44,6 +44,7 @@ define([
                 deepLink += searchOptions;
             }
             this.attributes.deepLink = deepLink;
+            this.attributes.facilities = [];
         },
 		_adultsPerRoom: function(data){
 			var adultsPerRoom, lastAdult, url='';
