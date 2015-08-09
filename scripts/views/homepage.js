@@ -110,10 +110,8 @@ define([
 		},
         _generateCheckOutDate: function() {
             var d;
-            console.log(this.model.attributes.checkIn);
             d = new Date(this.model.attributes.checkIn);
             d.setDate(d.getDate() + 1);
-            console.log(d);
 
             return d;
         },
