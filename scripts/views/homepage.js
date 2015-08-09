@@ -55,7 +55,7 @@ define([
             this.listenTo(window.DropdownController,'set',this._setDropdownValue);
 
 			inDate = this.$el.find('input.in').datepicker({
-				onClose: this._generateScopedDatePickerHandler('checkIn')
+                onSelect: this._generateScopedDatePickerHandler('checkIn')
 			});
 
 			if (!this.model.attributes.withDate) {
@@ -63,13 +63,13 @@ define([
 				this.model.attributes.checkOut = this._generateDefaultCheckOutDate();
 			}
 
-			inDate.datepicker("option", "minDate", this.model.attributes.checkIn);
+			inDate.datepicker("option", "minDate", new Date());
 			this._setValuesInInputs(inDate, this.model.attributes.checkIn);
 
 			outDate = this.$el.find('input.out').datepicker({
-				onClose: this._generateScopedDatePickerHandler('checkOut')
+				onSelect: this._generateScopedDatePickerHandler('checkOut')
 			});
-            outDate.datepicker( "option", "minDate", this.model.attributes.checkOut );
+            outDate.datepicker( "option", "minDate", this._generateDefaultCheckOutDate() );
 			this._setValuesInInputs(outDate, this.model.attributes.checkOut);
 		},
 		events: {
@@ -77,7 +77,6 @@ define([
 			'click .date.setter': '_showDatePicker',
 			'click .trips.checkbox.categories': '_toggleOptionsContainer',
 			'click .trips.checkbox.no-date': '_toggleNoDate',
-            'click .facilities-container.filters > ul > li.option': 'test',
             'keypress': '_stopPropag'
 		},
         _stopPropag: function(e){
@@ -101,9 +100,6 @@ define([
 			var el = e.currentTarget;
 			$.datepicker._showDatepicker(el.parentElement.querySelectorAll('.hasDatepicker')[0]);
 		},
-        test: function(e) {
-            console.log(e);
-		},
 		_generateDefaultCheckOutDate: function() {
 			var d;
 
@@ -112,17 +108,24 @@ define([
 
 			return d;
 		},
+        _generateCheckOutDate: function() {
+            var d;
+            console.log(this.model.attributes.checkIn);
+            d = new Date(this.model.attributes.checkIn);
+            d.setDate(d.getDate() + 1);
+            console.log(d);
+
+            return d;
+        },
 		_generateScopedDatePickerHandler: function(target) {
 			var that = this;
 			that.model.changed = true;
             return function (date) {
 				var res = date.split('/');
-				
-				if(target === 'checkIn'){
-					$(this).parent().find('input.in').datepicker("option", "minDate", new Date(date));
-				}else{
-					$(this).parent().find('input.out').datepicker("option", "minDate", new Date(date));
-				}
+
+				//else{
+				//	$(this).parent().find('input.out').datepicker("option", "minDate", new Date(date));
+				//}
 				
 				if (res.length > 1) {
 					this.parentElement.querySelector('.month').value = res[0][0] == 0 ? res[0][1] : res[0];
@@ -131,6 +134,10 @@ define([
 				}
 				
 				that.model.setDate(target, new Date(date));
+                if(target === 'checkIn'){
+                    that._setValuesInInputs(that.$el.find('input.out').datepicker(), that._generateCheckOutDate());
+                    that.model.setDate('checkOut', that._generateCheckOutDate());
+                }
 			};
 		},
         _setDropdownValue: function (data) {
