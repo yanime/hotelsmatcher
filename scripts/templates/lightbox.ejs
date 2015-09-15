@@ -5,7 +5,7 @@ if( obj.id !== undefined ) {
     <li class="header">
         <a href="#hotel/<%=obj.hotelId %>"><%= obj.name %></a>
     </li>
-    <li class="radio trips pin">
+    <li class="radio trips pin <%= obj.pinned ? 'checked' : 'unchecked'%>">
         <input type="hidden" name="pinned" value="<% obj.pinned %>" />
         <span class="label"><%= obj.pinned ? 'hotel pinned' : 'hotel unpinned'%></span>
         <div class="check"></div>
