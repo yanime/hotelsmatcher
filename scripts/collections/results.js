@@ -9,6 +9,7 @@ define([
 
     var ResultsCollection = Backbone.Collection.extend({
         model: ResultModel,
+        sortType: 'highRate',
         addSearchResult: function (data) {
             var result = _.pick(data,
                 'hotelId',
@@ -24,6 +25,13 @@ define([
             result.id = data.hotelId;
 
             this.add(result, {merge: true});
+        },
+        comparator: function(item) {
+            return item.attributes[this.sortType]
+        },
+        sortModels: function(sortType){
+            this.sortType = sortType;
+            this.sort();
         }
     });
 

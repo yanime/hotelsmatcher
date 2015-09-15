@@ -81,6 +81,10 @@ define([
 			this.listenTo(paginationView, 'change', this._handlePaginationChange);
 			paginationView.listenTo(this, 'result:pin', paginationView._handlePinnedAction);
 		},
+		sortHotelsByType: function (sortType) {
+            this.model.sortResults(sortType);
+            this._handlePaginationChange();
+		},
 		_handlePaginationChange: function () {
 			var views = this.getViews();
 			var i = 0;

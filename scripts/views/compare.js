@@ -48,10 +48,20 @@ define([
             this.topPagination.listenTo(this.bottomPagination, 'change', this.topPagination.syncDisplay);
         },
         events: {
-            'click .button.edit': "_handleChangeSearch"
+            'click .button.edit': "_handleChangeSearch",
+            'click .push-button': "_handleSortChange"
         },
         _handleChangeSearch: function () {
             App.router.navigate('index',{trigger: true});
+        },
+        _handleSortChange: function (e) {
+            var currentElement = e.currentTarget;
+            var type = currentElement.dataset.type;
+            if (!$(currentElement).hasClass('active')){
+                $('.push-button.active').removeClass('active');
+                $(currentElement).addClass('active');
+                this.resultsView.sortHotelsByType(type);
+            }
         },
         serialize: function () {
             return this.model.attributes;

@@ -78,6 +78,9 @@ define([
             }
             return false;
         },
+        sortResults: function(sortType){
+            this.results.sortModels(sortType);
+        },
         formatDate: function (date) {
             return ( date.getMonth() ) + 1 + '/' + date.getDate() + '/' + date.getFullYear();
         },
