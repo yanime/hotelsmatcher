@@ -124,13 +124,13 @@ define([
 					if(results == 'hotels'){
 						for(i = 0, l = v[results].length; i < l; i++){
 							r = v[results][i];
-							str += '<li data-value="'+r.HotelID.replace(/\{|\}/g,"")+'" class="'+className+'">'+r.name+this._buildCountryWrapHelper(results, r.country)+'</li>';
+							str += '<li data-value="'+r.HotelID.replace(/\{|\}/g,"")+'" class="'+className+'">'+r.name+', '+r.country+this._buildCountryWrapHelper(results)+'</li>';
 							className = 'action result ' + results;
 						}
 					}else{
 						for(i = 0, l = v[results].length; i < l; i++){
 							r = v[results][i];
-							str += '<li data-value="'+r.destinationId.replace(/\{|\}/g,"")+'" class="'+className+'">'+r.name+this._buildCountryWrapHelper(results, r.country)+'</li>';
+							str += '<li data-value="'+r.destinationId.replace(/\{|\}/g,"")+'" class="'+className+'">'+r.name+', '+r.country+this._buildCountryWrapHelper(results)+'</li>';
 							className = 'action result ' + results;
 						}
 					}
@@ -141,20 +141,20 @@ define([
             }
             return '<li class="result separated" >No results found</li>';
         },
-        _buildCountryWrapHelper: function (type, country) {
+        _buildCountryWrapHelper: function (type) {
             var res = '';
             switch (type) {
                 case 'cities':
-                    res = 'City,';
+                    res = 'City';
                     break;
                 case 'hotels':
-                    res = 'Hotel, ';
+                    res = 'Hotel';
                     break;
                 case 'landmarks':
-                    res = 'Landmark, ';
+                    res = 'Landmark';
                     break;
             }
-            return '<span class="label">'+res+country+'</span>';
+            return '<span class="label">'+res+'</span>';
         }
     });
 
