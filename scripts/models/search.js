@@ -184,7 +184,7 @@ define([
             throw new Error('09061250 something went wrong');
         },
         _parse: function (data) {
-            var results, hotels;
+            var hotels;
             hotels = data.HotelList.HotelSummary;
             if (hotels.length) {
                 for (var i = 0, l = hotels.length; i < l; i ++) {
