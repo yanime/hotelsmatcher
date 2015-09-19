@@ -90,17 +90,22 @@ define([
 			var i = 0;
 
 			while (i < views._wrapped.length) {
-				if (views._wrapped[i].model && !views._wrapped[i].model.get('pinned')) {
+
+				if (views._wrapped[i].model &&
+                    !views._wrapped[i].model.get('pinned') &&
+                    views._wrapped[i].cid !== this.lightboxView.cid) {
 					views._wrapped[i].remove();
 				}
 				i++;
 			}
 
 			this._addPagedUnpinnedResults(true);
-
 			if (window.scrollY > 373) {
 				window.scrollTo(0, 373);
 			}
+            if(this.lightboxView){
+                this.lightboxView.close();
+            }
 		},
 		_handlePin: function (view) {
 			var element = view.$el;

@@ -309,7 +309,7 @@ define([
 
 			this.$el.find('.loading').removeClass('hidden');
 
-			if (!destinationId.match(/-/g)) {
+			if (!destinationId.toString().match(/-/g)) {
 				var option = {id: destinationId, name: this.model.attributes.destinationName};
 				this._hotelRequest(option);
 			} else {

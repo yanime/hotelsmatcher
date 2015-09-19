@@ -15,7 +15,7 @@ define([
         className: 'main wrapper clearfix',
         template: 'hotel-page',
         events: {
-            'click .close': '_handleClosePage',
+            'click .close': '_handleCompareRequest',
             'click .compare': '_handleCompareRequest'
         },
         block: function () {

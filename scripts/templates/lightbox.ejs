@@ -12,7 +12,7 @@ if( obj.id !== undefined ) {
     </li>
     <li class="photos">
         <div class="images">
-            <img src="<%=obj.images[0].thumbnailUrl%>" height="90px" width="115px" alt="hotel image" />
+            <img src="<%=obj.images ? obj.images[0].thumbnailUrl : ''%>" height="90px" width="115px" alt="hotel image" />
         </div>
     </li>
     <li class="price"><span>Price </span><span class="currency"> $ </span><span class="value"><%=obj.highRate %></span></li>

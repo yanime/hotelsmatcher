@@ -156,7 +156,7 @@ define([
             var attr = this.attributes,
             url = '';
 
-            url += 'destinationId='+attr.destinationId;
+            url += 'destinationId=' + attr.destinationId;
             url += this.getOptionsQueryString();
 
             return url;
