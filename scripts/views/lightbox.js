@@ -14,7 +14,8 @@ define([
         className: "book details floating hidden",
         events: {
 			'click .close': 'close',
-            'click .pin': '_handleResultPinned'
+            'click .pin': '_handleResultPinned',
+            'click .hotel-link': '_handleResultPinned'
         },
         handle: function (model) {
             this.model = model;

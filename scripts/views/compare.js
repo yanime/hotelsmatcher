@@ -61,6 +61,7 @@ define([
                 $('.push-button.active').removeClass('active');
                 $(currentElement).addClass('active');
                 this.resultsView.sortHotelsByType(type);
+                this.topPagination._resetPaginationAndGoToFirstPage();
             }
         },
         serialize: function () {

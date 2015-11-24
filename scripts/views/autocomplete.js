@@ -124,7 +124,7 @@ define([
 					if(results == 'hotels'){
 						for(i = 0, l = v[results].length; i < l; i++){
 							r = v[results][i];
-							str += '<li data-value="'+r.HotelID.replace(/\{|\}/g,"")+'" class="'+className+'">'+r.name+', '+r.country+this._buildCountryWrapHelper(results)+'</li>';
+							str += '<li data-value="'+r.destinationId.replace(/\{|\}/g,"")+'" class="'+className+'">'+r.name+', '+r.country+this._buildCountryWrapHelper(results)+'</li>';
 							className = 'action result ' + results;
 						}
 					}else{

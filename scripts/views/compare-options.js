@@ -22,7 +22,7 @@ define([
 
 			$this.toggleClass('active');
 			id.item = $item[0].id;
-			($this.hasClass('active'))?id.value = true : id.value = false ;
+			($this.hasClass('active')) ? id.value = true : id.value = false ;
 			if (id.item) {
 				if(id.item == 'check_distance'){
 					this.model.attributes.check_distance = id.value;
