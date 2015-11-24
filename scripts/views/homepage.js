@@ -26,7 +26,7 @@ define([
 			this.listenTo(this._autocompleteView,'select', this._handleSelect);
 			this.model.attributes.check_distance = false;
 			this.model.attributes.facilities ={
-				'wifi': false,
+				'wifi': true,
 				'parking': false,
 				'airport_shuttle': false,
 				'fitness_center': false,
@@ -120,10 +120,6 @@ define([
 			that.model.changed = true;
             return function (date) {
 				var res = date.split('/');
-
-				//else{
-				//	$(this).parent().find('input.out').datepicker("option", "minDate", new Date(date));
-				//}
 				
 				if (res.length > 1) {
 					this.parentElement.querySelector('.month').value = res[0][0] == 0 ? res[0][1] : res[0];

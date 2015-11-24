@@ -27,7 +27,10 @@ define([
             this.add(result, {merge: true});
         },
         comparator: function(item) {
-            return item.attributes[this.sortType]
+            if(this.sortType === 'highRate'){
+                return item.attributes[this.sortType]
+            }
+            return -item.attributes[this.sortType]
         },
         sortModels: function(sortType){
             this.sortType = sortType;

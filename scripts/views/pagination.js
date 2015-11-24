@@ -57,6 +57,12 @@ define([
             this.trigger('change', this.counts.page);
             this.syncDisplay(newPage);
         },
+        _resetPaginationAndGoToFirstPage: function (){
+            this.counts.page = 0;
+
+            this.trigger('change', this.counts.page);
+            this.syncDisplay(0);
+        },
         _handlePaginationPrevious: function (e) {
             if (this.counts.page > 0) {
                 this.counts.page--;
