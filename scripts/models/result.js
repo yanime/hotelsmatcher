@@ -14,7 +14,8 @@ define([
         manage: true,
         template: 'results',
         defaults: {
-            "pinned":  false
+            "pinned":  false,
+			"showAdditionalFacilities" : false
         },
 
         initialize: function (options) {

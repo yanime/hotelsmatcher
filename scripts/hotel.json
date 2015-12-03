@@ -10,7 +10,7 @@
        "wifi": "true",
        "parking": "false",
        "airport-shuttle": "true",
-       "spa": "true"
+       "breakfast": "true"
      },
      "themes":{
        "family": "true",

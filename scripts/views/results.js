@@ -18,13 +18,16 @@ define([
 		className: 'compare-table',
 		template: 'results',
 		page: 0,
+        additionalFacilities: false,
 		initialize: function (options) {
 			this.counts = options.counts;
 
 			this.lightboxView = new LightboxView();
 		},
 		events: {
-			'mouseover .result .header': '_displayLightbox'
+			'mouseover .result .header': '_displayLightbox',
+			'click .check-more' : '_toggleFacilitiesList',
+            'click .option.checkbox:not(.blocked)': '_toggleOption'
 		},
 		_insertViews: function (collection, where, forceRender) {
 			var i, l = collection.length, v, view;
@@ -170,8 +173,41 @@ define([
             } else {
                 this.lightboxView.displayAt(marginLeft);
             }
+		},
+		_toggleFacilitiesList: function() {
+            this.additionalFacilities = !this.additionalFacilities;
+			this.model.set('additional_facilities', !this.model.get('additional_facilities'));
+            var views = this.getViews();
+            var i = 0;
 
-		}
+            while (i < views._wrapped.length) {
+                if (views._wrapped[i].cid !== this.lightboxView.cid) {
+                    views._wrapped[i]._showAdditionalFacilities(this.additionalFacilities);
+                }
+                i++;
+            }
+            this.additionalFacilities ? this.$("#additionalFacilities").show() : this.$("#additionalFacilities").hide();
+		},
+        _toggleOption: function (e) {
+            var $this = $(e.currentTarget),
+                $item = $this.find('input[type="hidden"]'),
+                id = {item: '', value: ''};
+
+            var views = this.getViews();
+            var i = 0;
+
+            $this.toggleClass('active');
+            id.item = $item[0].id;
+            ($this.hasClass('active')) ? id.value = true : id.value = false ;
+			this.model.attributes.facilities[id.item] = id.value;
+            $item.val($this.hasClass('active'));
+            while (i < views._wrapped.length) {
+                if (views._wrapped[i].cid !== this.lightboxView.cid) {
+                    views._wrapped[i].render();
+                }
+                i++;
+            }
+        }
 	});
 
 	return ResultsView;

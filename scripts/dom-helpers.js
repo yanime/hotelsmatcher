@@ -35,10 +35,10 @@ define([
     ];
     var _facilities = [
         'wifi',
+        'breakfast',
         'parking',
         'airport-shuttle',
-        'fitness-center',
-        'spa'
+        'fitness-center'
     ];
 
     var _themes = [

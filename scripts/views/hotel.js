@@ -15,7 +15,6 @@ define([
         events: {
             'click .read': '_handleReadMoreToggle',
             'click .view': '_handleViewAllToggle',
-            'click .book': '_handleBook',
             'click .compare': '_handleCompare'
         },
         serialize: function () {
@@ -37,8 +36,6 @@ define([
             } else {
                 el.className += ' expanded';
             }
-        },
-        _handleBook: function () {
         }
     });
 

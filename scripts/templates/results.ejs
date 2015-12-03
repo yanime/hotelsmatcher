@@ -9,13 +9,28 @@
     <li class="distance"><span>Distance from area</span></li>
     <li class="photos"><span>Photos</span></li>
     <li class="facilities category title"><span>Facilities</span></li>
-    <% if((obj.facilities.wifi == true)){%> <li class="wifi option checkbox <%=(obj.facilities.wifi == true)? 'checked' : 'unchecked' %>"><div class="check"></div><span>Wifi</span></li><%}%>
-    <% if((obj.facilities.parking == true)){%>  <li class="parking option checkbox <%=(obj.facilities.parking == true)? 'checked' : 'unchecked' %>"><div class="check"></div><span>Parking</span></li><%}%>
-    <% if((obj.facilities.airport_shuttle == true)){%> <li class="airport-shuttle option checkbox <%=(obj.facilities.airport_shuttle == true)? 'checked' : 'unchecked' %>"><div class="check"></div><span>Airport Shuttle</span></li><%}%>
-    <% if((obj.facilities.fitness_center == true)){%> <li class="fitness-center option checkbox <%=(obj.facilities.fitness_center == true)? 'checked' : 'unchecked' %>"><div class="check"></div><span>Fitness Center</span></li><%}%>
-    <% if((obj.facilities.spa == true)){%> <li class="spa option checkbox <%=(obj.facilities.spa == true) ? 'checked' : 'unchecked' %>"><div class="check"></div><span>Spa</span></li><%}%>
-    <li class="see-all facilities"></li>
-    <li></li>
+    <li class="wifi option checkbox unchecked <%=(obj.facilities.wifi == true)? ' active' : '' %>">
+        <input type="hidden" id="wifi" value="<%=(obj.facilities.wifi == true)%>" /><div class="check"></div><span>Wifi</span></li>
+    <li class="breakfast option checkbox unchecked <%=(obj.facilities.breakfast == true) ? ' active' : '' %>">
+        <input type="hidden" id="breakfast" value="<%=(obj.facilities.breakfast == true)%>" /><div class="check"></div><span>Breakfast</span></li>
+    <li class="parking option checkbox unchecked<%=(obj.facilities.parking == true)? ' active' : '' %>">
+        <input type="hidden" id="parking" value="<%=(obj.facilities.parking == true)%>" /><div class="check"></div><span>Parking</span></li>
+    <li class="airport-shuttle option checkbox unchecked <%=(obj.facilities.airport_shuttle == true)? ' active' : '' %>">
+        <input type="hidden" id="airport_shuttle" value="<%=(obj.facilities.airport_shuttle == true)%>" /><div class="check"></div><span>Airport Shuttle</span></li>
+    <li class="fitness-center option checkbox unchecked<%=(obj.facilities.fitness_center == true)? ' active' : '' %>">
+        <input type="hidden" id="fitness_center" value="<%=(obj.facilities.fitness_center == true)%>" /><div class="check"></div><span>Fitness Center</span></li>
+    <li class="check-more facilities">check more (5) ...</li>
+    <ul id="additionalFacilities">
+        <li class="spa option checkbox unchecked <%=(obj.facilities.spa == true) ? ' active' : '' %>">
+            <input type="hidden" id="spa" value="<%=(obj.facilities.spa == true)%>" /><div class="check"></div><span>Spa</span></li>
+        <li class="pool option checkbox unchecked <%=(obj.facilities.pool == true) ? ' active' : '' %>">
+            <input type="hidden" id="pool" value="<%=(obj.facilities.pool == true)%>" /><div class="check"></div><span>Pool</span></li>
+        <li class="free_parking option checkbox unchecked <%=(obj.facilities.free_parking == true) ? ' active' : '' %>">
+            <input type="hidden" id="free_parking" value="<%=(obj.facilities.free_parking == true)%>" /><div class="check"></div><span>Free Parking</span></li>
+        <li class="kitchen option checkbox unchecked <%=(obj.facilities.kitchen == true) ? ' active' : '' %>">
+            <input type="hidden" id="kitchen" value="<%=(obj.facilities.kitchen == true)%>" /><div class="check"></div><span>Kitchen</span></li>
+        <li class="pets_allowed option checkbox unchecked <%=(obj.facilities.pets_allowed == true) ? ' active' : '' %>">
+            <input type="hidden" id="pets_allowed" value="<%=(obj.facilities.pets_allowed == true)%>" /><div class="check"></div><span>Pets Allowed</span></li>    </ul>
 </ul>
 <div class="pinned-container hidden">
 </div>

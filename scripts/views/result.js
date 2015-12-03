@@ -18,6 +18,7 @@ define([
         initialize: function () {
             this.listenTo(this.model, 'result:update', this._handleModelDetailsLoaded);
             this.listenTo(this.model, 'result:pinUpdate', this._handleResultPinned);
+            this.listenTo(this.model, 'result:showAdditionalFacilities', this._showAdditionalFacilities);
 
             this._imagesView = new HotelImages({
                 useThumbnails: true
@@ -49,6 +50,10 @@ define([
             } else {
                 this.trigger('result:pin', this);
             }
+            this.render();
+        },
+        _showAdditionalFacilities: function(displayAdditionalFacilities){
+            this.model.set('showAdditionalFacilities', displayAdditionalFacilities);
             this.render();
         }
     });

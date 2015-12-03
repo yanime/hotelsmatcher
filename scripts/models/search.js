@@ -20,7 +20,8 @@ define([
             adults: 2,
             children: 0,
             rooms: 1,
-            guests: 2
+            guests: 2,
+            additional_facilities : false
         },
         initialize: function () {
             this.setDate('checkIn', today);
@@ -203,7 +204,6 @@ define([
             'parking': 'parking',
             'airport-shuttle': 'airport_shuttle',
             'fitness-center': 'fitness_center',
-            'spa': 'spa',
             'family': 'family-option',
             'business': 'business-option',
             'romance': 'romance-option',
