@@ -111,22 +111,25 @@ define([
             }
 		},
 		_handlePin: function (view) {
-			var element = view.$el;
+			if(this.counts.countPinned > 4){
+				$('.pin.error').removeClass('hidden');
+			} else {
+				var element = view.$el;
+				this._cachedDOMPinned.append(element);
 
-			this._cachedDOMPinned.append(element);
+				this.model.pin(view.model);
 
-			this.model.pin(view.model);
+				view.refreshEvents();
 
-			view.refreshEvents();
+				if (this.counts.countPinned === 0) {
+					this._cachedDOMPinned.removeClass('hidden');
+				}
 
-			if (this.counts.countPinned === 0) {
-				this._cachedDOMPinned.removeClass('hidden');
+				this._updateCountsFor(PIN);
+				if(this.lightboxView){
+					this.lightboxView.close();
+				}
 			}
-
-			this._updateCountsFor(PIN);
-            if(this.lightboxView){
-                this.lightboxView.close();
-            }
 		},
 		_updateCountsFor: function (action) {
 			this.counts.countPinned += action;
@@ -134,6 +137,9 @@ define([
 			this.counts.countPages = Math.ceil((this.counts.results - this.counts.countPinned) / (6 - this.counts.countPinned));
 		},
 		_handleUnpin: function (view) {
+			if(this.counts.countPinned > 4) {
+				$('.pin.error').addClass('hidden');
+			}
 			var element = view.$el;
 
 			element.remove();
