@@ -19,6 +19,8 @@ define([
 		template: 'results',
 		page: 0,
         additionalFacilities: false,
+		paginationTop: null,
+		paginationBottom: null,
 		initialize: function (options) {
 			this.counts = options.counts;
 
@@ -80,9 +82,16 @@ define([
 				this._cachedDOMPinned.removeClass('hidden');
 			}
 		},
-		connectPaginationView: function (paginationView) {
+		connectTopPaginationView: function (paginationView) {
 			this.listenTo(paginationView, 'change', this._handlePaginationChange);
-			paginationView.listenTo(this, 'result:pin', paginationView._handlePinnedAction);
+			this.paginationTop = paginationView;
+
+
+		},
+		connectBottomPaginationView: function (paginationView) {
+			this.listenTo(paginationView, 'change', this._handlePaginationChange);
+			this.paginationBottom = paginationView;
+
 		},
 		sortHotelsByType: function (sortType) {
             this.model.sortResults(sortType);
@@ -135,6 +144,8 @@ define([
 			this.counts.countPinned += action;
 			this.counts.countUnpinnedPerPage -= action;
 			this.counts.countPages = Math.ceil((this.counts.results - this.counts.countPinned) / (6 - this.counts.countPinned));
+			this.paginationTop._handlePinnedAction(this.counts.countPages);
+			this.paginationBottom._handlePinnedAction(this.counts.countPages);
 		},
 		_handleUnpin: function (view) {
 			if(this.counts.countPinned > 4) {
@@ -164,6 +175,7 @@ define([
             if(this.lightboxView){
                 this.lightboxView.close();
             }
+			this.trigger('result:pin');
         },
 		_displayLightbox: function (e) {
 			var parent = e.currentTarget.parentElement,

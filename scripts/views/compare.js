@@ -41,8 +41,8 @@ define([
                 counts: counts
             });
 
-            this.resultsView.connectPaginationView(this.topPagination);
-            this.resultsView.connectPaginationView(this.bottomPagination);
+            this.resultsView.connectTopPaginationView(this.topPagination);
+            this.resultsView.connectBottomPaginationView(this.bottomPagination);
 
             this.bottomPagination.listenTo(this.topPagination, 'change', this.bottomPagination.syncDisplay);
             this.topPagination.listenTo(this.bottomPagination, 'change', this.topPagination.syncDisplay);

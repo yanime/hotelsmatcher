@@ -33,16 +33,23 @@ define([
             // @todo sync paginations
         },
         serialize: function () {
-            return this.counts.countPages;
+            if(this.counts.page + 1 > this.counts.countPages){
+                this.counts.page--;
+            }
+            return {
+                numberOfPages: this.counts.countPages,
+                currentPage: this.counts.page + 1
+            };
         },
         afterRender: function () {
-            this._cachedCurrentPage = this._getPageBtnEl(0);
+            this._cachedCurrentPage = this._getPageBtnEl(this.counts.page);
         },
         _getPageBtnEl: function (page) {
             // works ok because nex/prev btns are after the pages ones
             return this.el.getElementsByTagName('button')[page];
         },
-        _handlePinnedAction: function () {
+        _handlePinnedAction: function (pagesNumbers) {
+            this.counts.countPages = pagesNumbers;
             this.render();
         },
         _handlePaginationNavigation: function (e) {
