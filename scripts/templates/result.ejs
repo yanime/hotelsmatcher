@@ -13,8 +13,10 @@
             <%
             l = obj.hotelRating;
             for(i = 0; i < 5; i++) {
-                if(l > i) {
+                if(l > i && (i + 0.5 != l) ) {
                 %><span class="active"></span><%
+                } else if(l > i && (i + 0.5 == l) ) {
+                %><span class="half-star"></span><%
                 } else {
                 %><span></span><%
                 }
@@ -26,10 +28,12 @@
             <%
             l = obj.tripAdvisorRating;
             for(i = 0; i < 5; i++) {
-                if(l > i) {
-                %><span class="active"></span><%
-                } else {
-                %><span></span><%
+                if(l > i && (i + 0.5 != l) ) {
+                    %><span class="active"></span><%
+                    } else if(l > i && (i + 0.5 == l) ) {
+                    %><span class="half-circle"></span><%
+                    } else {
+                    %><span></span><%
                 }
             } %>
         </div>
