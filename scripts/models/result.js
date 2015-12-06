@@ -133,6 +133,7 @@ define([
 
 				this.attributes.city = res.HotelSummary.city;
 				this.attributes.address = res.HotelSummary.address1;
+				this.attributes.countryCode =res.HotelSummary.countryCode;
 
 				if (res.HotelImages.HotelImage) {
 					this.attributes.images = _.map(res.HotelImages.HotelImage, this._extractImage);

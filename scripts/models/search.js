@@ -6,8 +6,9 @@ define([
     'moment',
     'collections/results',
     'models/result',
-    'models/api-call'
-], function (_, Backbone, momentjs, Results, Result, ApiCall) {
+    'models/api-call',
+    'models/country-code-converter'
+], function (_, Backbone, momentjs, Results, Result, ApiCall, CountryCodeConverter) {
     'use strict';
     var today = new Date();
 
@@ -171,18 +172,24 @@ define([
             return new ApiCall(this.url + this.getQueryString()).status.done(this._parse.bind(this));
         },
         fetchHotelsNearHotel: function (hotel) {
-            var cities = window._searchCache.cities;
+            var countryName = new CountryCodeConverter().getCountryNameByCode(hotel.attributes.countryCode.toUpperCase());
+            var that = this;
+            var dfd = jQuery.Deferred();
 
-            for ( var i= 0, l = cities.length; i < l; i ++) {
-                var v = cities[i];
-
-                if (v.name === hotel.attributes.city) {
-                    this.attributes.destinationId = v.destinationId;
-                    return this.fetch();
+            $.get('http://dev.enode.ro/eanapi/autocomplete?q=' + hotel.attributes.city).done(function(data) {
+                for ( var i= 0, l = data.result.cities.length; i < l; i ++) {
+                    var v = data.result.cities[i];
+                    if (hotel.attributes.city === v.name && countryName === v.country) {
+                        that.attributes.destinationId = v.destinationId;
+                        that.fetch().done(function(){
+                            dfd.resolve();
+                        });
+                    }
                 }
-            }
+                throw new Error('09061250 something went wrong');
+            });
 
-            throw new Error('09061250 something went wrong');
+            return dfd.promise();
         },
         _parse: function (data) {
             var hotels;
