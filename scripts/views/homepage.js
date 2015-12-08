@@ -27,7 +27,7 @@ define([
 			this.model.attributes.check_distance = false;
 			this.model.attributes.facilities ={
 				'wifi': true,
-				'breakfast' : true,
+				'breakfast' : false,
 				'parking': false,
 				'airport_shuttle': false,
 				'fitness_center': false
