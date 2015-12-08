@@ -39,7 +39,7 @@ define([
                 App.router.navigate('compare', {
                     trigger: true
                 });
-            }).fail(this._displayAPIError.bind(this));
+            });
         }
     });
 
