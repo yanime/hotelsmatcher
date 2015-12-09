@@ -22,17 +22,73 @@ define([
             children: 0,
             rooms: 1,
             guests: 2,
-            additional_facilities : false
+            additionalFacilities: false,
+            facilities: {
+                'wifi': {
+                    value: true,
+                    label: 'Wifi',
+                    compare_option: true,
+                    api_label: 'Free WiFi'
+                },
+                'breakfast': {
+                    label: 'Breackfast',
+                    value: false,
+                    compare_option: true,
+                    api_label: 'Free breakfast'
+                },
+                'parking': {
+                    label: 'Parking',
+                    value: false,
+                    compare_option: true,
+                    api_label: 'Free self parking'
+                },
+                'airport_shuttle': {
+                    label: 'Airport Shuttle',
+                    value: false,
+                    compare_option: true,
+                    api_value: 'Airport transportation (surcharge)'
+                },
+                'fitness_center': {
+                    label: 'Fitness Center',
+                    value: false,
+                    compare_option: true,
+                    api_label: 'Fitness facilities'
+                },
+                'spa': {
+                    label: 'Spa',
+                    value: false,
+                    compare_option: false,
+                    api_label: 'Spa services on site'
+                },
+                'pool': {
+                    label: 'Pool',
+                    value: false,
+                    compare_option: false,
+                    api_label: 'Indoor pool'
+                },
+                'kitchen': {
+                    label: 'Kitchen',
+                    value: false,
+                    compare_option: false,
+                    api_value: 'Full kitchen'
+                },
+                'pets_allowed': {
+                    label: 'Pets allowed',
+                    value: false,
+                    compare_option: false,
+                    api_label: 'Pets allowed'
+                }
+            }
         },
         initialize: function () {
             this.setDate('checkIn', today);
-            this.setDate('checkOut', new Date(today.getTime() + (24 * 60 * 60 * 1000) ) );
+            this.setDate('checkOut', new Date(today.getTime() + (24 * 60 * 60 * 1000)));
             this.results = new Results();
             this.pinnedResults = [];
         },
         setDate: function (attr, value) {
             this.attributes[attr] = value;
-            this.attributes['formatted_'+attr] = momentjs(value).format("MMM. Do YYYY");
+            this.attributes['formatted_' + attr] = momentjs(value).format("MMM. Do YYYY");
         },
         updateGuests: function (from) {
             var attrs = this.attributes;
@@ -43,7 +99,7 @@ define([
         addResult: function (hotel) {
             this.results.add(hotel);
         },
-        getUnpinned: function (count, skip){
+        getUnpinned: function (count, skip) {
             var i = 0,
                 res = [],
                 v,
@@ -52,7 +108,7 @@ define([
 
             skip = skip || 0;
 
-            while ( found < count && i < failsafe ){
+            while (found < count && i < failsafe) {
                 v = this.results.at(i);
                 if (!v.attributes.pinned) {
                     if (skip) {
@@ -71,21 +127,21 @@ define([
             this.pinnedResults.push(result);
         },
         unpin: function (result) {
-            for (var i = 0, l = this.pinnedResults.length; i < l; i ++) {
+            for (var i = 0, l = this.pinnedResults.length; i < l; i++) {
                 if (this.pinnedResults[i] === result) {
-                    this.pinnedResults.splice(i,1);
+                    this.pinnedResults.splice(i, 1);
                     result.set({pinned: false});
                     return true;
                 }
             }
             return false;
         },
-        sortResults: function(sortType){
+        sortResults: function (sortType) {
             this.results.sortModels(sortType);
         },
-        displayPinButton: function(displayPinButton){
-            this.results.forEach(function(model) {
-                if(!model.get('pinned')){
+        displayPinButton: function (displayPinButton) {
+            this.results.forEach(function (model) {
+                if (!model.get('pinned')) {
                     model.set('showPinButton', displayPinButton);
                 }
             });
@@ -95,56 +151,56 @@ define([
         },
         validateQueryParams: function () {
             var attr = this.attributes,
-            errors = [];
+                errors = [];
 
-            if ( attr.destinationId === undefined ){
+            if (attr.destinationId === undefined) {
                 errors[errors.length] = 'destinationId';
             }
-            if ( attr.checkIn === undefined  && attr.withDate){
+            if (attr.checkIn === undefined && attr.withDate) {
                 errors[errors.length] = 'checkIn';
             }
-            if ( attr.checkOut === undefined  && attr.withDate){
+            if (attr.checkOut === undefined && attr.withDate) {
                 errors[errors.length] = 'checkOut';
             }
-			if((attr.checkIn > attr.checkOut) && attr.withDate){
-				errors[errors.length] = 'calendar'
-			}
-            if ( attr.rooms === undefined ){
+            if ((attr.checkIn > attr.checkOut) && attr.withDate) {
+                errors[errors.length] = 'calendar'
+            }
+            if (attr.rooms === undefined) {
                 errors[errors.length] = 'rooms';
             }
-            if ( attr.adults === undefined ) {
+            if (attr.adults === undefined) {
                 errors[errors.length] = 'adults';
             }
-			if ( attr.children === undefined ) {
+            if (attr.children === undefined) {
                 errors[errors.length] = 'children';
             }
-			if(errors.length){
-				errors[attr] = this.attributes;
-				return errors;
-			}else{
-				return true;
-			}	
+            if (errors.length) {
+                errors[attr] = this.attributes;
+                return errors;
+            } else {
+                return true;
+            }
         },
         getOptionsQueryString: function () {
             var attr = this.attributes,
-            room = 0,
-            i = 0,
-            url = '';
+                room = 0,
+                i = 0,
+                url = '';
 
             if (attr.withDate) {
-                url += '&from='+this.formatDate(attr.checkIn);
-                url += '&to='+this.formatDate(attr.checkOut);
+                url += '&from=' + this.formatDate(attr.checkIn);
+                url += '&to=' + this.formatDate(attr.checkOut);
             }
-			
+
             var adultsPerRoom = attr.adults / attr.rooms;
             adultsPerRoom = Math.floor(adultsPerRoom);
 
             // @todo fix issue where one adult is swallowed by floor
-            while ( room < attr.rooms ) {
-                url += '&room'+(room+1);
-                url += '='+adultsPerRoom;
+            while (room < attr.rooms) {
+                url += '&room' + (room + 1);
+                url += '=' + adultsPerRoom;
 
-                if ( i < attr.children ) {
+                if (i < attr.children) {
                     url += ',5';
                     i++;
                 }
@@ -152,18 +208,18 @@ define([
                 room++;
             }
 
-            if ( i < attr.children ) {
-                while ( i < attr.children ){
+            if (i < attr.children) {
+                while (i < attr.children) {
                     url += ',5';
                     i++;
                 }
             }
-	
+
             return url;
         },
         getQueryString: function () {
             var attr = this.attributes,
-            url = '';
+                url = '';
 
             url += 'destinationId=' + attr.destinationId;
             url += this.getOptionsQueryString();
@@ -183,12 +239,12 @@ define([
             var that = this;
             var dfd = jQuery.Deferred();
 
-            $.get('http://dev.enode.ro/eanapi/autocomplete?q=' + hotel.attributes.city).done(function(data) {
-                for ( var i= 0, l = data.result.cities.length; i < l; i ++) {
+            $.get('http://dev.enode.ro/eanapi/autocomplete?q=' + hotel.attributes.city).done(function (data) {
+                for (var i = 0, l = data.result.cities.length; i < l; i++) {
                     var v = data.result.cities[i];
                     if (hotel.attributes.city === v.name && countryName === v.country) {
                         that.attributes.destinationId = v.destinationId;
-                        that.fetch().done(function(){
+                        that.fetch().done(function () {
                             dfd.resolve();
                         });
                     }
@@ -201,17 +257,17 @@ define([
             var hotels;
             hotels = data.HotelList.HotelSummary;
             if (hotels.length) {
-                for (var i = 0, l = hotels.length; i < l; i ++) {
-					hotels[i]['search_options'] = this.attributes;
+                for (var i = 0, l = hotels.length; i < l; i++) {
+                    hotels[i]['search_options'] = this.attributes;
                     this.results.addSearchResult(hotels[i]);
                 }
             } else {
                 // one result is not wrapped in an array
-				hotels['search_options'] = this.attributes;
+                hotels['search_options'] = this.attributes;
                 this.results.addSearchResult(hotels);
             }
         }
-    },{
+    }, {
         options: {
             'wifi': 'wifi',
             'parking': 'parking',

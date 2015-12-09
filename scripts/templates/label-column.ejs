@@ -1,0 +1,25 @@
+<ul class="headers column">
+    <li class="header">
+        Hotels
+    </li>
+    <li class="pin"></li>
+    <li class="price"><span>Price</span></li>
+    <li class="stars"><span>Stars</span></li>
+    <li class="tripadvisor-reviews"><span>TripAdvisor Reviews</span></li>
+    <li class="distance"><span>Distance from area</span></li>
+    <li class="photos"><span>Photos</span></li>
+    <li class="facilities category title"><span>Facilities</span></li>
+
+    <% _.map(Object.keys(obj.facilities), function(key){
+    if(obj.facilities[key].value || obj.additionalFacilities){ %>
+    <li class="<%= key %> option checkbox unchecked <%= obj.facilities[key].value ? ' active' : '' %>">
+        <input type="hidden" id="<%= key %>" value="<%= obj.facilities[key].value %>"/>
+        <div class="check"></div>
+        <span><%= obj.facilities[key].label %></span></li>
+    <% }}) %>
+    <% if(obj.additionalFacilities){ %>
+    <li class="check-more facilities">check less ...</li>
+    <% } else { %>
+    <li class="check-more facilities">check more ...</li>
+    <%}%>
+</ul>

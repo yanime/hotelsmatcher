@@ -6,8 +6,9 @@ define([
 	'backbone',
 	'layoutmanager',
 	'views/result',
-	'views/lightbox'
-], function ($, _, Backbone, Layout, ResultView, LightboxView) {
+	'views/lightbox',
+    'views/label-column'
+], function ($, _, Backbone, Layout, ResultView, LightboxView, LabelColumn) {
 	'use strict';
 
 	var PIN = 1,
@@ -18,13 +19,15 @@ define([
 		className: 'compare-table',
 		template: 'results',
 		page: 0,
-        additionalFacilities: false,
 		paginationTop: null,
 		paginationBottom: null,
 		initialize: function (options) {
 			this.counts = options.counts;
 
 			this.lightboxView = new LightboxView();
+            this.labelColumn = new LabelColumn({
+                model: this.model
+            });
 		},
 		events: {
 			'mouseover .result .header': '_displayLightbox',
@@ -71,6 +74,7 @@ define([
 			this._insertViews(arr, false, forceRender);
 		},
 		beforeRender: function () {
+            this.insertView('.label-container', this.labelColumn);
 			this._addPinnedResults();
 			this._addPagedUnpinnedResults();
 
@@ -105,7 +109,8 @@ define([
 
 				if (views._wrapped[i].model &&
                     !views._wrapped[i].model.get('pinned') &&
-                    views._wrapped[i].cid !== this.lightboxView.cid) {
+                    views._wrapped[i].cid !== this.lightboxView.cid &&
+                    views._wrapped[i].cid !== this.labelColumn.cid) {
 					views._wrapped[i].remove();
 				}
 				i++;
@@ -219,18 +224,17 @@ define([
             }
 		},
 		_toggleFacilitiesList: function() {
-            this.additionalFacilities = !this.additionalFacilities;
-			this.model.set('additional_facilities', !this.model.get('additional_facilities'));
+			this.model.set('additionalFacilities', !this.model.get('additionalFacilities'));
+            this.labelColumn.render();
             var views = this.getViews();
             var i = 0;
 
             while (i < views._wrapped.length) {
-                if (views._wrapped[i].cid !== this.lightboxView.cid) {
-                    views._wrapped[i]._showAdditionalFacilities(this.additionalFacilities);
+                if (views._wrapped[i].cid !== this.lightboxView.cid && views._wrapped[i].cid !== this.labelColumn.cid) {
+                    views._wrapped[i]._showAdditionalFacilities(this.model.get('additionalFacilities'));
                 }
                 i++;
             }
-            this.additionalFacilities ? this.$("#additionalFacilities").show() : this.$("#additionalFacilities").hide();
 		},
         _toggleOption: function (e) {
             var $this = $(e.currentTarget),
@@ -243,7 +247,7 @@ define([
             $this.toggleClass('active');
             id.item = $item[0].id;
             ($this.hasClass('active')) ? id.value = true : id.value = false ;
-			this.model.attributes.facilities[id.item] = id.value;
+			this.model.attributes.facilities[id.item].value = id.value;
             $item.val($this.hasClass('active'));
             while (i < views._wrapped.length) {
                 if (views._wrapped[i].cid !== this.lightboxView.cid) {

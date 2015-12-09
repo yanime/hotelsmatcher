@@ -27,7 +27,7 @@ define([
 				if(id.item == 'check_distance'){
 					this.model.attributes.check_distance = id.value;
 				}else{
-					this.model.attributes.facilities[id.item] = id.value;
+					this.model.attributes.facilities[id.item].value = id.value;
 				}
 			}
 			$item.val($this.hasClass('active'));

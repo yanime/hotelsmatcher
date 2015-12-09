@@ -42,18 +42,15 @@
     <li class="photos">
     </li>
     <li class="facilities category title">Facilities</li>
-    <li class="wifi option"><% if((obj.search_options.facilities.wifi == true)){%> <span class="checkbox <%=obj.facilities.indexOf("Free WiFi")>=0 ? 'checked' : 'unchecked'%> "></span><%}%></li>
-    <li class="breakfast option"><% if((obj.search_options.facilities.breakfast == true)){%> <span class="checkbox <%=obj.facilities.indexOf("Free breakfast")>=0 ? 'checked' : 'unchecked'%> "></span><%}%></li>
-    <li class="parking option"><% if((obj.search_options.facilities.parking == true)){%> <span class="checkbox <%=obj.facilities.indexOf("Free self parking")>=0 ? 'checked' : 'unchecked'%> "></span></li><%}%>
-    <li class="airport-shuttle option"><% if((obj.search_options.facilities.airport_shuttle == true)){%> <span class="checkbox <%=obj.facilities.indexOf("Airport transportation (surcharge)")>=0 ? 'checked' : 'unchecked'%> "></span><%}%></li>
-    <li class="fitness-center option"><% if((obj.search_options.facilities.fitness_center == true)){%> <span class="checkbox <%=obj.facilities.indexOf("Fitness facilities")>=0 ? 'checked' : 'unchecked'%> "></span><%}%></li>
-    <li class="option"></li>
-    <% if((obj.showAdditionalFacilities)){%>
-    <li class="spa option"><% if((obj.search_options.facilities.spa == true)){%> <span class="checkbox <%=obj.facilities.indexOf("Spa services on site")>=0 ? 'checked' : 'unchecked'%> "></span><%}%></li>
-    <li class="pool option"><% if((obj.search_options.facilities.pool == true)){%> <span class="checkbox <%=(obj.facilities.indexOf("Outdoor pool") || obj.facilities.indexOf("Indoor pool"))>=0 ? 'checked' : 'unchecked'%> "></span><%}%></li>
-    <li class="free_parking option"><% if((obj.search_options.facilities.free_parking == true)){%> <span class="checkbox <%=obj.facilities.indexOf("Free Hotel Parking")>=0 ? 'checked' : 'unchecked'%> "></span><%}%></li>
-    <li class="kitchen option"><% if((obj.search_options.facilities.kitchen == true)){%> <span class="checkbox <%=obj.facilities.indexOf("Full Kitchen")>=0 ? 'checked' : 'unchecked'%> "></span><%}%></li>
-    <li class="pets_allowed option"><% if((obj.search_options.facilities.pets_allowed == true)){%> <span class="checkbox <%=obj.facilities.indexOf("Pets allowed")>=0 ? 'checked' : 'unchecked'%> "></span><%}%></li>
-    <%}%>
+
+    <% _.map(Object.keys(obj.search_options.facilities), function(key){%>
+    <% if(obj.search_options.facilities[key].value || obj.search_options.additionalFacilities){%>
+    <li class="<%=key%> option">
+        <% if(obj.search_options.facilities[key].value){%>
+        <span class="checkbox <%=obj.facilities.indexOf(obj.search_options.facilities[key].api_label)>=0 ? 'checked' : 'unchecked'%> "></span>
+            <%}%>
+        </li>
+    <% }}) %>
+    <li></li>
     <li class="book"><a href="<%=obj.deepLink %>" target="_blank" class="button action book" title="Book for this hotel">Book now</a></li>
 </ul>
