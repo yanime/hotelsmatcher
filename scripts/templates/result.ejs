@@ -3,9 +3,9 @@
 		<%= obj.name %>
     </li>
     <li class="radio trips pin">
-        <input type="hidden" name="pinned" value="<%=obj.pinned%>" />
+        <%if(obj.showPinButton){%><input type="hidden" name="pinned" value="<%=obj.pinned%>" />
         <span class="label"><%=obj.pinned ? 'comparing' : 'compare' %></span>
-        <div class="check"></div>
+        <div class="check"></div><%}%>
     </li>
     <li class="price"><span> $ </span><span class="value"><%=obj.highRate %></span></li>
     <li class="stars">

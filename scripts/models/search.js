@@ -83,6 +83,13 @@ define([
         sortResults: function(sortType){
             this.results.sortModels(sortType);
         },
+        displayPinButton: function(displayPinButton){
+            this.results.forEach(function(model) {
+                if(!model.get('pinned')){
+                    model.set('showPinButton', displayPinButton);
+                }
+            });
+        },
         formatDate: function (date) {
             return ( date.getMonth() ) + 1 + '/' + date.getDate() + '/' + date.getFullYear();
         },

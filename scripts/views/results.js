@@ -120,25 +120,38 @@ define([
             }
 		},
 		_handlePin: function (view) {
-			if(this.counts.countPinned > 4){
-				$('.pin.error').removeClass('hidden');
-			} else {
-				var element = view.$el;
-				this._cachedDOMPinned.append(element);
+            var element = view.$el;
+            this._cachedDOMPinned.append(element);
 
-				this.model.pin(view.model);
+            this.model.pin(view.model);
 
-				view.refreshEvents();
+            view.refreshEvents();
 
-				if (this.counts.countPinned === 0) {
-					this._cachedDOMPinned.removeClass('hidden');
-				}
+            if (this.counts.countPinned === 0) {
+                this._cachedDOMPinned.removeClass('hidden');
+            }
 
-				this._updateCountsFor(PIN);
-				if(this.lightboxView){
-					this.lightboxView.close();
-				}
-			}
+            this._updateCountsFor(PIN);
+            if(this.lightboxView){
+                this.lightboxView.close();
+            }
+
+            if(this.counts.countPinned == 5 ){
+                var views = this.getViews();
+                var i = 0;
+
+                this.model.displayPinButton(false);
+
+                while (i < views._wrapped.length) {
+
+                    if (views._wrapped[i].model &&
+                        !views._wrapped[i].model.get('pinned') &&
+                        views._wrapped[i].cid !== this.lightboxView.cid) {
+                        views._wrapped[i].render();
+                    }
+                    i++;
+                }
+            }
 		},
 		_updateCountsFor: function (action) {
 			this.counts.countPinned += action;
@@ -148,8 +161,21 @@ define([
 			this.paginationBottom._handlePinnedAction(this.counts.countPages);
 		},
 		_handleUnpin: function (view) {
-			if(this.counts.countPinned > 4) {
-				$('.pin.error').addClass('hidden');
+			if(this.counts.countPinned === 5) {
+
+                var views = this.getViews();
+                var i = 0;
+
+                this.model.displayPinButton(true);
+
+                while (i < views._wrapped.length) {
+
+                    if (views._wrapped[i].model &&
+                        !views._wrapped[i].model.get('pinned')){
+                        views._wrapped[i].render();
+                    }
+                    i++;
+                }
 			}
 			var element = view.$el;
 
