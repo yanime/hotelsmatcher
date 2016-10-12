@@ -31,7 +31,7 @@ define([
                     api_label: 'Free WiFi'
                 },
                 'breakfast': {
-                    label: 'Breackfast',
+                    label: 'Breakfast',
                     value: false,
                     compare_option: true,
                     api_label: 'Free breakfast'

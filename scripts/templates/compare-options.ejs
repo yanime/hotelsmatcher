@@ -25,12 +25,12 @@
     </li>
 </ul>
 <ul class="categories-list">
-    <li class="checkbox trips categories blocked" data-target="facilities-container">
+    <li class="checkbox trips categories blocked active" data-target="facilities-container">
         <div class="check"></div>
         <span class="label">Facilities</span>
     </li>
 </ul>
-<div class="facilities-container filters hidden">
+<div class="facilities-container filters">
     <ul class="options">
         <% _.map(Object.keys(obj.facilities), function(key){ %>
         <% if(obj.facilities[key].compare_option){ %>
